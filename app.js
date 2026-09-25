@@ -1,5 +1,6 @@
 /**
  * Konversian Stage — Application Logic v2.2
+ * built by Seroja Labs
  * ==========================================
  * Features:
  * - 3-level navigation: Home → Category → Workspace
@@ -24,10 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================================================================
   const TRANSLATIONS = {
     id: {
-      logo_sub: 'File Conversion Studio',
+      logo_sub: 'File Conversion',
       privacy_badge: '100% Client-Side',
-      hero_title_prefix: 'Studio Konversi File',
-      hero_title_accent: 'Terlengkap',
+      hero_title_prefix: 'Konversi File Workspace',
+      hero_title_accent: 'Workspace',
       hero_sub: 'Pilih kategori alat di bawah ini. Semua operasi berjalan langsung di perangkat Anda — tanpa upload, tanpa watermark, tanpa batas.',
       img_card_badge: '2 Kategori · 14 Alat',
       img_card_title: 'Image Converter',
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chip_4_tools: '4 alat',
       chip_2_tools: '2 alat',
       pdf_card_cta: 'Jelajahi Tools PDF',
-      footer_privacy: 'Privasi terjaga — File tidak pernah meninggalkan perangkat Anda.',
+      footer_privacy: 'Privasi terjaga — File anda tidak akan tersimpan diserver kami.',
       footer_built_for: 'Built for Workspace, Community and General.',
       footer_donate: 'Open Donate',
       esc_hint: 'kembali ke menu utama',
@@ -151,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hint_split_download: 'Setiap rentang akan diunduh sebagai file PDF terpisah.',
       ph_text_editor: 'Ketikkan atau tempel teks di sini untuk diubah menjadi dokumen PDF...',
       ctx_refresh: 'Segarkan',
-      ctx_about: 'Tentang Seroja Labs',
+      ctx_about: 'Tentang',
       ctx_donate: 'Donasi Sekarang',
       about_title: 'Tentang Seroja Labs',
       about_hero_h1: 'Konversian Stage dibangun oleh',
-      about_hero_sub: 'Sebuah studio utilitas file modern yang dirancang untuk mendukung kebutuhan alur kerja harian individu, komunitas open-source, dan lingkungan profesional tanpa kompromi pada privasi data pengguna.',
+      about_hero_sub: 'Sebuah platform utilitas file modern yang dirancang untuk mendukung kebutuhan alur kerja harian individu, komunitas open-source, dan lingkungan profesional tanpa kompromi pada privasi data pengguna.',
       pillar_privacy_title: '100% Client-Side Privacy',
       pillar_privacy_desc: 'File Anda tidak pernah dikirim ke server cloud mana pun. Seluruh operasi kompresi, konversi, rendering, dan penggabungan berkas dieksekusi murni di dalam memori browser lokal perangkat Anda.',
       pillar_speed_title: 'Performa Instan Tanpa Batas',
@@ -208,10 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
       desc_stirling_p2o_info: 'Mengonversi struktur berkas PDF menjadi dokumen Office yang sepenuhnya dapat disunting teks, tabel, dan gambarnya.',
     },
     en: {
-      logo_sub: 'File Conversion Studio',
+      logo_sub: 'File Conversion',
       privacy_badge: '100% Client-Side',
-      hero_title_prefix: 'Comprehensive File',
-      hero_title_accent: 'Conversion Studio',
+      hero_title_prefix: 'Workspace File Conversion',
+      hero_title_accent: 'Conversion',
       hero_sub: 'Choose a tool category below. All operations execute directly on your device — no uploads, no watermarks, unlimited.',
       img_card_badge: '2 Categories · 14 Tools',
       img_card_title: 'Image Converter',
@@ -232,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chip_4_tools: '4 tools',
       chip_2_tools: '2 tools',
       pdf_card_cta: 'Explore PDF Tools',
-      footer_privacy: 'Privacy guaranteed — Files never leave your device.',
+      footer_privacy: 'Privacy guaranteed — we never collect any data of your files.',
       footer_built_for: 'Built for Workspace, Community and General.',
       footer_donate: 'Open Donate',
       esc_hint: 'press ESC to return home',
@@ -335,9 +336,9 @@ document.addEventListener('DOMContentLoaded', () => {
       hint_split_download: 'Each range will download as a separate PDF file.',
       ph_text_editor: 'Type or paste text here to convert into a clean PDF document...',
       ctx_refresh: 'Refresh',
-      ctx_about: 'About Seroja Labs',
+      ctx_about: 'About',
       ctx_donate: 'Donate Now',
-      about_title: 'About Seroja Labs',
+      about_title: 'About us',
       about_hero_h1: 'Konversian Stage is built by',
       about_hero_sub: 'A modern file utility studio engineered to empower daily workflows for individuals, open-source communities, and enterprise teams without compromising data privacy.',
       pillar_privacy_title: '100% Client-Side Privacy',
@@ -568,10 +569,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn_convert_to_office: 'تحويل إلى مستند',
     },
     de: {
-      logo_sub: 'File Conversion Studio',
+      logo_sub: 'File Conversion',
       privacy_badge: '100% Client-Side',
       hero_title_prefix: 'Das umfassende',
-      hero_title_accent: 'Konvertierungsstudio',
+      hero_title_accent: 'Konvertierungs',
       hero_sub: 'Wählen Sie unten eine Tool-Kategorie. Alle Aktionen laufen direkt auf Ihrem Gerät — kein Upload, kein Wasserzeichen, unbegrenzt.',
       img_card_badge: '2 Kategorien · 14 Tools',
       img_card_title: 'Image Converter',
@@ -695,11 +696,11 @@ document.addEventListener('DOMContentLoaded', () => {
       hint_split_download: 'Jeder Bereich wird als separate PDF gespeichert.',
       ph_text_editor: 'Geben Sie hier Text ein, um ein sauberes PDF-Dokument zu erstellen...',
       ctx_refresh: 'Aktualisieren',
-      ctx_about: 'Über Seroja Labs',
+      ctx_about: 'Über',
       ctx_donate: 'Jetzt spenden',
       about_title: 'Über Seroja Labs',
       about_hero_h1: 'Konversian Stage wurde entwickelt von',
-      about_hero_sub: 'Ein modernes Datei-Studio, entwickelt für Workspaces, Open-Source-Communities und professionelle Nutzung bei maximalem Datenschutz.',
+      about_hero_sub: 'Ein modernes Datei, entwickelt für Workspaces, Open-Source-Communities und professionelle Nutzung bei maximalem Datenschutz.',
       pillar_privacy_title: '100% Client-Side Datenschutz',
       pillar_privacy_desc: 'Dateien werden niemals auf Cloud-Server übertragen. Alle Operationen laufen isoliert im lokalen Browser-Speicher.',
       pillar_speed_title: 'Sofortige Leistung ohne Limits',
@@ -868,7 +869,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hint_split_download: 'Каждый диапазон скачается отдельным файлом PDF.',
       ph_text_editor: 'Введите или вставьте текст сюда для создания аккуратного PDF...',
       ctx_refresh: 'Обновить страницу',
-      ctx_about: 'О лаборатории Seroja Labs',
+      ctx_about: 'О лаборатории',
       ctx_donate: 'Поддержать проект',
       about_title: 'О лаборатории Seroja Labs',
       about_hero_h1: 'Konversian Stage создана командой',
@@ -1041,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hint_split_download: '每个选定区间都将导出为一份独立的 PDF。',
       ph_text_editor: '在此输入或粘贴文本内容，即可一键生成规整的 PDF 电子书...',
       ctx_refresh: '刷新页面',
-      ctx_about: '关于 Seroja Labs',
+      ctx_about: '关于',
       ctx_donate: '赞助支持我们',
       about_title: '关于 Seroja Labs',
       about_hero_h1: 'Konversian Stage 由团队打造',
@@ -1104,7 +1105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { id:'compress-jpeg', label:'Compress JPEG', status:'ready', panel:'panelImgCompress', accept:'image/jpeg',           ext:'jpeg' },
             { id:'compress-png',  label:'Compress PNG',  status:'ready', panel:'panelImgCompress', accept:'image/png',            ext:'png'  },
             { id:'compress-webp', label:'Compress WEBP', status:'ready', panel:'panelImgCompress', accept:'image/webp',           ext:'webp' },
-            { id:'compress-heic', label:'Compress HEIC', status:'ready', panel:'panelImgCompress', accept:'.heic,.heif,image/heic,image/heif', ext:'heic' },
+            { id:'compress-heic', label:'Compress HEIC', status:'soon', panel:'panelImgCompress', accept:'.heic,.heif,image/heic,image/heif', ext:'heic' },
             { id:'compress-bmp',  label:'Compress BMP',  status:'ready', panel:'panelImgCompress', accept:'image/bmp',            ext:'bmp'  },
           ]
         },
@@ -1114,7 +1115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { id:'convert-jpg',  label:'JPG → PNG/WEBP/BMP', status:'ready', panel:'panelImgConvert', srcFmt:'jpg',  srcMime:'image/jpeg', targets:['png','webp','bmp'] },
             { id:'convert-jpeg', label:'JPEG → PNG/WEBP/BMP',status:'ready', panel:'panelImgConvert', srcFmt:'jpeg', srcMime:'image/jpeg', targets:['png','webp','bmp'] },
             { id:'convert-png',  label:'PNG → JPG/WEBP/BMP', status:'ready', panel:'panelImgConvert', srcFmt:'png',  srcMime:'image/png',  targets:['jpg','webp','bmp'] },
-            { id:'convert-heic', label:'HEIC → JPG/PNG/WEBP', status:'ready', panel:'panelImgConvert', srcFmt:'heic', srcMime:'.heic,.heif,image/heic,image/heif', targets:['jpg','png','webp'] },
+            { id:'convert-heic', label:'HEIC → JPG/PNG/WEBP', status:'soon', panel:'panelImgConvert', srcFmt:'heic', srcMime:'.heic,.heif,image/heic,image/heif', targets:['jpg','png','webp'] },
             { id:'convert-webp', label:'WEBP → JPG/PNG',     status:'ready', panel:'panelImgConvert', srcFmt:'webp', srcMime:'image/webp', targets:['jpg','png'] },
             { id:'convert-bmp',  label:'BMP → PNG/JPG',      status:'ready', panel:'panelImgConvert', srcFmt:'bmp',  srcMime:'image/bmp',  targets:['png','jpg'] },
           ]
@@ -1140,18 +1141,18 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           id: 'sec-doc2pdf', labelKey: 'sec_doc2pdf',
           tools: [
-            { id:'docx2pdf',  label:'DOCX to PDF',  status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.docx,.doc', ext:'docx' },
-            { id:'ppt2pdf',   label:'PPT to PDF',   status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.pptx,.ppt', ext:'pptx' },
-            { id:'excel2pdf', label:'Excel to PDF', status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.xlsx,.xls', ext:'xlsx' },
+            { id:'docx2pdf',  label:'DOCX to PDF',  status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.docx,.doc', ext:'docx' },
+            { id:'ppt2pdf',   label:'PPT to PDF',   status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.pptx,.ppt', ext:'pptx' },
+            { id:'excel2pdf', label:'Excel to PDF', status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.xlsx,.xls', ext:'xlsx' },
             { id:'text2pdf',  label:'Text to PDF',  status:'ready', panel:'panelText2Pdf'  },
           ]
         },
         {
           id: 'sec-pdf2doc', labelKey: 'sec_pdf2doc',
           tools: [
-            { id:'pdf2docx',  label:'PDF to DOCX',  status:'ready', panel:'panelStirlingPdf2Office', targetFormat:'docx' },
-            { id:'pdf2ppt',   label:'PDF to PPT',   status:'ready', panel:'panelStirlingPdf2Office', targetFormat:'pptx' },
-            { id:'pdf2excel', label:'PDF to Excel', status:'ready', panel:'panelStirlingPdf2Office', targetFormat:'xlsx' },
+            { id:'pdf2docx',  label:'PDF to DOCX',  status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'docx' },
+            { id:'pdf2ppt',   label:'PDF to PPT',   status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'pptx' },
+            { id:'pdf2excel', label:'PDF to Excel', status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'xlsx' },
             { id:'pdf2text',  label:'PDF to Text',  status:'ready', panel:'panelPdf2Text'  },
           ]
         },
@@ -1159,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
           id: 'sec-security', labelKey: 'sec_security',
           tools: [
             { id:'lockpdf',   label:'Lock PDF',   status:'ready', panel:'panelLockPdf'    },
-            { id:'unlockpdf', label:'Unlock PDF', status:'ready', panel:'panelUnlockPdf'  },
+            { id:'unlockpdf', label:'Unlock PDF', status:'soon', panel:'panelUnlockPdf'  },
           ]
         },
       ]
