@@ -3,9 +3,9 @@
 Studio Konversi File dan Dokumen Modern oleh **Seroja Labs** dengan antarmuka **One-Page Fixed Viewport (tanpa scroll)** pada halaman utama, efek **Cursor Backlight**, sistem navigasi 3 tingkat (*Home → Category Overview → Dedicated Workspace*), serta dukungan tema **Light & Dark**.
 
 Semua pemrosesan yang didukung berjalan **100% Client-Side** langsung di peramban tanpa mengunggah berkas ke server luar demi privasi data mutlak.
-<p align="center">
-  <img src="[https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/home.png)" width="80" alt="Home">
-</p>
+Home|Right Click
+|--|--|
+![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/home.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/right-click.png)
 
 ---
 
