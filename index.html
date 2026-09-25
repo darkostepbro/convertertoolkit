@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="id" class="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-ico" href="paper.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konversian Stage — Studio Konversi File Terlengkap</title>
+  <meta name="description" content="Platform konversi gambar dan PDF terlengkap oleh Seroja Labs. Compress, convert, merge, split, dan lindungi file Anda — 100% di browser, tanpa upload ke server.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- heic2any / heic-convert browser WASM port -->
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <!-- @pdfsmaller/pdf-encrypt for real client-side PDF password locking -->
+  <script src="https://unpkg.com/@pdfsmaller/pdf-encrypt@1.2.0/dist/pdf-encrypt.umd.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Cursor Backlight (home only) -->
+  <div id="cursorLight" class="cursor-light" aria-hidden="true"></div>
+
+  <!-- Toast Notifications -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Right-Click Bubble Light Container -->
+  <div id="bubbleContainer" class="bubble-container" aria-hidden="true"></div>
+
+  <!-- Custom Context Menu (Right Click) -->
+  <div id="customContextMenu" class="custom-context-menu hidden" role="menu" aria-label="Menu Opsi">
+    <button type="button" class="ctx-item" id="ctxRefresh" role="menuitem">
+      <svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+      <span data-i18n="ctx_refresh">Segarkan</span>
+      <span class="ctx-shortcut">F5</span>
+    </button>
+    <button type="button" class="ctx-item" id="ctxAbout" role="menuitem">
+      <svg class="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <span data-i18n="ctx_about">Tentang Seroja Labs</span>
+    </button>
+    <div class="ctx-divider"></div>
+    <button type="button" class="ctx-item ctx-donate" id="ctxDonate" role="menuitem">
+      <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      <span data-i18n="ctx_donate">Donasi Sekarang</span>
+      <span class="ctx-badge">Support</span>
+    </button>
+  </div>
+
+  <!-- ESC Floating Hint (shown in category, workspace, about, donate) -->
+  <div id="escHintBadge" class="esc-hint-badge hidden" role="status">
+    <span class="kbd-key">ESC</span>
+    <span data-i18n="esc_hint">kembali ke menu utama</span>
+  </div>
+
+
+  <!-- ==================================================================== -->
+  <!-- VIEW 1: HOME (FIXED VIEWPORT — TANPA SCROLL)                         -->
+  <!-- ==================================================================== -->
+  <main id="homeView" class="view-home">
+
+    <!-- Home Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="logo-mark cursor-pointer" onclick="goHome()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <path d="M8 13h2"/><path d="M8 17h8"/><path d="M14 13h2"/>
+            </svg>
+          </div>
+          <div class="cursor-pointer" onclick="goHome()">
+            <div class="logo-name">Konver<span class="logo-accent">sian</span> Stage</div>
+            <div class="logo-sub" data-i18n="logo_sub">File Conversion Studio</div>
+          </div>
+        </div>
+
+        <!-- Header Controls (Privacy + Language Selector + Theme Toggle) -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <div class="privacy-badge">
+            <span class="privacy-dot"></span>
+            <span data-i18n="privacy_badge">100% Client-Side</span>
+          </div>
+
+          <!-- Language Selector Dropdown -->
+          <div class="relative lang-dropdown-wrapper">
+            <button id="langToggleBtn" type="button" class="lang-btn" aria-label="Ganti Bahasa">
+              <svg class="w-4 h-4 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span id="currentLangLabel" class="text-xs font-bold font-mono">ID</span>
+              <svg class="w-3 h-3 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div id="langMenu" class="lang-menu hidden" role="menu">
+              <button type="button" class="lang-option active" data-lang="id"><span class="lang-flag">🇮🇩</span> <span>Indonesia</span></button>
+              <button type="button" class="lang-option" data-lang="en"><span class="lang-flag">🇬🇧</span> <span>English</span></button>
+              <button type="button" class="lang-option" data-lang="ar"><span class="lang-flag">🇸🇦</span> <span>العربية</span></button>
+              <button type="button" class="lang-option" data-lang="de"><span class="lang-flag">🇩🇪</span> <span>Deutsch</span></button>
+              <button type="button" class="lang-option" data-lang="ru"><span class="lang-flag">🇷🇺</span> <span>Русский</span></button>
+              <button type="button" class="lang-option" data-lang="zh"><span class="lang-flag">🇨🇳</span> <span>中文</span></button>
+            </div>
+          </div>
+
+          <!-- Theme Button -->
+          <button id="themeToggleBtn" class="theme-btn" aria-label="Ganti Tema">
+            <svg class="theme-icon dark-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon light-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.93-7.07-1.41 1.41M6.34 17.66l-1.41 1.41"/></svg>
+            <span class="theme-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Home Main Content -->
+    <div class="home-content">
+
+      <!-- Hero Title -->
+      <div class="hero-title-block">
+        <h1 class="hero-title">
+          <span data-i18n="hero_title_prefix">Studio Konversi File</span>
+          <em class="accent-text not-italic" data-i18n="hero_title_accent">Terlengkap</em>
+        </h1>
+        <p class="hero-sub" data-i18n="hero_sub">Pilih kategori alat di bawah ini. Semua operasi berjalan langsung di perangkat Anda — tanpa upload, tanpa watermark, tanpa batas.</p>
+      </div>
+
+      <!-- Two Category Cards -->
+      <div class="category-cards-grid">
+
+        <!-- Card: Image Converter Tools -->
+        <button type="button" class="category-card" data-category="image">
+          <div class="cat-card-glow cat-glow-emerald"></div>
+          <div class="cat-card-body">
+            <div class="cat-card-head">
+              <div class="cat-icon cat-icon-emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2"/>
+                  <circle cx="9" cy="9" r="2"/>
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                </svg>
+              </div>
+              <div class="cat-tool-count emerald" data-i18n="img_card_badge">2 Kategori · 14 Alat</div>
+            </div>
+
+            <h2 class="cat-title"><span data-i18n="img_card_title">Image Converter</span> <span class="cat-title-sub" data-i18n="tools_word">Tools</span></h2>
+            <p class="cat-overview" data-i18n="img_card_overview">Kompres ukuran foto tanpa kehilangan kualitas berarti, atau konversikan antar format gambar populer — semua dikerjakan langsung di browser menggunakan teknologi Canvas API.</p>
+
+            <div class="cat-sections-list">
+              <div class="cat-section-chip emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span data-i18n="sec_img_compress">A. Compressing Image</span>
+                <span class="chip-count" data-i18n="chip_6_format">6 format</span>
+              </div>
+              <div class="cat-section-chip emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <span data-i18n="sec_img_convert">B. Converting Image</span>
+                <span class="chip-count" data-i18n="chip_6_format">6 format</span>
+              </div>
+            </div>
+
+            <div class="cat-card-footer">
+              <span class="cat-cta" data-i18n="img_card_cta">Jelajahi Tools Gambar</span>
+              <span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </div>
+        </button>
+
+        <!-- Card: PDF Converter Tools -->
+        <button type="button" class="category-card" data-category="pdf">
+          <div class="cat-card-glow cat-glow-sky"></div>
+          <div class="cat-card-body">
+            <div class="cat-card-head">
+              <div class="cat-icon cat-icon-sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <path d="M9 13h6M9 17h3"/>
+                </svg>
+              </div>
+              <div class="cat-tool-count sky" data-i18n="pdf_card_badge">4 Kategori · 20 Alat</div>
+            </div>
+
+            <h2 class="cat-title"><span data-i18n="pdf_card_title">PDF Converter</span> <span class="cat-title-sub" data-i18n="tools_word">Tools</span></h2>
+            <p class="cat-overview" data-i18n="pdf_card_overview">Kelola dokumen PDF secara menyeluruh — dari konversi standar, gabung, pisah, kompres, hingga proteksi dokumen. Termasuk konversi ke/dari format dokumen populer seperti DOCX, PPT, dan Excel.</p>
+
+            <div class="cat-sections-list">
+              <div class="cat-section-chip sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+                <span data-i18n="sec_pdf_standard">A. Standard Convert</span>
+                <span class="chip-count" data-i18n="chip_6_tools">6 alat</span>
+              </div>
+              <div class="cat-section-chip sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><path d="M15 2H6a2 2 0 0 0-2 2v16"/><path d="M20 10h-7"/></svg>
+                <span data-i18n="sec_doc2pdf">B. Document to PDF</span>
+                <span class="chip-count" data-i18n="chip_4_tools">4 alat</span>
+              </div>
+              <div class="cat-section-chip sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><path d="M14.5 2H6a2 2 0 0 0-2 2v16"/><path d="M10 10h7"/></svg>
+                <span data-i18n="sec_pdf2doc">C. PDF to Document</span>
+                <span class="chip-count" data-i18n="chip_4_tools">4 alat</span>
+              </div>
+              <div class="cat-section-chip sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="w-3 h-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span data-i18n="sec_security">D. Security Document</span>
+                <span class="chip-count" data-i18n="chip_2_tools">2 alat</span>
+              </div>
+            </div>
+
+            <div class="cat-card-footer">
+              <span class="cat-cta" data-i18n="pdf_card_cta">Jelajahi Tools PDF</span>
+              <span class="cat-arrow cat-arrow-sky">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Home Footer -->
+    <footer class="home-footer">
+      <div class="footer-left">
+        <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+        <span data-i18n="footer_privacy">Privasi terjaga — File tidak pernah meninggalkan perangkat Anda.</span>
+      </div>
+      <div class="footer-right">
+        <span>© 2026 <strong class="cursor-pointer hover:underline text-main" id="footerAboutLink">Seroja Labs</strong>.</span>
+        <span class="footer-divider">·</span>
+        <span data-i18n="footer_built_for">Built for Workspace, Community and General.</span>
+        <span class="footer-divider">·</span>
+        <a href="#donate" id="footerDonateLink" class="footer-donate-link" data-i18n="footer_donate">Open Donate</a>
+      </div>
+    </footer>
+
+  </main>
+
+
+  <!-- ==================================================================== -->
+  <!-- VIEW 2: CATEGORY VIEW (TOOL GRID, SCROLLABLE)                        -->
+  <!-- ==================================================================== -->
+  <section id="categoryView" class="view-category hidden" aria-hidden="true">
+
+    <header class="site-header sticky-header">
+      <div class="header-inner">
+        <div class="flex items-center gap-3">
+          <button id="catBackBtn" class="back-btn" aria-label="Kembali ke Beranda">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            <span data-i18n="btn_home">Beranda</span>
+          </button>
+          <div class="breadcrumb-divider"></div>
+          <nav class="breadcrumb" aria-label="Navigasi halaman">
+            <span class="breadcrumb-root">Konversian Stage</span>
+            <span class="breadcrumb-sep">›</span>
+            <span id="catBreadcrumbLabel" class="breadcrumb-current">Image Converter Tools</span>
+          </nav>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button id="themeToggleBtn2" class="theme-btn" aria-label="Ganti Tema">
+            <svg class="theme-icon dark-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon light-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            <span class="theme-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Category Hero -->
+    <div id="catHero" class="cat-view-hero">
+      <div id="catHeroIcon" class="cat-hero-icon"></div>
+      <div>
+        <h1 id="catHeroTitle" class="cat-hero-title">Image Converter Tools</h1>
+        <p id="catHeroDesc" class="cat-hero-desc">Pilih alat yang ingin Anda gunakan.</p>
+      </div>
+    </div>
+
+    <!-- Dynamically generated tool sections -->
+    <div id="categoryBody" class="cat-body max-w-7xl mx-auto px-4 sm:px-6 pb-16"></div>
+
+  </section>
+
+
+  <!-- ==================================================================== -->
+  <!-- VIEW 3: WORKSPACE VIEW (ACTUAL TOOL OPERATION)                       -->
+  <!-- ==================================================================== -->
+  <section id="workspaceView" class="view-workspace hidden" aria-hidden="true">
+
+    <header class="site-header sticky-header">
+      <div class="header-inner">
+        <div class="flex items-center gap-3">
+          <button id="wsBackBtn" class="back-btn" aria-label="Kembali ke daftar alat">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            <span id="wsBackLabel" data-i18n="btn_tools">Alat</span>
+          </button>
+          <div class="breadcrumb-divider"></div>
+          <nav class="breadcrumb">
+            <span class="breadcrumb-root">Konversian Stage</span>
+            <span class="breadcrumb-sep">›</span>
+            <span id="wsCatLabel" class="breadcrumb-mid">Image Converter</span>
+            <span class="breadcrumb-sep">›</span>
+            <span id="wsToolLabel" class="breadcrumb-current">Compress JPG</span>
+          </nav>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div id="wsStatusBadge" class="ws-status-badge ws-badge-ready" data-i18n="badge_ready">Siap</div>
+          <button id="themeToggleBtn3" class="theme-btn" aria-label="Ganti Tema">
+            <svg class="theme-icon dark-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon light-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            <span class="theme-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace-body max-w-7xl mx-auto px-4 sm:px-6 py-6">
+
+      <!-- PANEL: COMING SOON -->
+      <div id="panelComingSoon" class="tool-panel hidden">
+        <div class="coming-soon-container">
+          <div class="coming-soon-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h2 class="text-xl font-bold text-main mt-4" data-i18n="cs_title">Segera Hadir</h2>
+          <p class="text-sm text-muted mt-2 max-w-sm text-center leading-relaxed" id="comingSoonDesc" data-i18n="cs_desc">
+            Fitur ini sedang dalam pengembangan aktif dan akan segera tersedia di platform ini.
+          </p>
+          <div class="coming-soon-tags mt-5">
+            <span class="cs-tag" data-i18n="cs_tag_server">Server-Side Processing</span>
+            <span class="cs-tag" data-i18n="cs_tag_dev">Dalam Pengembangan</span>
+          </div>
+          <button type="button" onclick="goHome()" class="mt-6 btn-subtle px-5 py-2 rounded-xl text-sm font-semibold" data-i18n="btn_back_home">
+            ← Kembali ke Menu Utama
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL: IMAGE COMPRESS -->
+      <div id="panelImgCompress" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="icDropzone" class="dropzone group">
+              <input type="file" id="icFileInput" multiple class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_drag_drop_img">Tarik & Lepaskan Gambar di Sini</h3>
+                <p id="icDropzoneHint" class="text-xs text-muted mt-1" data-i18n="dz_hint_compress">Pilih gambar untuk dikompres</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold" data-i18n="btn_choose_device">Pilih File dari Perangkat</div>
+              </div>
+            </div>
+
+            <div id="icListHeader" class="flex items-center justify-between px-1 hidden">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-main" data-i18n="label_compress_queue">Antrian Kompresi</span>
+                <span id="icCountBadge" class="badge-count">0 File</span>
+              </div>
+              <button id="icClearBtn" type="button" class="text-xs text-rose-500 hover:text-rose-600 font-medium" data-i18n="btn_clear_all">Hapus Semua</button>
+            </div>
+
+            <div id="icGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="settings-card">
+              <h3 class="settings-title">
+                <svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>
+                <span data-i18n="settings_compression">Pengaturan Kompresi</span>
+              </h3>
+
+              <div class="mb-4">
+                <label class="input-label" data-i18n="label_output_quality">Kualitas Output</label>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <input type="range" id="icQuality" min="10" max="95" value="75" class="quality-slider flex-1">
+                  <span id="icQualityVal" class="text-sm font-bold text-main font-mono w-10 text-right">75%</span>
+                </div>
+                <div class="flex justify-between text-[10px] text-muted mt-1">
+                  <span data-i18n="quality_small">Kecil</span>
+                  <span data-i18n="quality_balanced">Seimbang</span>
+                  <span data-i18n="quality_high">Tinggi</span>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="icMaxWidth" class="input-label" data-i18n="label_max_width">Lebar Maksimal (px)</label>
+                <select id="icMaxWidth" class="form-select">
+                  <option value="0" data-i18n="opt_keep_original">Pertahankan Ukuran Asli</option>
+                  <option value="1920">1920 px (Full HD)</option>
+                  <option value="1280">1280 px (HD)</option>
+                  <option value="800">800 px (Web Optimal)</option>
+                  <option value="480">480 px (Thumbnail)</option>
+                </select>
+              </div>
+
+              <button id="icCompressBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2" disabled>
+                <span id="icSpinner" class="spinner hidden"></span>
+                <span id="icBtnText" data-i18n="btn_compress_all">Kompres Semua Gambar</span>
+              </button>
+              <p class="text-[11px] text-muted text-center mt-2" data-i18n="hint_auto_download">File terkompresi akan diunduh satu per satu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: IMAGE CONVERT -->
+      <div id="panelImgConvert" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="icvDropzone" class="dropzone group">
+              <input type="file" id="icvFileInput" multiple class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_drag_drop_img">Tarik & Lepaskan Gambar di Sini</h3>
+                <p id="icvDropzoneHint" class="text-xs text-muted mt-1" data-i18n="dz_hint_convert">Pilih gambar sumber yang ingin dikonversi</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400 text-xs font-semibold" data-i18n="btn_choose_device">Pilih File dari Perangkat</div>
+              </div>
+            </div>
+
+            <div id="icvListHeader" class="flex items-center justify-between px-1 hidden">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-main" data-i18n="label_convert_queue">Antrian Konversi</span>
+                <span id="icvCountBadge" class="badge-count">0 File</span>
+              </div>
+              <button id="icvClearBtn" type="button" class="text-xs text-rose-500 hover:text-rose-600 font-medium" data-i18n="btn_clear_all">Hapus Semua</button>
+            </div>
+
+            <div id="icvGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="settings-card">
+              <h3 class="settings-title">
+                <svg class="w-4 h-4 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <span data-i18n="settings_convert_format">Format Konversi</span>
+              </h3>
+
+              <div class="mb-4">
+                <label class="input-label" data-i18n="label_detected_src">Format Sumber (Terdeteksi)</label>
+                <div id="icvSourceFormat" class="px-3 py-2 rounded-lg bg-base border border-subtle text-sm font-mono font-bold text-main">—</div>
+              </div>
+
+              <div class="mb-4">
+                <label for="icvTargetFormat" class="input-label" data-i18n="label_convert_to">Konversi Ke Format</label>
+                <select id="icvTargetFormat" class="form-select"></select>
+              </div>
+
+              <div id="icvQualityRow" class="mb-4 hidden">
+                <label class="input-label" data-i18n="label_jpg_quality">Kualitas JPG/JPEG</label>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <input type="range" id="icvQuality" min="50" max="100" value="92" class="quality-slider flex-1">
+                  <span id="icvQualityVal" class="text-sm font-bold font-mono text-main w-10 text-right">92%</span>
+                </div>
+              </div>
+
+              <button id="icvConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2" style="background-color: #7C3AED; box-shadow: 0 4px 14px rgba(124,58,237,0.3);" disabled>
+                <span id="icvSpinner" class="spinner hidden"></span>
+                <span id="icvBtnText" data-i18n="btn_convert_all">Konversi Semua</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: IMAGE TO PDF -->
+      <div id="panelImg2Pdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="imgDropzone" class="dropzone group">
+              <input type="file" id="imgFileInput" multiple accept="image/*" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_drag_drop_img">Tarik & Lepaskan Gambar ke Sini</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_multi_img">PNG, JPG, JPEG, WEBP — bisa banyak sekaligus</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold" data-i18n="btn_choose_images">Pilih File Gambar</div>
+              </div>
+            </div>
+            <div id="imgListHeader" class="flex items-center justify-between px-1 hidden">
+              <div class="flex items-center gap-2"><span class="text-xs font-bold text-main" data-i18n="label_img_list">Daftar Gambar</span><span id="imgCountBadge" class="badge-count">0 File</span></div>
+              <button id="clearAllImagesBtn" type="button" class="text-xs text-rose-500 hover:text-rose-600 font-medium" data-i18n="btn_clear_all">Hapus Semua</button>
+            </div>
+            <div id="imgGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>
+              <span data-i18n="settings_doc">Pengaturan Dokumen</span>
+            </h3>
+            <div><label for="imgPageSize" class="input-label" data-i18n="label_page_size">Ukuran Halaman</label><select id="imgPageSize" class="form-select"><option value="a4" selected>A4 (210 × 297 mm)</option><option value="letter">US Letter</option><option value="fit" data-i18n="opt_fit_image">Pas Ukuran Gambar</option></select></div>
+            <div><label for="imgOrientation" class="input-label" data-i18n="label_orientation">Orientasi</label><select id="imgOrientation" class="form-select"><option value="auto" data-i18n="opt_auto">Otomatis</option><option value="p" data-i18n="opt_portrait">Potret</option><option value="l" data-i18n="opt_landscape">Lanskap</option></select></div>
+            <div><label for="imgMargin" class="input-label" data-i18n="label_margin">Margin</label><select id="imgMargin" class="form-select"><option value="0" data-i18n="opt_no_margin">Tanpa Margin</option><option value="10" data-i18n="opt_small_margin">Kecil (10mm)</option><option value="20" data-i18n="opt_std_margin">Standar (20mm)</option></select></div>
+            <div><label for="imgOutputName" class="input-label" data-i18n="label_filename">Nama File</label><div class="relative"><input type="text" id="imgOutputName" value="dokumen-konversi" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div></div>
+            <button id="convertImg2PdfBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" disabled>
+              <span id="convertImg2PdfSpinner" class="spinner hidden"></span>
+              <span id="convertImg2PdfText" data-i18n="btn_create_pdf">Buat Dokumen PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: PDF TO IMAGE -->
+      <div id="panelPdf2Img" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="pdfDropzone" class="dropzone group">
+              <input type="file" id="pdfFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_choose_pdf">Pilih Dokumen PDF</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_single_pdf">Satu file PDF untuk diekstrak halamannya</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="pdfInfoBar" class="hidden flex items-center justify-between p-3.5 rounded-xl bg-surface border border-subtle">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="pdfLoadedName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.pdf</h4><p id="pdfLoadedMeta" class="text-[11px] text-muted font-mono">0 Halaman</p></div>
+              </div>
+              <button id="pdfChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <div id="pdfPagesHeader" class="flex items-center justify-between px-1 hidden">
+              <span class="text-xs font-bold text-main" data-i18n="label_page_preview">Pratinjau Halaman</span>
+              <span id="pdfPageRenderingState" class="text-xs text-muted font-mono"></span>
+            </div>
+            <div id="pdfPagesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+              <span data-i18n="settings_format_res">Format & Resolusi</span>
+            </h3>
+            <div><label for="pdfImgFormat" class="input-label" data-i18n="label_output_format">Format Output</label><select id="pdfImgFormat" class="form-select"><option value="image/png">PNG (Tajam & Bersih)</option><option value="image/jpeg">JPG (Ukuran Ringan)</option></select></div>
+            <div><label for="pdfImgScale" class="input-label" data-i18n="label_render_scale">Resolusi Render</label><select id="pdfImgScale" class="form-select"><option value="1.5">1.5x — Standar Web</option><option value="2.0" selected>2.0x — HD (Direkomendasikan)</option><option value="3.0">3.0x — Ultra Tajam</option></select></div>
+            <button id="downloadAllImagesBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-2" style="background-color: #0EA5E9; box-shadow: 0 4px 14px rgba(14,165,233,0.3);" disabled>
+              <span id="downloadZipSpinner" class="spinner hidden"></span>
+              <span id="downloadZipText" data-i18n="btn_download_zip">Unduh Semua (.ZIP)</span>
+            </button>
+            <p class="text-[11px] text-muted text-center" data-i18n="hint_single_download">Atau klik tombol unduh di setiap kartu halaman.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: MERGE PDF -->
+      <div id="panelMergePdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="mergeDropzone" class="dropzone group">
+              <input type="file" id="mergeFileInput" multiple accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6"/><path d="M9 17h3"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_choose_multi_pdf">Pilih Beberapa Dokumen PDF</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_min_2">Minimal 2 file untuk digabungkan menjadi satu</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="mergeListHeader" class="flex items-center justify-between px-1 hidden">
+              <div class="flex items-center gap-2"><span class="text-xs font-bold text-main" data-i18n="label_doc_order">Urutan Dokumen</span><span id="mergeCountBadge" class="badge-count">0 File</span></div>
+              <button id="clearAllMergeBtn" type="button" class="text-xs text-rose-500 hover:text-rose-600 font-medium" data-i18n="btn_clear_all">Hapus Semua</button>
+            </div>
+            <div id="mergeList" class="space-y-2.5"></div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/></svg>
+              <span data-i18n="settings_merge_info">Info Penggabungan</span>
+            </h3>
+            <div class="p-3 rounded-lg bg-base border border-subtle space-y-2">
+              <div class="flex justify-between text-xs"><span class="text-muted" data-i18n="label_total_files">Total Berkas:</span><span id="mergeTotalFiles" class="font-bold text-main font-mono">0</span></div>
+              <div class="flex justify-between text-xs"><span class="text-muted" data-i18n="label_total_pages">Total Halaman:</span><span id="mergeTotalPages" class="font-bold text-main font-mono">0</span></div>
+            </div>
+            <div><label for="mergeOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label><div class="relative"><input type="text" id="mergeOutputName" value="dokumen-tergabung" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div></div>
+            <button id="executeMergeBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #F59E0B; box-shadow: 0 4px 14px rgba(245,158,11,0.3); color:#000;" disabled>
+              <span id="executeMergeSpinner" class="spinner hidden" style="border-top-color:#000;"></span>
+              <span id="executeMergeText" data-i18n="btn_merge_docs">Gabungkan Dokumen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: SPLIT PDF -->
+      <div id="panelSplitPdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="splitDropzone" class="dropzone group">
+              <input type="file" id="splitFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_split_title">Pilih PDF yang Ingin Dipecah</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_split_hint">Tentukan rentang halaman setelah file dipilih</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="splitInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-rose-500/10 text-rose-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="splitPdfName" class="text-xs font-bold text-main">dokumen.pdf</h4><p id="splitPdfMeta" class="text-[11px] text-muted font-mono">0 Halaman</p></div>
+              </div>
+              <button id="splitChangeBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <div id="splitRangesContainer" class="hidden space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <span class="text-xs font-bold text-main" data-i18n="label_split_ranges">Rentang Halaman yang Dipecah</span>
+                <button id="addRangeBtn" type="button" class="text-xs text-emerald-500 hover:text-emerald-400 font-semibold" data-i18n="btn_add_range">+ Tambah Rentang</button>
+              </div>
+              <div id="splitRangesList" class="space-y-2"></div>
+              <p class="text-[11px] text-muted px-1" data-i18n="hint_split_download">Setiap rentang akan diunduh sebagai file PDF terpisah.</p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="13" x2="15" y2="13"/></svg>
+              <span data-i18n="settings_split">Pengaturan Split</span>
+            </h3>
+            <div class="p-3 rounded-lg bg-base border border-subtle">
+              <div class="flex justify-between text-xs mb-1"><span class="text-muted" data-i18n="label_file">File:</span><span id="splitSumFile" class="font-bold font-mono text-main">—</span></div>
+              <div class="flex justify-between text-xs"><span class="text-muted" data-i18n="label_total_pages">Total Halaman:</span><span id="splitSumTotal" class="font-bold font-mono text-main">—</span></div>
+            </div>
+            <div><label for="splitBaseName" class="input-label" data-i18n="label_basename">Nama Dasar File</label><div class="relative"><input type="text" id="splitBaseName" value="bagian" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div></div>
+            <button id="executeSplitBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #F43F5E; box-shadow: 0 4px 14px rgba(244,63,94,0.3);" disabled>
+              <span id="splitSpinner" class="spinner hidden"></span>
+              <span id="splitBtnText" data-i18n="btn_split_docs">Pecah Dokumen PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: COMPRESS PDF -->
+      <div id="panelCompressPdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="cpDropzone" class="dropzone group">
+              <input type="file" id="cpFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_compress_pdf_title">Pilih PDF untuk Dikompres</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_compress_pdf_hint">File PDF yang ingin diperkecil ukurannya</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="cpInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="cpPdfName" class="text-xs font-bold text-main">dokumen.pdf</h4><p id="cpPdfMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
+              </div>
+            </div>
+            <div id="cpResultBlock" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+              <p class="text-xs text-muted mb-1" data-i18n="label_compress_result">Hasil Kompresi:</p>
+              <p id="cpResultText" class="text-sm font-bold text-main"></p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+              <span data-i18n="settings_compress_pdf">Pengaturan Kompresi PDF</span>
+            </h3>
+            <p class="text-xs text-muted" data-i18n="desc_compress_pdf">Kompresi berbasis optimasi metadata dan penghapusan objek tidak terpakai.</p>
+            <div><label for="cpOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label><div class="relative"><input type="text" id="cpOutputName" value="dokumen-terkompres" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div></div>
+            <button id="cpCompressBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #F97316; box-shadow: 0 4px 14px rgba(249,115,22,0.3);" disabled>
+              <span id="cpSpinner" class="spinner hidden"></span>
+              <span id="cpBtnText" data-i18n="btn_compress_pdf">Kompres PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: TEXT TO PDF -->
+      <div id="panelText2Pdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="settings-card h-full flex flex-col">
+              <h3 class="settings-title mb-3">
+                <svg class="w-4 h-4 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                <span data-i18n="title_text_editor">Teks / Konten Dokumen</span>
+              </h3>
+              <textarea id="t2pTextArea" placeholder="Ketikkan atau tempel teks di sini untuk diubah menjadi dokumen PDF..." class="form-input flex-1 resize-none min-h-[300px] font-mono text-sm leading-relaxed mt-1" data-i18n-ph="ph_text_editor"></textarea>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+              <span data-i18n="settings_pdf_format">Format PDF</span>
+            </h3>
+            <div><label for="t2pFontSize" class="input-label" data-i18n="label_font_size">Ukuran Font</label><select id="t2pFontSize" class="form-select"><option value="10">10 pt</option><option value="12" selected>12 pt (Standar)</option><option value="14">14 pt</option><option value="16">16 pt</option></select></div>
+            <div><label for="t2pPageSize" class="input-label" data-i18n="label_page_size">Ukuran Halaman</label><select id="t2pPageSize" class="form-select"><option value="a4">A4</option><option value="letter">US Letter</option></select></div>
+            <div><label for="t2pOutputName" class="input-label" data-i18n="label_output_filename">Nama File</label><div class="relative"><input type="text" id="t2pOutputName" value="dokumen-teks" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div></div>
+            <button id="t2pConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #14B8A6; box-shadow: 0 4px 14px rgba(20,184,166,0.3);">
+              <span id="t2pSpinner" class="spinner hidden"></span>
+              <span id="t2pBtnText" data-i18n="btn_create_text_pdf">Buat PDF dari Teks</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: PDF TO TEXT -->
+      <div id="panelPdf2Text" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="p2tDropzone" class="dropzone group">
+              <input type="file" id="p2tFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_choose_pdf">Pilih Dokumen PDF</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_extract_text">Teks akan diekstrak dari semua halaman PDF</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="p2tResultBlock" class="hidden settings-card">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-xs font-bold text-main" data-i18n="label_extracted_text">Teks Terekstrak</h4>
+                <div class="flex gap-2">
+                  <button id="p2tCopyBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_copy">Salin</button>
+                  <button id="p2tDownloadBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_download_txt">Unduh .txt</button>
+                </div>
+              </div>
+              <textarea id="p2tOutput" class="form-input w-full resize-none min-h-[250px] font-mono text-xs" readonly></textarea>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14"/></svg>
+              <span data-i18n="settings_text_extract">Ekstraksi Teks</span>
+            </h3>
+            <p class="text-xs text-muted" data-i18n="desc_text_extract">Ekstrak teks dari PDF yang mengandung teks digital.</p>
+            <div id="p2tInfoBox" class="p-3 rounded-lg bg-base border border-subtle hidden">
+              <div class="flex justify-between text-xs mb-1"><span class="text-muted" data-i18n="label_file">File:</span><span id="p2tFileName" class="font-bold font-mono text-main text-right truncate max-w-[120px]">—</span></div>
+              <div class="flex justify-between text-xs"><span class="text-muted" data-i18n="label_total_pages">Halaman:</span><span id="p2tPageCount" class="font-bold font-mono text-main">—</span></div>
+            </div>
+            <button id="p2tExtractBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #6366F1; box-shadow: 0 4px 14px rgba(99,102,241,0.3);" disabled>
+              <span id="p2tSpinner" class="spinner hidden"></span>
+              <span id="p2tBtnText" data-i18n="btn_extract_text">Ekstrak Teks dari PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: LOCK PDF (PASSWORD PROTECTION & ENCRYPTION) -->
+      <div id="panelLockPdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="lpDropzone" class="dropzone group">
+              <input type="file" id="lpFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_lock_title">Pilih PDF yang Ingin Dikunci</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_lock_pwd_hint">Dokumen akan dienkripsi dengan kata sandi (Password Protect)</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="lpInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-yellow-500/10 text-yellow-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="lpPdfName" class="text-xs font-bold text-main">dokumen.pdf</h4><p id="lpPdfMeta" class="text-[11px] text-muted font-mono" data-i18n="label_ready_protect">Siap dikunci dengan kata sandi</p></div>
+              </div>
+              <button id="lpChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+              <p class="text-xs text-emerald-700 dark:text-emerald-400 leading-relaxed" data-i18n="desc_lock_real_enc"><strong>Keamanan Terjamin:</strong> PDF dienkripsi menggunakan standar industri (AES-256 / RC4). Siapa pun yang membuka berkas ini wajib memasukkan kata sandi yang Anda tentukan.</p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span data-i18n="settings_protection">Kata Sandi & Proteksi</span>
+            </h3>
+            <div>
+              <label for="lpUserPassword" class="input-label" data-i18n="label_user_password">Kata Sandi Buka File (Wajib)</label>
+              <input type="password" id="lpUserPassword" placeholder="Masukkan kata sandi..." class="form-input">
+            </div>
+            <div>
+              <label for="lpConfirmPassword" class="input-label" data-i18n="label_confirm_password">Konfirmasi Kata Sandi</label>
+              <input type="password" id="lpConfirmPassword" placeholder="Ulangi kata sandi..." class="form-input">
+            </div>
+            <div>
+              <label for="lpOwnerPassword" class="input-label" data-i18n="label_owner_password">Kata Sandi Izin / Pemilik (Opsional)</label>
+              <input type="password" id="lpOwnerPassword" placeholder="Kata sandi izin master..." class="form-input">
+            </div>
+            <div>
+              <label for="lpEncryptionAlgo" class="input-label" data-i18n="label_encryption_algo">Standar Enkripsi</label>
+              <select id="lpEncryptionAlgo" class="form-select">
+                <option value="AES-256" selected>AES-256 bit (Standar Modern)</option>
+                <option value="RC4">RC4 128-bit (Kompatibilitas Luas)</option>
+              </select>
+            </div>
+            <div>
+              <label for="lpOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
+              <div class="relative"><input type="text" id="lpOutputName" value="dokumen-terkunci" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div>
+            </div>
+            <button id="lpLockBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #EAB308; box-shadow: 0 4px 14px rgba(234,179,8,0.3); color:#000;" disabled>
+              <span id="lpSpinner" class="spinner hidden" style="border-top-color:#000;"></span>
+              <span id="lpBtnText" data-i18n="btn_lock_pdf">Kunci & Lindungi PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: UNLOCK PDF (REMOVE PASSWORD) -->
+      <div id="panelUnlockPdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="ulpDropzone" class="dropzone group">
+              <input type="file" id="ulpFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_unlock_title">Pilih PDF Terkunci untuk Dibuka</h3>
+                <p class="text-xs text-muted mt-1" data-i18n="dz_unlock_hint">Masukkan kata sandi saat ini untuk menghapus proteksi secara permanen</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="ulpInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="ulpPdfName" class="text-xs font-bold text-main">dokumen.pdf</h4><p id="ulpPdfMeta" class="text-[11px] text-muted font-mono">Terkunci</p></div>
+              </div>
+              <button id="ulpChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <div class="p-3.5 rounded-xl bg-sky-500/10 border border-sky-500/20">
+              <p class="text-xs text-sky-700 dark:text-sky-400 leading-relaxed" data-i18n="desc_unlock_notice">Setelah kata sandi yang valid dimasukkan, salinan PDF baru yang tidak terkunci akan dibuat dan langsung dapat diunduh.</p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+              <span data-i18n="settings_unlock">Buka Proteksi PDF</span>
+            </h3>
+            <div>
+              <label for="ulpPassword" class="input-label" data-i18n="label_current_password">Kata Sandi Dokumen Saat Ini</label>
+              <input type="password" id="ulpPassword" placeholder="Masukkan kata sandi pembuka..." class="form-input">
+            </div>
+            <div>
+              <label for="ulpOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
+              <div class="relative"><input type="text" id="ulpOutputName" value="dokumen-terbuka" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div>
+            </div>
+            <button id="ulpUnlockBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #0284C7; box-shadow: 0 4px 14px rgba(2,132,199,0.3);" disabled>
+              <span id="ulpSpinner" class="spinner hidden"></span>
+              <span id="ulpBtnText" data-i18n="btn_unlock_pdf">Buka Kunci Dokumen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: STIRLING-PDF OFFICE TO PDF (DOCX, PPT, EXCEL TO PDF) -->
+      <div id="panelStirlingOffice2Pdf" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="so2pDropzone" class="dropzone group">
+              <input type="file" id="so2pFileInput" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M2 15h10"/><path d="m9 18 3-3-3-3"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" id="so2pDropzoneTitle" data-i18n="dz_stirling_o2p_title">Pilih Dokumen Office (DOCX / PPT / Excel)</h3>
+                <p class="text-xs text-muted mt-1" id="so2pDropzoneHint">Pilih berkas dokumen yang ingin dikonversi menjadi PDF</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold" data-i18n="btn_choose_device">Pilih File dari Perangkat</div>
+              </div>
+            </div>
+            <div id="so2pInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-xs" id="so2pExtBadge">DOC</div>
+                <div><h4 id="so2pFileName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.docx</h4><p id="so2pMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
+              </div>
+              <button id="so2pChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <!-- Stirling-PDF Engine Info Banner -->
+            <div class="p-3.5 rounded-xl bg-surface border border-subtle">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500" id="stirlingStatusDot"></span>
+                  <span class="text-xs font-bold text-main">Engine: Stirling-Tools / Stirling-PDF</span>
+                </div>
+                <span class="text-[10px] font-mono text-muted" id="stirlingServerDisplay">http://localhost:8080</span>
+              </div>
+              <p class="text-xs text-muted mt-1.5 leading-relaxed" data-i18n="desc_stirling_api_info">
+                Didukung oleh arsitektur open-source <strong>Stirling-Tools/Stirling-PDF</strong> via REST API. Mendukung LibreOffice headless engine untuk hasil tata letak dokumen yang presisi.
+              </p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+              <span data-i18n="settings_stirling_o2p">Konfigurasi Stirling-PDF</span>
+            </h3>
+            <div>
+              <label for="stirlingServerUrl" class="input-label">Stirling-PDF Server URL</label>
+              <input type="text" id="stirlingServerUrl" value="http://localhost:8080" class="form-input font-mono text-xs">
+            </div>
+            <div>
+              <label for="so2pOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
+              <div class="relative"><input type="text" id="so2pOutputName" value="dokumen-konversi" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div>
+            </div>
+            <button id="so2pConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #2563EB; box-shadow: 0 4px 14px rgba(37,99,235,0.3);" disabled>
+              <span id="so2pSpinner" class="spinner hidden"></span>
+              <span id="so2pBtnText" data-i18n="btn_convert_to_pdf">Konversi ke PDF</span>
+            </button>
+            <div class="text-[11px] text-muted text-center leading-relaxed">
+              Jalankan Stirling-PDF via Docker: <code class="px-1 py-0.5 rounded bg-base text-main text-[10px] font-mono">docker run -d -p 8080:8080 frooodle/s-pdf:latest</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: STIRLING-PDF PDF TO OFFICE (PDF TO DOCX, PPT, EXCEL) -->
+      <div id="panelStirlingPdf2Office" class="tool-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div id="sp2oDropzone" class="dropzone group">
+              <input type="file" id="sp2oFileInput" accept="application/pdf" class="sr-only">
+              <div class="dropzone-content pointer-events-none">
+                <div class="dropzone-icon">
+                  <svg class="w-8 h-8 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M2 15h10"/><path d="m5 12-3 3 3 3"/></svg>
+                </div>
+                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_stirling_p2o_title">Pilih Dokumen PDF</h3>
+                <p class="text-xs text-muted mt-1" id="sp2oDropzoneHint">Pilih dokumen PDF yang ingin diubah menjadi format Office yang dapat diedit</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
+              </div>
+            </div>
+            <div id="sp2oInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-xs">PDF</div>
+                <div><h4 id="sp2oFileName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.pdf</h4><p id="sp2oMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
+              </div>
+              <button id="sp2oChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+            </div>
+            <div class="p-3.5 rounded-xl bg-surface border border-subtle">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="text-xs font-bold text-main">Engine: Stirling-Tools / Stirling-PDF</span>
+                </div>
+                <span class="text-[10px] font-mono text-muted">Stirling-PDF API</span>
+              </div>
+              <p class="text-xs text-muted mt-1.5 leading-relaxed" data-i18n="desc_stirling_p2o_info">
+                Mengonversi struktur berkas PDF menjadi dokumen Office yang sepenuhnya dapat disunting teks, tabel, dan gambarnya.
+              </p>
+            </div>
+          </div>
+          <div class="settings-card space-y-3.5">
+            <h3 class="settings-title">
+              <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+              <span data-i18n="settings_stirling_p2o">Format Target Dokumen</span>
+            </h3>
+            <div>
+              <label for="sp2oTargetFormat" class="input-label" data-i18n="label_target_office">Konversi Ke</label>
+              <select id="sp2oTargetFormat" class="form-select">
+                <option value="docx" selected>Microsoft Word (.docx)</option>
+                <option value="pptx">PowerPoint Presentation (.pptx)</option>
+                <option value="xlsx">Excel Spreadsheet (.xlsx)</option>
+              </select>
+            </div>
+            <div>
+              <label for="sp2oServerUrl" class="input-label">Stirling-PDF Server URL</label>
+              <input type="text" id="sp2oServerUrl" value="http://localhost:8080" class="form-input font-mono text-xs">
+            </div>
+            <div>
+              <label for="sp2oOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
+              <div class="relative"><input type="text" id="sp2oOutputName" value="dokumen-ekstrak" class="form-input pr-16"><span id="sp2oExtDisplay" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.docx</span></div>
+            </div>
+            <button id="sp2oConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #4F46E5; box-shadow: 0 4px 14px rgba(79,70,229,0.3);" disabled>
+              <span id="sp2oSpinner" class="spinner hidden"></span>
+              <span id="sp2oBtnText" data-i18n="btn_convert_to_office">Konversi ke Dokumen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================================================================== -->
+  <!-- VIEW 4: ABOUT VIEW (TENTANG SEROJA LABS & KONVERSIAN STAGE)          -->
+  <!-- ==================================================================== -->
+  <section id="aboutView" class="view-about hidden" aria-hidden="true">
+    <header class="site-header sticky-header">
+      <div class="header-inner">
+        <div class="flex items-center gap-3">
+          <button id="aboutBackBtn" class="back-btn" aria-label="Kembali ke Beranda">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            <span data-i18n="btn_home">Beranda</span>
+          </button>
+          <div class="breadcrumb-divider"></div>
+          <nav class="breadcrumb">
+            <span class="breadcrumb-root">Konversian Stage</span>
+            <span class="breadcrumb-sep">›</span>
+            <span class="breadcrumb-current" data-i18n="about_title">Tentang Seroja Labs</span>
+          </nav>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <button id="themeToggleBtn4" class="theme-btn" aria-label="Ganti Tema">
+            <svg class="theme-icon dark-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon light-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            <span class="theme-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="about-container max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+      <!-- Hero Intro -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-4">
+          <span>Seroja Labs Digital Initiative</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-main tracking-tight leading-tight">
+          <span data-i18n="about_hero_h1">Konversian Stage dibangun oleh</span> <span class="accent-text">Seroja Labs</span>
+        </h1>
+        <p class="mt-4 text-sm sm:text-base text-muted leading-relaxed" data-i18n="about_hero_sub">
+          Sebuah studio utilitas file modern yang dirancang untuk mendukung kebutuhan alur kerja harian individu, komunitas open-source, dan lingkungan profesional tanpa kompromi pada privasi data pengguna.
+        </p>
+      </div>
+
+      <!-- Pillars Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
+        <div class="about-card">
+          <div class="about-card-icon bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_privacy_title">100% Client-Side Privacy</h3>
+          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_privacy_desc">
+            File Anda tidak pernah dikirim ke server cloud mana pun. Seluruh operasi kompresi, konversi, rendering, dan penggabungan berkas dieksekusi murni di dalam memori browser lokal perangkat Anda.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon bg-sky-500/10 text-sky-500 border border-sky-500/20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_speed_title">Performa Instan Tanpa Batas</h3>
+          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_speed_desc">
+            Didukung Canvas API, WebAssembly, PDF-Lib, dan PDF.js. Tidak ada antrian upload jaringan, tidak ada watermark yang disisipkan, dan tidak ada pembatasan jumlah file harian.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_community_title">Untuk Workspace & Komunitas</h3>
+          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_community_desc">
+            Seroja Labs menciptakan ekosistem perangkat lunak yang berfokus pada efisiensi kerja tim, kemudahan penggunaan umum, dan dukungan berkelanjutan bagi komunitas kreatif.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon bg-violet-500/10 text-violet-500 border border-violet-500/20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_open_title">Transparan & Independen</h3>
+          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_open_desc">
+            Bebas dari pelacak agresif dan iklan pengintai privasi. Pengembangan proyek ini didorong secara independen dan didukung melalui donasi sukarela komunitas global.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button type="button" onclick="openDonateView()" class="btn-primary px-6 py-3 text-sm font-bold flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span data-i18n="btn_support_us">Dukung Kami (Donasi)</span>
+        </button>
+        <button type="button" onclick="goHome()" class="btn-subtle px-6 py-3 text-sm font-bold" data-i18n="btn_explore_tools">
+          Mulai Menggunakan Alat
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================================================================== -->
+  <!-- VIEW 5: DONATE VIEW (OPEN DONATE)                                    -->
+  <!-- ==================================================================== -->
+  <section id="donateView" class="view-donate hidden" aria-hidden="true">
+    <header class="site-header sticky-header">
+      <div class="header-inner">
+        <div class="flex items-center gap-3">
+          <button id="donateBackBtn" class="back-btn" aria-label="Kembali ke Beranda">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            <span data-i18n="btn_home">Beranda</span>
+          </button>
+          <div class="breadcrumb-divider"></div>
+          <nav class="breadcrumb">
+            <span class="breadcrumb-root">Konversian Stage</span>
+            <span class="breadcrumb-sep">›</span>
+            <span class="breadcrumb-current" data-i18n="donate_title">Open Donate</span>
+          </nav>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <button id="themeToggleBtn5" class="theme-btn" aria-label="Ganti Tema">
+            <svg class="theme-icon dark-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="theme-icon light-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            <span class="theme-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="donate-container max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+      <!-- Headline & Privacy Guarantee -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold mb-4">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span data-i18n="donate_badge">Dukungan Komunitas & Riset</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-main tracking-tight leading-snug" data-i18n="donate_headline">
+          Dukung kami terus untuk perkembangan yang lebih baik dan kami akan selalu menjaga privasi anda, file anda tidak akan tersimpan di server kami.
+        </h1>
+        <p class="mt-4 text-xs sm:text-sm text-muted leading-relaxed" data-i18n="donate_sub">
+          Setiap donasi Anda memperkuat keberlangsungan platform ini, mendanai pengembangan fitur-fitur baru, dan memastikan seluruh utilitas tetap dapat diakses bebas tanpa paywall.
+        </p>
+      </div>
+
+      <!-- 4 Donation Channels Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+
+        <!-- Channel 1: PayPal -->
+        <div class="donate-card">
+          <div class="flex items-center justify-between mb-4">
+            <div class="donate-card-icon bg-blue-500/10 text-blue-500 border border-blue-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13l2-7h5a3 3 0 0 1 0 6h-4l-1 5H8l2-7h2z"/><path d="M6 18h4l1-4H8l-2 4z"/></svg>
+            </div>
+            <span class="badge-tag" data-i18n="tag_intl">Internasional</span>
+          </div>
+          <h3 class="text-base font-bold text-main">PayPal</h3>
+          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="paypal_desc">
+            Dukungan global aman melalui saldo PayPal, Kartu Kredit (Visa, Mastercard), atau Debit internasional.
+          </p>
+          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
+            <span class="text-main font-semibold truncate">paypal.me/serojalabs</span>
+            <button type="button" class="text-xs text-sky-500 hover:text-sky-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('paypal.me/serojalabs', 'Link PayPal disalin!')" data-i18n="btn_copy">Salin</button>
+          </div>
+          <a href="https://paypal.me" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" style="background-color: #0070BA; box-shadow: 0 4px 12px rgba(0,112,186,0.3);">
+            <span data-i18n="btn_open_paypal">Buka PayPal</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+        <!-- Channel 2: Ko-fi -->
+        <div class="donate-card">
+          <div class="flex items-center justify-between mb-4">
+            <div class="donate-card-icon bg-rose-500/10 text-rose-500 border border-rose-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+            </div>
+            <span class="badge-tag">Creator Support</span>
+          </div>
+          <h3 class="text-base font-bold text-main">Ko-fi</h3>
+          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="kofi_desc">
+            Traktir secangkir kopi untuk pengembang Seroja Labs dengan donasi satu kali atau dukungan bulanan.
+          </p>
+          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
+            <span class="text-main font-semibold truncate">ko-fi.com/serojalabs</span>
+            <button type="button" class="text-xs text-rose-500 hover:text-rose-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('ko-fi.com/serojalabs', 'Link Ko-fi disalin!')" data-i18n="btn_copy">Salin</button>
+          </div>
+          <a href="https://ko-fi.com" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" style="background-color: #FF5E5B; box-shadow: 0 4px 12px rgba(255,94,91,0.3);">
+            <span data-i18n="btn_open_kofi">Traktir di Ko-fi</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+        <!-- Channel 3: SociaBuzz -->
+        <div class="donate-card">
+          <div class="flex items-center justify-between mb-4">
+            <div class="donate-card-icon bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <span class="badge-tag">Indonesia E-Wallet</span>
+          </div>
+          <h3 class="text-base font-bold text-main">SociaBuzz Tribe</h3>
+          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="sociabuzz_desc">
+            Metode termudah untuk pengguna di Indonesia menggunakan GoPay, OVO, DANA, LinkAja, atau ShopeePay.
+          </p>
+          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
+            <span class="text-main font-semibold truncate">sociabuzz.com/serojalabs/tribe</span>
+            <button type="button" class="text-xs text-emerald-500 hover:text-emerald-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('sociabuzz.com/serojalabs/tribe', 'Link SociaBuzz disalin!')" data-i18n="btn_copy">Salin</button>
+          </div>
+          <a href="https://sociabuzz.com" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4">
+            <span data-i18n="btn_open_sociabuzz">Dukung via SociaBuzz</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+        <!-- Channel 4: QRIS Nasional -->
+        <div class="donate-card">
+          <div class="flex items-center justify-between mb-4">
+            <div class="donate-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M17 7h.01M7 17h.01M12 12h.01M17 17h.01"/></svg>
+            </div>
+            <span class="badge-tag">QRIS Standar BI</span>
+          </div>
+          <h3 class="text-base font-bold text-main">QRIS (Semua Bank & E-Wallet)</h3>
+          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="qris_desc">
+            Pindai langsung dari aplikasi Mobile Banking (BCA, Mandiri, BRI, BNI) atau aplikasi dompet digital apa saja.
+          </p>
+
+          <!-- Interactive QRIS Nominal Selector -->
+          <div class="mt-4">
+            <label class="input-label" data-i18n="label_qris_amount">Pilih Nominal Donasi:</label>
+            <div class="grid grid-cols-4 gap-2 mt-1.5">
+              <button type="button" class="qris-amount-btn active" data-amount="10000">10K</button>
+              <button type="button" class="qris-amount-btn" data-amount="25000">25K</button>
+              <button type="button" class="qris-amount-btn" data-amount="50000">50K</button>
+              <button type="button" class="qris-amount-btn" data-amount="100000">100K</button>
+            </div>
+          </div>
+
+          <!-- QRIS Graphic Preview -->
+          <div class="p-4 rounded-xl bg-base border border-subtle mt-4 flex items-center gap-4">
+            <div class="qris-box-graphic p-2 bg-white rounded-lg shrink-0">
+              <!-- Stylized Vector QR Code -->
+              <svg class="w-16 h-16 text-black" viewBox="0 0 100 100" fill="currentColor">
+                <rect x="5" y="5" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
+                <rect x="13" y="13" width="12" height="12"/>
+                <rect x="67" y="5" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
+                <rect x="75" y="13" width="12" height="12"/>
+                <rect x="5" y="67" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
+                <rect x="13" y="75" width="12" height="12"/>
+                <rect x="42" y="10" width="8" height="18"/>
+                <rect x="10" y="42" width="18" height="8"/>
+                <rect x="42" y="42" width="16" height="16"/>
+                <rect x="68" y="42" width="12" height="8"/>
+                <rect x="42" y="72" width="14" height="18"/>
+                <rect x="70" y="70" width="20" height="20"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <div class="text-[10px] text-muted uppercase font-mono tracking-wider">NMID: ID102026SEROJA</div>
+              <div class="text-sm font-bold text-main mt-0.5" id="qrisNominalDisplay">Rp 10.000</div>
+              <div class="text-[11px] text-emerald-500 font-medium mt-0.5">Seroja Labs Official</div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-subtle w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" onclick="copyToClipboard('ID102026SEROJA998', 'Kode NMID QRIS disalin!')">
+            <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/></svg>
+            <span data-i18n="btn_copy_qris">Salin Kode Bayar QRIS</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Thank You Notice -->
+      <div class="p-6 rounded-2xl bg-surface border border-subtle text-center max-w-2xl mx-auto">
+        <h4 class="text-sm font-bold text-main" data-i18n="donate_thankyou_title">Terima Kasih Banyak Atas Dukungan Anda!</h4>
+        <p class="text-xs text-muted mt-2 leading-relaxed" data-i18n="donate_thankyou_desc">
+          Kebaikan Anda adalah energi utama bagi tim kami di Seroja Labs untuk terus berinovasi dan menjaga platform ini tetap bebas biaya selamanya.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
