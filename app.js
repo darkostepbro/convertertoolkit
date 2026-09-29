@@ -1268,9 +1268,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('themeToggleBtn5'),
   ].filter(Boolean);
 
+  function getInitialLanguage() {
+    const saved = localStorage.getItem('ks-lang');
+    if (saved && TRANSLATIONS[saved]) return saved;
+
+    // Detect preferred browser/system language
+    const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    for (const rawLang of browserLangs) {
+      if (!rawLang) continue;
+      const code = rawLang.toLowerCase().split('-')[0]; // e.g. "en-US" -> "en", "id-ID" -> "id"
+      if (TRANSLATIONS[code]) {
+        return code;
+      }
+    }
+
+    // Check if browser locale indicates Indonesian
+    const isIndonesian = browserLangs.some(l => l && l.toLowerCase().includes('id'));
+    return isIndonesian ? 'id' : 'en'; // Default to English for international users, Indonesian for ID
+  }
+
   let currentCategory = 'image';
   let currentToolId   = null;
-  let currentLang     = localStorage.getItem('ks-lang') || 'id';
+  let currentLang     = getInitialLanguage();
 
   // ===========================================================================
   // 4. LANGUAGE SYSTEM (i18n)
@@ -1662,15 +1681,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const qrisAmountBtns = document.querySelectorAll('.qris-amount-btn');
   const qrisNominalDisplay = document.getElementById('qrisNominalDisplay');
 
-  qrisAmountBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      qrisAmountBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const val = parseInt(btn.dataset.amount, 10);
-      qrisNominalDisplay.textContent = 'Rp ' + val.toLocaleString('id-ID');
-      showToast(`Nominal QRIS dipilih: Rp ${val.toLocaleString('id-ID')}`, 'info');
+  if (qrisAmountBtns.length && qrisNominalDisplay) {
+    qrisAmountBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        qrisAmountBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const val = parseInt(btn.dataset.amount, 10);
+        qrisNominalDisplay.textContent = 'Rp ' + val.toLocaleString('id-ID');
+        showToast(`Nominal QRIS dipilih: Rp ${val.toLocaleString('id-ID')}`, 'info');
+      });
     });
-  });
+  }
 
   window.copyToClipboard = (text, successMsg) => {
     navigator.clipboard.writeText(text).then(() => {

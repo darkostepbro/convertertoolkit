@@ -129,8 +129,202 @@
   </script>
 
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    html.skip-splash #appSplashScreen { display: none !important; }
+    
+    #appSplashScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background-color: #090D16;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+    }
+    #appSplashScreen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .splash-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(14, 165, 233, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.15);
+      animation: splashLogoPulse 3s ease-in-out infinite;
+    }
+    .splash-logo-box svg { width: 22px; height: 22px; color: #10B981; }
+    @keyframes splashLogoPulse {
+      0%, 100% { transform: scale(1); border-color: rgba(16, 185, 129, 0.25); box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+      50% { transform: scale(1.05); border-color: rgba(16, 185, 129, 0.45); box-shadow: 0 0 32px rgba(16, 185, 129, 0.3); }
+    }
+    .splash-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      margin-bottom: 18px;
+    }
+    .splash-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #E2E8F0;
+    }
+    .splash-dot-pulse {
+      display: inline-flex;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #10B981;
+      margin-left: 2px;
+    }
+    .splash-dot-pulse span { animation: splashBlinkDots 1.4s infinite both; }
+    .splash-dot-pulse span:nth-child(1) { animation-delay: 0.2s; }
+    .splash-dot-pulse span:nth-child(2) { animation-delay: 0.4s; }
+    .splash-dot-pulse span:nth-child(3) { animation-delay: 0.6s; }
+    @keyframes splashBlinkDots {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+    .splash-squares-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 4px;
+    }
+    .splash-square-item {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      animation: splashSquareWave 1.4s infinite ease-in-out;
+    }
+    .splash-square-item:nth-child(1) { animation-delay: 0.0s; }
+    .splash-square-item:nth-child(2) { animation-delay: 0.15s; }
+    .splash-square-item:nth-child(3) { animation-delay: 0.3s; }
+    .splash-square-item:nth-child(4) { animation-delay: 0.45s; }
+    .splash-square-item:nth-child(5) { animation-delay: 0.6s; }
+    @keyframes splashSquareWave {
+      0%, 100% {
+        background: rgba(148, 163, 184, 0.15);
+        border-color: rgba(255, 255, 255, 0.08);
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+      }
+      35% {
+        background: #10B981;
+        border-color: #34D399;
+        transform: scale(1.3) rotate(4deg);
+        box-shadow: 0 0 14px rgba(16, 185, 129, 0.8), 0 0 24px rgba(16, 185, 129, 0.35);
+      }
+      60% {
+        background: #0EA5E9;
+        border-color: #38BDF8;
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+      }
+    }
+    .splash-sub {
+      margin-top: 22px;
+      font-size: 11px;
+      color: #64748B;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .splash-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+    }
+    .splash-footer {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: #334155;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+  </style>
+
+  <script>
+    if (sessionStorage.getItem('ks_splash_shown') === '1') {
+      document.documentElement.classList.add('skip-splash');
+    }
+  </script>
 </head>
 <body>
+
+  <!-- Minimalist Entrance Splash Screen -->
+  <div id="appSplashScreen">
+    <div class="splash-logo-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <rect width="18" height="18" x="3" y="3" rx="2"/>
+        <path d="M7 7h10M7 12h10M7 17h6"/>
+      </svg>
+    </div>
+    <div class="splash-title-row">
+      <span class="splash-text">Initializing</span>
+      <span class="splash-dot-pulse">
+        <span>.</span><span>.</span><span>.</span>
+      </span>
+    </div>
+    <div class="splash-squares-track">
+      <div class="splash-square-item"></div>
+      <div class="splash-square-item"></div>
+      <div class="splash-square-item"></div>
+      <div class="splash-square-item"></div>
+      <div class="splash-square-item"></div>
+    </div>
+    <div class="splash-sub">
+      <span class="splash-status-dot"></span>
+      <span>100% Client-Side Engine</span>
+    </div>
+    <footer class="splash-footer">
+      <span>(C) 2026 Konversian Stage</span>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      var splashEl = document.getElementById('appSplashScreen');
+      if (!splashEl) return;
+      if (sessionStorage.getItem('ks_splash_shown') === '1') {
+        splashEl.style.display = 'none';
+        return;
+      }
+      setTimeout(function() {
+        splashEl.classList.add('fade-out');
+        sessionStorage.setItem('ks_splash_shown', '1');
+        setTimeout(function() {
+          splashEl.style.display = 'none';
+        }, 460);
+      }, 1300);
+    })();
+  </script>
 
   <!-- Top Notification for Local Server -->
   <div id="fileProtocolNotice" class="hidden bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-2 text-center text-xs text-emerald-400 font-semibold flex items-center justify-center gap-2">
@@ -1156,41 +1350,31 @@
         <!-- Channel 1: QRIS Standar Pembayaran Nasional -->
         <div class="donate-card p-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="donate-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M17 7h.01M7 17h.01M12 12h.01M17 17h.01"/></svg>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="donate-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20 flex-shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M17 7h.01M7 17h.01M12 12h.01M17 17h.01"/></svg>
+                </div>
+                <div class="text-left">
+                  <h3 class="text-base font-bold text-main leading-tight">QRIS Standar Nasional</h3>
+                  <p class="text-[11px] text-muted mt-0.5">Semua Bank & E-Wallet</p>
+                </div>
               </div>
-              <span class="badge-tag">QRIS Semua Bank & E-Wallet</span>
+              <span class="badge-tag bg-emerald-500/10 text-emerald-500 border-emerald-500/20 font-semibold">Instan</span>
             </div>
-            <h3 class="text-base font-bold text-main">QRIS Standar Nasional</h3>
-            <p class="text-xs text-muted mt-1 leading-relaxed">
+            <p class="text-xs text-muted leading-relaxed">
               Pindai dari BCA Mobile, Livin' by Mandiri, BRImo, BNI Mobile, GoPay, OVO, DANA, ShopeePay, LinkAja, atau m-Banking apa saja.
             </p>
 
-            <!-- QRIS Merchant Details & Real Image -->
+            <!-- QRIS Official Card Display -->
             <div class="mt-4 p-4 rounded-xl bg-base border border-subtle text-center">
-              <div class="flex items-center justify-center mb-2">
-                <span class="text-xs font-bold text-main tracking-wider uppercase">SEROJA LABS, TECH</span>
+              <div class="qris-img-container mx-auto p-2 bg-white rounded-2xl shadow-md inline-block max-w-[260px]">
+                <img src="qris.jpg" alt="QRIS SEROJA LABS, TECH" class="w-full h-auto rounded-xl mx-auto block" />
               </div>
-              <div class="qris-img-container mx-auto my-2 p-2 bg-white rounded-xl shadow-sm inline-block">
-                <img src="qris.jpg" alt="QRIS SEROJA LABS, TECH" class="max-w-[200px] sm:max-w-[220px] w-full h-auto rounded-lg mx-auto block" />
-              </div>
-              <div class="mt-2 text-[11px] font-mono text-muted flex items-center justify-center gap-1">
+              <div class="mt-3 text-[11px] font-mono text-muted flex items-center justify-center gap-1.5">
                 <span>NMID:</span>
-                <span class="text-main font-bold select-all">ID1025465813588</span>
+                <span class="text-main font-bold select-all tracking-wider">ID1025465813588</span>
               </div>
-            </div>
-
-            <!-- Nominal Selector -->
-            <div class="mt-4">
-              <label class="input-label" data-i18n="label_qris_amount">Pilih Nominal Donasi:</label>
-              <div class="grid grid-cols-4 gap-2 mt-1.5">
-                <button type="button" class="qris-amount-btn active" data-amount="10000">10K</button>
-                <button type="button" class="qris-amount-btn" data-amount="25000">25K</button>
-                <button type="button" class="qris-amount-btn" data-amount="50000">50K</button>
-                <button type="button" class="qris-amount-btn" data-amount="100000">100K</button>
-              </div>
-              <div class="mt-2 text-center text-xs font-bold text-main" id="qrisNominalDisplay">Rp 10.000</div>
             </div>
           </div>
 
@@ -1209,35 +1393,38 @@
         <!-- Channel 2: PayPal -->
         <div class="donate-card p-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="donate-card-icon bg-blue-500/10 text-blue-500 border border-blue-500/20">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13l2-7h5a3 3 0 0 1 0 6h-4l-1 5H8l2-7h2z"/><path d="M6 18h4l1-4H8l-2 4z"/></svg>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="donate-card-icon bg-blue-500/10 text-blue-500 border border-blue-500/20 flex-shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13l2-7h5a3 3 0 0 1 0 6h-4l-1 5H8l2-7h2z"/><path d="M6 18h4l1-4H8l-2 4z"/></svg>
+                </div>
+                <div class="text-left">
+                  <h3 class="text-base font-bold text-main leading-tight">PayPal</h3>
+                  <p class="text-[11px] text-muted mt-0.5">Internasional & Kartu Kredit</p>
+                </div>
               </div>
-              <span class="badge-tag" data-i18n="tag_intl">Internasional</span>
+              <span class="badge-tag bg-amber-500/10 text-amber-500 border-amber-500/20 font-semibold">Segera Hadir</span>
             </div>
-            <h3 class="text-base font-bold text-main">PayPal</h3>
-            <p class="text-xs text-muted mt-1 leading-relaxed" data-i18n="paypal_desc">
+            <p class="text-xs text-muted leading-relaxed" data-i18n="paypal_desc">
               Dukungan global aman melalui saldo PayPal, Kartu Kredit (Visa, Mastercard, Amex), atau Kartu Debit internasional.
             </p>
 
-            <div class="mt-4 p-4 rounded-xl bg-base border border-subtle">
-              <div class="text-[11px] text-muted font-medium mb-1">Tautan Pembayaran:</div>
-              <div class="font-mono text-xs font-bold text-main truncate">paypal.me/serojalabs</div>
-              <p class="text-[11px] text-muted mt-2 leading-relaxed">
-                Anda dapat memilih jumlah nominal donasi bebas langsung di portal resmi PayPal yang terenkripsi aman.
+            <div class="mt-4 p-6 rounded-xl bg-base border border-dashed border-subtle text-center">
+              <div class="w-10 h-10 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto mb-2.5">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="text-xs font-bold text-main">Metode Pembayaran Segera Hadir</div>
+              <p class="text-[11px] text-muted mt-1.5 leading-relaxed max-w-xs mx-auto">
+                Integrasi akun gateway PayPal sedang dalam proses verifikasi merchant. Anda dapat menggunakan QRIS Nasional untuk saat ini.
               </p>
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 mt-4">
-            <button type="button" class="btn-subtle py-2.5 text-xs font-bold flex items-center justify-center gap-1.5" onclick="copyToClipboard('https://paypal.me/serojalabs', 'Link PayPal disalin!')" data-i18n="btn_copy">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-              <span>Salin Link</span>
+          <div class="mt-4">
+            <button type="button" disabled class="btn-subtle w-full py-2.5 text-xs font-bold text-muted cursor-not-allowed opacity-50 flex items-center justify-center gap-1.5" style="border-style:dashed;">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Segera Hadir (Coming Soon)</span>
             </button>
-            <a href="https://paypal.me/serojalabs" target="_blank" rel="noopener noreferrer" class="btn-primary py-2.5 text-xs font-bold flex items-center justify-center gap-1.5 text-center" style="background-color: #0070BA; box-shadow: 0 4px 12px rgba(0,112,186,0.3);">
-              <span data-i18n="btn_open_paypal">Buka PayPal</span>
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
           </div>
         </div>
 
