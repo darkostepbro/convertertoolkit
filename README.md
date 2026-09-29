@@ -78,28 +78,13 @@ convertertoolkit/
     ├── about/index.html  # Profil Seroja Labs minimalis
     └── donate/index.html # Halaman donasi QRIS + PayPal
 ```
-
----
-
-## 🚀 Panduan Deployment
-
-### Deploy ke Vercel (Rekomendasi)
-1. Fork atau clone repositori ini ke akun GitHub Anda.
-2. Buka [Vercel Dashboard](https://vercel.com/) dan pilih **Add New... ➔ Project**.
-3. Import repositori `convertertoolkit`.
-4. Pada bagian **Framework Preset**, pilih **Other** (karena murni Static HTML/JS/CSS).
-5. Klik **Deploy**. Website akan langsung aktif dalam hitungan detik.
-
-### Menjalankan Secara Lokal
-Cukup buka file `index.html` menggunakan peramban modern (Chrome, Edge, Brave, Firefox) atau gunakan ekstensi Live Server di VS Code.
-
 ---
 
 ## ☕ Donasi & Kontribusi
 
 Jika aplikasi ini bermanfaat untuk produktivitas Anda, dukung pengembangannya melalui:
 - **QRIS:** Pindai barcode QRIS di menu Donasi aplikasi.
-- **PayPal:** [paypal.me/serojalabs](https://paypal.me/serojalabs)
+- **PayPal:** Segera Hadir (Coming soon)
 
 ---
 
