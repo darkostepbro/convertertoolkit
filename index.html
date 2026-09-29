@@ -2,6 +2,81 @@
 <html lang="id" class="dark" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      // 1. Force desktop override via URL query or session
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'desktop') {
+        sessionStorage.setItem('docshift_force_desktop', '1');
+        try {
+          localStorage.removeItem('docshift_device');
+          localStorage.removeItem('docshift_force_mobile');
+        } catch(e) {}
+        return;
+      }
+      if (sessionStorage.getItem('docshift_force_desktop') === '1') {
+        return;
+      }
+
+      // 2. Strict & Robust Device Detection
+      function isMobileDevice() {
+        // Modern standard User-Agent Client Hints
+        if (navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') {
+          if (!navigator.userAgentData.mobile) return false;
+        }
+
+        var ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+
+        // Obvious desktop operating systems (PC / Laptop / Mac / Linux)
+        // If it's a desktop OS without mobile UA, it is 100% PC!
+        var isDesktopOS = (/windows nt|macintosh|mac os x|linux x86_64/i.test(ua)) && !(/android|iphone|ipad|ipod|windows phone|iemobile|mobile/i.test(ua));
+        if (isDesktopOS) {
+          return false;
+        }
+
+        // True mobile OS check (Android phone/tablet, iPhone, iPod, Windows Phone)
+        var isMobileOS = /android|iphone|ipod|windows phone|iemobile|mobile safari|blackberry|opera mini/i.test(ua);
+        if (isMobileOS) {
+          return true;
+        }
+
+        // iPad check
+        var isIPad = /ipad/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIPad) {
+          return true;
+        }
+
+        // Check screen dimensions: PC monitors are typically >= 1024px
+        if (window.screen && Math.max(window.screen.width, window.screen.height) >= 1024 && !(/mobile|android|iphone/i.test(ua))) {
+          return false;
+        }
+
+        // Final fallback: small screen with coarse pointer
+        var minDim = Math.min(window.screen.width || 1200, window.screen.height || 1200);
+        var isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        return (minDim <= 768 && isCoarse);
+      }
+
+      var isMobile = isMobileDevice();
+
+      if (isMobile) {
+        // Safe redirect that works on BOTH local file:/// and HTTP/HTTPS servers (Vercel)
+        if (window.location.protocol === 'file:') {
+          var current = window.location.pathname;
+          var mobileUrl = current.substring(0, current.lastIndexOf('/') + 1) + 'm/index.html';
+          window.location.replace(mobileUrl);
+        } else {
+          window.location.replace('./m/');
+        }
+      } else {
+        // If detected as PC / Laptop, clear any accidental mobile flags in localStorage
+        try {
+          localStorage.removeItem('docshift_device');
+          localStorage.removeItem('docshift_force_mobile');
+        } catch(e) {}
+      }
+    })();
+  </script>
   <link rel="shortcut icon" type="image/x-ico" href="paper.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Konversian Stage — Platform Konversi File</title>
@@ -27,10 +102,42 @@
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
   <!-- @pdfsmaller/pdf-encrypt for real client-side PDF password locking -->
   <script src="https://unpkg.com/@pdfsmaller/pdf-encrypt@1.2.0/dist/pdf-encrypt.umd.js"></script>
+  <!-- SheetJS for Excel (XLSX, XLS) reading and writing -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Mammoth.js for DOCX reading and HTML rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <!-- html2canvas for DOM-to-canvas rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- html2pdf.js for converting HTML documents to PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- PptxGenJS for creating PowerPoint PPTX files in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <!-- docx.js for creating Word DOCX files in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script>
+    if (window.docx) window.docxGen = window.docx;
+  </script>
+  <!-- docx-preview for high-fidelity Microsoft Word rendering in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.2/dist/docx-preview.min.js"></script>
+  <script>
+    if (window.docx) {
+      window.docxPreview = window.docx;
+      if (window.docxGen) {
+        Object.assign(window.docx, window.docxGen);
+      }
+    }
+  </script>
 
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- Top Notification for Local Server -->
+  <div id="fileProtocolNotice" class="hidden bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-2 text-center text-xs text-emerald-400 font-semibold flex items-center justify-center gap-2">
+    <span>✨ Mesin Presisi Tinggi Siap Digunakan: Buka via</span>
+    <a href="http://127.0.0.1:49152/" class="underline font-bold text-emerald-300 hover:text-white">http://127.0.0.1:49152/</a>
+    <span>untuk konversi 100% identik dengan Microsoft Office!</span>
+  </div>
 
   <!-- Cursor Backlight (home only) -->
   <div id="cursorLight" class="cursor-light" aria-hidden="true"></div>
@@ -130,8 +237,8 @@
       <!-- Hero Title -->
       <div class="hero-title-block">
         <h1 class="hero-title">
-          <span data-i18n="hero_title_prefix">Studio Konversi File Workspace</span>
-          <em class="accent-text not-italic" data-i18n="hero_title_accent">Workspace</em>
+          <span data-i18n="hero_title_prefix">Studio Konversi File</span>
+          <em class="accent-text not-italic" data-i18n="hero_title_accent"></em>
         </h1>
         <p class="hero-sub" data-i18n="hero_sub">Pilih kategori alat di bawah ini. Semua operasi berjalan langsung di perangkat Anda — tanpa upload, tanpa watermark, tanpa batas.</p>
       </div>
@@ -517,49 +624,7 @@
         </div>
       </div>
 
-      <!-- PANEL: PDF TO IMAGE -->
-      <div id="panelPdf2Img" class="tool-panel hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 space-y-4">
-            <div id="pdfDropzone" class="dropzone group">
-              <input type="file" id="pdfFileInput" accept="application/pdf" class="sr-only">
-              <div class="dropzone-content pointer-events-none">
-                <div class="dropzone-icon">
-                  <svg class="w-8 h-8 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_choose_pdf">Pilih Dokumen PDF</h3>
-                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_single_pdf">Satu file PDF untuk diekstrak halamannya</p>
-                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
-              </div>
-            </div>
-            <div id="pdfInfoBar" class="hidden flex items-center justify-between p-3.5 rounded-xl bg-surface border border-subtle">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-500 flex items-center justify-center font-bold text-xs">PDF</div>
-                <div><h4 id="pdfLoadedName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.pdf</h4><p id="pdfLoadedMeta" class="text-[11px] text-muted font-mono">0 Halaman</p></div>
-              </div>
-              <button id="pdfChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
-            </div>
-            <div id="pdfPagesHeader" class="flex items-center justify-between px-1 hidden">
-              <span class="text-xs font-bold text-main" data-i18n="label_page_preview">Pratinjau Halaman</span>
-              <span id="pdfPageRenderingState" class="text-xs text-muted font-mono"></span>
-            </div>
-            <div id="pdfPagesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
-          </div>
-          <div class="settings-card space-y-3.5">
-            <h3 class="settings-title">
-              <svg class="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-              <span data-i18n="settings_format_res">Format & Resolusi</span>
-            </h3>
-            <div><label for="pdfImgFormat" class="input-label" data-i18n="label_output_format">Format Output</label><select id="pdfImgFormat" class="form-select"><option value="image/png">PNG (Tajam & Bersih)</option><option value="image/jpeg">JPG (Ukuran Ringan)</option></select></div>
-            <div><label for="pdfImgScale" class="input-label" data-i18n="label_render_scale">Resolusi Render</label><select id="pdfImgScale" class="form-select"><option value="1.5">1.5x — Standar Web</option><option value="2.0" selected>2.0x — HD (Direkomendasikan)</option><option value="3.0">3.0x — Ultra Tajam</option></select></div>
-            <button id="downloadAllImagesBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-2" style="background-color: #0EA5E9; box-shadow: 0 4px 14px rgba(14,165,233,0.3);" disabled>
-              <span id="downloadZipSpinner" class="spinner hidden"></span>
-              <span id="downloadZipText" data-i18n="btn_download_zip">Unduh Semua (.ZIP)</span>
-            </button>
-            <p class="text-[11px] text-muted text-center" data-i18n="hint_single_download">Atau klik tombol unduh di setiap kartu halaman.</p>
-          </div>
-        </div>
-      </div>
+
 
       <!-- PANEL: MERGE PDF -->
       <div id="panelMergePdf" class="tool-panel hidden">
@@ -718,49 +783,7 @@
         </div>
       </div>
 
-      <!-- PANEL: PDF TO TEXT -->
-      <div id="panelPdf2Text" class="tool-panel hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 space-y-4">
-            <div id="p2tDropzone" class="dropzone group">
-              <input type="file" id="p2tFileInput" accept="application/pdf" class="sr-only">
-              <div class="dropzone-content pointer-events-none">
-                <div class="dropzone-icon">
-                  <svg class="w-8 h-8 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_choose_pdf">Pilih Dokumen PDF</h3>
-                <p class="text-xs text-muted mt-1" data-i18n="dz_hint_extract_text">Teks akan diekstrak dari semua halaman PDF</p>
-                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
-              </div>
-            </div>
-            <div id="p2tResultBlock" class="hidden settings-card">
-              <div class="flex items-center justify-between mb-2">
-                <h4 class="text-xs font-bold text-main" data-i18n="label_extracted_text">Teks Terekstrak</h4>
-                <div class="flex gap-2">
-                  <button id="p2tCopyBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_copy">Salin</button>
-                  <button id="p2tDownloadBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_download_txt">Unduh .txt</button>
-                </div>
-              </div>
-              <textarea id="p2tOutput" class="form-input w-full resize-none min-h-[250px] font-mono text-xs" readonly></textarea>
-            </div>
-          </div>
-          <div class="settings-card space-y-3.5">
-            <h3 class="settings-title">
-              <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14"/></svg>
-              <span data-i18n="settings_text_extract">Ekstraksi Teks</span>
-            </h3>
-            <p class="text-xs text-muted" data-i18n="desc_text_extract">Ekstrak teks dari PDF yang mengandung teks digital.</p>
-            <div id="p2tInfoBox" class="p-3 rounded-lg bg-base border border-subtle hidden">
-              <div class="flex justify-between text-xs mb-1"><span class="text-muted" data-i18n="label_file">File:</span><span id="p2tFileName" class="font-bold font-mono text-main text-right truncate max-w-[120px]">—</span></div>
-              <div class="flex justify-between text-xs"><span class="text-muted" data-i18n="label_total_pages">Halaman:</span><span id="p2tPageCount" class="font-bold font-mono text-main">—</span></div>
-            </div>
-            <button id="p2tExtractBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #6366F1; box-shadow: 0 4px 14px rgba(99,102,241,0.3);" disabled>
-              <span id="p2tSpinner" class="spinner hidden"></span>
-              <span id="p2tBtnText" data-i18n="btn_extract_text">Ekstrak Teks dari PDF</span>
-            </button>
-          </div>
-        </div>
-      </div>
+
 
       <!-- PANEL: LOCK PDF (PASSWORD PROTECTION & ENCRYPTION) -->
       <div id="panelLockPdf" class="tool-panel hidden">
@@ -871,7 +894,7 @@
         </div>
       </div>
 
-      <!-- PANEL: STIRLING-PDF OFFICE TO PDF (DOCX, PPT, EXCEL TO PDF) -->
+      <!-- PANEL: OFFICE TO PDF (DOCX, PPT, EXCEL TO PDF) -->
       <div id="panelStirlingOffice2Pdf" class="tool-panel hidden">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 space-y-4">
@@ -881,119 +904,106 @@
                 <div class="dropzone-icon">
                   <svg class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M2 15h10"/><path d="m9 18 3-3-3-3"/></svg>
                 </div>
-                <h3 class="text-base font-bold text-main mt-3" id="so2pDropzoneTitle" data-i18n="dz_stirling_o2p_title">Pilih Dokumen Office (DOCX / PPT / Excel)</h3>
+                <h3 class="text-base font-bold text-main mt-3" id="so2pDropzoneTitle">Pilih Dokumen (Excel / Word / PPT)</h3>
                 <p class="text-xs text-muted mt-1" id="so2pDropzoneHint">Pilih berkas dokumen yang ingin dikonversi menjadi PDF</p>
-                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold" data-i18n="btn_choose_device">Pilih File dari Perangkat</div>
+                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold">Pilih File dari Perangkat</div>
               </div>
             </div>
+            
             <div id="so2pInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-xs" id="so2pExtBadge">DOC</div>
-                <div><h4 id="so2pFileName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.docx</h4><p id="so2pMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
+                <div><h4 id="so2pFileName" class="text-xs font-bold text-main truncate max-w-[240px]">dokumen.docx</h4><p id="so2pMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
               </div>
-              <button id="so2pChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
+              <button id="so2pChangeFileBtn" type="button" class="btn-subtle px-3 py-1.5 text-xs rounded-lg font-semibold">Ganti File</button>
             </div>
-            <!-- Stirling-PDF Engine Info Banner -->
-            <div class="p-3.5 rounded-xl bg-surface border border-subtle">
-              <div class="flex items-center justify-between">
+
+            <!-- LIVE INTERACTIVE PREVIEW CONTAINER -->
+            <div id="so2pPreviewWrapper" class="doc-preview-wrapper hidden">
+              <div class="doc-preview-header">
                 <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500" id="stirlingStatusDot"></span>
-                  <span class="text-xs font-bold text-main">Engine: Stirling-Tools / Stirling-PDF</span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="text-xs font-bold text-main" id="so2pPreviewTitle">Pratinjau Dokumen Asli</span>
                 </div>
-                <span class="text-[10px] font-mono text-muted" id="stirlingServerDisplay">http://localhost:8080</span>
+                <!-- Excel Tabs -->
+                <div id="so2pExcelTabs" class="sheet-tabs-container hidden"></div>
+                <!-- PPT Slide Controls -->
+                <div id="so2pPptControls" class="hidden flex items-center gap-2">
+                  <button type="button" id="so2pPptPrevBtn" class="px-2 py-1 rounded bg-base text-xs font-bold text-main hover:bg-hover">◀</button>
+                  <span id="so2pPptSlideIndicator" class="text-xs font-mono text-muted">Slide 1 / 1</span>
+                  <button type="button" id="so2pPptNextBtn" class="px-2 py-1 rounded bg-base text-xs font-bold text-main hover:bg-hover">▶</button>
+                </div>
+                <!-- Docx Status Indicator -->
+                <span id="so2pDocxStatus" class="hidden text-[11px] font-mono text-muted">Halaman Asli Word</span>
               </div>
-              <p class="text-xs text-muted mt-1.5 leading-relaxed" data-i18n="desc_stirling_api_info">
-                Didukung oleh arsitektur open-source <strong>Stirling-Tools/Stirling-PDF</strong> via REST API. Mendukung LibreOffice headless engine untuk hasil tata letak dokumen yang presisi.
-              </p>
+
+              <!-- Preview Bodies -->
+              <div id="so2pExcelViewer" class="excel-preview-scroll hidden">
+                <table id="so2pExcelTable" class="excel-grid-table"></table>
+              </div>
+              <div id="so2pDocxViewer" class="docx-render-wrapper hidden"></div>
+              <div id="so2pPptxViewer" class="pptx-slide-canvas-container hidden">
+                <canvas id="so2pPptxCanvas" class="pptx-slide-canvas"></canvas>
+              </div>
             </div>
           </div>
+
+          <!-- Settings Sidebar -->
           <div class="settings-card space-y-3.5">
             <h3 class="settings-title">
               <svg class="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
-              <span data-i18n="settings_stirling_o2p">Konfigurasi Stirling-PDF</span>
+              <span>Pengaturan Output PDF</span>
             </h3>
-            <div>
-              <label for="stirlingServerUrl" class="input-label">Stirling-PDF Server URL</label>
-              <input type="text" id="stirlingServerUrl" value="http://localhost:8080" class="form-input font-mono text-xs">
+            
+            <div id="so2pOrientationBlock">
+              <label for="so2pPageOrientation" class="input-label">Orientasi Kertas</label>
+              <select id="so2pPageOrientation" class="form-select text-xs">
+                <option value="auto" selected>Otomatis (Sesuai Layout Dokumen)</option>
+                <option value="landscape">Lanskap (Landscape - Disarankan untuk Excel/PPT)</option>
+                <option value="portrait">Potret (Portrait - Disarankan untuk Word)</option>
+              </select>
             </div>
+
+            <div id="so2pExcelScaleBlock" class="hidden">
+              <label for="so2pExcelScale" class="input-label">Penskalaan Tabel</label>
+              <select id="so2pExcelScale" class="form-select text-xs">
+                <option value="fit" selected>Pas Lebar Halaman (Tidak Terpotong)</option>
+                <option value="actual">Ukuran Asli 100%</option>
+              </select>
+            </div>
+
+            <!-- Excel Sheet Export Scope -->
+            <div id="so2pExcelSheetScopeBlock" class="hidden">
+              <label for="so2pExcelSheetScope" class="input-label">Cakupan Lembar Excel</label>
+              <select id="so2pExcelSheetScope" class="form-select text-xs">
+                <option value="active" selected id="so2pActiveSheetOpt">Lembar Aktif yang Dipilih Saja</option>
+                <option value="all">Semua Lembar Kerja (All Sheets)</option>
+              </select>
+              <p class="text-[11px] text-muted mt-1" id="so2pSheetScopeHint">Mengonversi lembar yang sedang aktif dipilih pada pratinjau.</p>
+            </div>
+
             <div>
-              <label for="so2pOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
+              <label for="so2pOutputName" class="input-label">Nama File Output</label>
               <div class="relative"><input type="text" id="so2pOutputName" value="dokumen-konversi" class="form-input pr-12"><span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.pdf</span></div>
             </div>
+
+            <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="font-medium text-[11px]">Konversi Presisi Tinggi: Format, tata letak &amp; tema asli 100% dipertahankan.</span>
+            </div>
+
             <button id="so2pConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #2563EB; box-shadow: 0 4px 14px rgba(37,99,235,0.3);" disabled>
               <span id="so2pSpinner" class="spinner hidden"></span>
-              <span id="so2pBtnText" data-i18n="btn_convert_to_pdf">Konversi ke PDF</span>
+              <span id="so2pBtnText">Konversi ke PDF</span>
             </button>
             <div class="text-[11px] text-muted text-center leading-relaxed">
-              Jalankan Stirling-PDF via Docker: <code class="px-1 py-0.5 rounded bg-base text-main text-[10px] font-mono">docker run -d -p 8080:8080 frooodle/s-pdf:latest</code>
+              100% Client-Side. Berkas diproses di memori browser tanpa dikirim ke server luar.
             </div>
           </div>
         </div>
       </div>
 
-      <!-- PANEL: STIRLING-PDF PDF TO OFFICE (PDF TO DOCX, PPT, EXCEL) -->
-      <div id="panelStirlingPdf2Office" class="tool-panel hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 space-y-4">
-            <div id="sp2oDropzone" class="dropzone group">
-              <input type="file" id="sp2oFileInput" accept="application/pdf" class="sr-only">
-              <div class="dropzone-content pointer-events-none">
-                <div class="dropzone-icon">
-                  <svg class="w-8 h-8 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M2 15h10"/><path d="m5 12-3 3 3 3"/></svg>
-                </div>
-                <h3 class="text-base font-bold text-main mt-3" data-i18n="dz_stirling_p2o_title">Pilih Dokumen PDF</h3>
-                <p class="text-xs text-muted mt-1" id="sp2oDropzoneHint">Pilih dokumen PDF yang ingin diubah menjadi format Office yang dapat diedit</p>
-                <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold" data-i18n="btn_choose_pdf">Pilih Dokumen PDF</div>
-              </div>
-            </div>
-            <div id="sp2oInfoBar" class="hidden p-3.5 rounded-xl bg-surface border border-subtle flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-xs">PDF</div>
-                <div><h4 id="sp2oFileName" class="text-xs font-bold text-main truncate max-w-[200px]">dokumen.pdf</h4><p id="sp2oMeta" class="text-[11px] text-muted font-mono">0 KB</p></div>
-              </div>
-              <button id="sp2oChangeFileBtn" type="button" class="btn-subtle px-2.5 py-1 text-xs rounded-lg" data-i18n="btn_change_file">Ganti File</button>
-            </div>
-            <div class="p-3.5 rounded-xl bg-surface border border-subtle">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                  <span class="text-xs font-bold text-main">Engine: Stirling-Tools / Stirling-PDF</span>
-                </div>
-                <span class="text-[10px] font-mono text-muted">Stirling-PDF API</span>
-              </div>
-              <p class="text-xs text-muted mt-1.5 leading-relaxed" data-i18n="desc_stirling_p2o_info">
-                Mengonversi struktur berkas PDF menjadi dokumen Office yang sepenuhnya dapat disunting teks, tabel, dan gambarnya.
-              </p>
-            </div>
-          </div>
-          <div class="settings-card space-y-3.5">
-            <h3 class="settings-title">
-              <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
-              <span data-i18n="settings_stirling_p2o">Format Target Dokumen</span>
-            </h3>
-            <div>
-              <label for="sp2oTargetFormat" class="input-label" data-i18n="label_target_office">Konversi Ke</label>
-              <select id="sp2oTargetFormat" class="form-select">
-                <option value="docx" selected>Microsoft Word (.docx)</option>
-                <option value="pptx">PowerPoint Presentation (.pptx)</option>
-                <option value="xlsx">Excel Spreadsheet (.xlsx)</option>
-              </select>
-            </div>
-            <div>
-              <label for="sp2oServerUrl" class="input-label">Stirling-PDF Server URL</label>
-              <input type="text" id="sp2oServerUrl" value="http://localhost:8080" class="form-input font-mono text-xs">
-            </div>
-            <div>
-              <label for="sp2oOutputName" class="input-label" data-i18n="label_output_filename">Nama File Output</label>
-              <div class="relative"><input type="text" id="sp2oOutputName" value="dokumen-ekstrak" class="form-input pr-16"><span id="sp2oExtDisplay" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted font-mono">.docx</span></div>
-            </div>
-            <button id="sp2oConvertBtn" type="button" class="btn-primary w-full py-3 text-sm font-bold flex items-center justify-center gap-2 mt-1" style="background-color: #4F46E5; box-shadow: 0 4px 14px rgba(79,70,229,0.3);" disabled>
-              <span id="sp2oSpinner" class="spinner hidden"></span>
-              <span id="sp2oBtnText" data-i18n="btn_convert_to_office">Konversi ke Dokumen</span>
-            </button>
-          </div>
-        </div>
-      </div>
+
 
     </div>
   </section>
@@ -1027,71 +1037,70 @@
       </div>
     </header>
 
-    <div class="about-container max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-14">
-      <!-- Hero Intro -->
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-4">
-          <span>Seroja Labs Digital Initiative</span>
+    <div class="about-container max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+      <!-- Minimalist Hero -->
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Seroja Labs Digital Studio</span>
         </div>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-main tracking-tight leading-tight">
-          <span data-i18n="about_hero_h1">Konversian Stage dibangun oleh</span> <span class="accent-text">Seroja Labs</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-main tracking-tight leading-tight">
+          Konversian <span class="accent-text">Stage</span>
         </h1>
-        <p class="mt-4 text-sm sm:text-base text-muted leading-relaxed" data-i18n="about_hero_sub">
-          Sebuah studio utilitas file modern yang dirancang untuk mendukung kebutuhan alur kerja harian individu, komunitas open-source, dan lingkungan profesional tanpa kompromi pada privasi data pengguna.
+        <p class="mt-3 text-xs sm:text-sm text-muted leading-relaxed" data-i18n="about_hero_sub">
+          Platform utilitas file modern berkecepatan tinggi dengan arsitektur 100% Client-Side. Berkas Anda diproses murni di peramban lokal tanpa pernah meninggalkan perangkat.
         </p>
+
+        <!-- Tech Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+          <span class="px-2.5 py-1 rounded-md bg-surface border border-subtle text-[11px] font-mono text-muted">100% Client-Side</span>
+          <span class="px-2.5 py-1 rounded-md bg-surface border border-subtle text-[11px] font-mono text-muted">Zero Cloud Upload</span>
+          <span class="px-2.5 py-1 rounded-md bg-surface border border-subtle text-[11px] font-mono text-muted">High Precision</span>
+          <span class="px-2.5 py-1 rounded-md bg-surface border border-subtle text-[11px] font-mono text-muted">No Watermark</span>
+        </div>
       </div>
 
-      <!-- Pillars Bento Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
-        <div class="about-card">
-          <div class="about-card-icon bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+      <!-- 3 Minimalist Pillars -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        <div class="about-card p-5">
+          <div class="about-card-icon bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 mb-3">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_privacy_title">100% Client-Side Privacy</h3>
-          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_privacy_desc">
-            File Anda tidak pernah dikirim ke server cloud mana pun. Seluruh operasi kompresi, konversi, rendering, dan penggabungan berkas dieksekusi murni di dalam memori browser lokal perangkat Anda.
+          <h3 class="text-sm font-bold text-main">Privasi Mutlak</h3>
+          <p class="text-xs text-muted mt-1.5 leading-relaxed">
+            Berkas dokumen dan gambar Anda tidak pernah diunggah ke cloud server mana pun. Pemrosesan berjalan langsung di memori perangkat Anda.
           </p>
         </div>
 
-        <div class="about-card">
-          <div class="about-card-icon bg-sky-500/10 text-sky-500 border border-sky-500/20">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div class="about-card p-5">
+          <div class="about-card-icon bg-sky-500/10 text-sky-500 border border-sky-500/20 mb-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
-          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_speed_title">Performa Instan Tanpa Batas</h3>
-          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_speed_desc">
-            Didukung Canvas API, WebAssembly, PDF-Lib, dan PDF.js. Tidak ada antrian upload jaringan, tidak ada watermark yang disisipkan, dan tidak ada pembatasan jumlah file harian.
+          <h3 class="text-sm font-bold text-main">Presisi Format</h3>
+          <p class="text-xs text-muted mt-1.5 leading-relaxed">
+            Konversi Office (DOCX, PPT, Excel per lembar sheet) ke PDF mempertahankan struktur tabel, tata letak, dan keaslian halaman.
           </p>
         </div>
 
-        <div class="about-card">
-          <div class="about-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="about-card p-5">
+          <div class="about-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20 mb-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_community_title">Untuk Workspace & Komunitas</h3>
-          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_community_desc">
-            Seroja Labs menciptakan ekosistem perangkat lunak yang berfokus pada efisiensi kerja tim, kemudahan penggunaan umum, dan dukungan berkelanjutan bagi komunitas kreatif.
-          </p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-card-icon bg-violet-500/10 text-violet-500 border border-violet-500/20">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </div>
-          <h3 class="text-base font-bold text-main mt-3" data-i18n="pillar_open_title">Transparan & Independen</h3>
-          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed" data-i18n="pillar_open_desc">
-            Bebas dari pelacak agresif dan iklan pengintai privasi. Pengembangan proyek ini didorong secara independen dan didukung melalui donasi sukarela komunitas global.
+          <h3 class="text-sm font-bold text-main">Cepat & Bebas Batas</h3>
+          <p class="text-xs text-muted mt-1.5 leading-relaxed">
+            Didukung teknologi WebAssembly dan Canvas API. Tanpa antrean tunggu, tanpa watermark paksa, dan bebas digunakan kapan saja.
           </p>
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <button type="button" onclick="openDonateView()" class="btn-primary px-6 py-3 text-sm font-bold flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-          <span data-i18n="btn_support_us">Dukung Kami (Donasi)</span>
+        <button type="button" onclick="goHome()" class="btn-primary w-full sm:w-auto px-6 py-2.5 text-xs font-bold flex items-center justify-center gap-2">
+          <span>Mulai Menggunakan Alat</span>
         </button>
-        <button type="button" onclick="goHome()" class="btn-subtle px-6 py-3 text-sm font-bold" data-i18n="btn_explore_tools">
-          Mulai Menggunakan Alat
+        <button type="button" onclick="openDonateView()" class="btn-subtle w-full sm:w-auto px-6 py-2.5 text-xs font-bold flex items-center justify-center gap-2">
+          <svg class="w-3.5 h-3.5 text-rose-500" viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span data-i18n="btn_support_us">Dukung Kami (Donasi)</span>
         </button>
       </div>
     </div>
@@ -1099,7 +1108,7 @@
 
 
   <!-- ==================================================================== -->
-  <!-- VIEW 5: DONATE VIEW (OPEN DONATE)                                    -->
+  <!-- VIEW 5: DONATE VIEW (OPEN DONATE - QRIS & PAYPAL)                   -->
   <!-- ==================================================================== -->
   <section id="donateView" class="view-donate hidden" aria-hidden="true">
     <header class="site-header sticky-header">
@@ -1126,152 +1135,118 @@
       </div>
     </header>
 
-    <div class="donate-container max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+    <div class="donate-container max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12">
       <!-- Headline & Privacy Guarantee -->
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold mb-4">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold mb-3">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
           <span data-i18n="donate_badge">Dukungan Komunitas & Riset</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-main tracking-tight leading-snug" data-i18n="donate_headline">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-main tracking-tight leading-snug" data-i18n="donate_headline">
           Dukung kami terus untuk perkembangan yang lebih baik dan kami akan selalu menjaga privasi anda, file anda tidak akan tersimpan di server kami.
         </h1>
-        <p class="mt-4 text-xs sm:text-sm text-muted leading-relaxed" data-i18n="donate_sub">
-          Setiap donasi Anda memperkuat keberlangsungan platform ini, mendanai pengembangan fitur-fitur baru, dan memastikan seluruh utilitas tetap dapat diakses bebas tanpa paywall.
+        <p class="mt-3 text-xs sm:text-sm text-muted leading-relaxed" data-i18n="donate_sub">
+          Dukungan Anda membantu keberlangsungan server & platform ini agar selalu gratis dan bebas paywall bagi semua orang.
         </p>
       </div>
 
-      <!-- 4 Donation Channels Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <!-- 2 Donation Channels: QRIS & PayPal -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
-        <!-- Channel 1: PayPal -->
-        <div class="donate-card">
-          <div class="flex items-center justify-between mb-4">
-            <div class="donate-card-icon bg-blue-500/10 text-blue-500 border border-blue-500/20">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13l2-7h5a3 3 0 0 1 0 6h-4l-1 5H8l2-7h2z"/><path d="M6 18h4l1-4H8l-2 4z"/></svg>
+        <!-- Channel 1: QRIS Standar Pembayaran Nasional -->
+        <div class="donate-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="donate-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M17 7h.01M7 17h.01M12 12h.01M17 17h.01"/></svg>
+              </div>
+              <span class="badge-tag">QRIS Semua Bank & E-Wallet</span>
             </div>
-            <span class="badge-tag" data-i18n="tag_intl">Internasional</span>
+            <h3 class="text-base font-bold text-main">QRIS Standar Nasional</h3>
+            <p class="text-xs text-muted mt-1 leading-relaxed">
+              Pindai dari BCA Mobile, Livin' by Mandiri, BRImo, BNI Mobile, GoPay, OVO, DANA, ShopeePay, LinkAja, atau m-Banking apa saja.
+            </p>
+
+            <!-- QRIS Merchant Details & Real Image -->
+            <div class="mt-4 p-4 rounded-xl bg-base border border-subtle text-center">
+              <div class="flex items-center justify-center mb-2">
+                <span class="text-xs font-bold text-main tracking-wider uppercase">SEROJA LABS, TECH</span>
+              </div>
+              <div class="qris-img-container mx-auto my-2 p-2 bg-white rounded-xl shadow-sm inline-block">
+                <img src="qris.jpg" alt="QRIS SEROJA LABS, TECH" class="max-w-[200px] sm:max-w-[220px] w-full h-auto rounded-lg mx-auto block" />
+              </div>
+              <div class="mt-2 text-[11px] font-mono text-muted flex items-center justify-center gap-1">
+                <span>NMID:</span>
+                <span class="text-main font-bold select-all">ID1025465813588</span>
+              </div>
+            </div>
+
+            <!-- Nominal Selector -->
+            <div class="mt-4">
+              <label class="input-label" data-i18n="label_qris_amount">Pilih Nominal Donasi:</label>
+              <div class="grid grid-cols-4 gap-2 mt-1.5">
+                <button type="button" class="qris-amount-btn active" data-amount="10000">10K</button>
+                <button type="button" class="qris-amount-btn" data-amount="25000">25K</button>
+                <button type="button" class="qris-amount-btn" data-amount="50000">50K</button>
+                <button type="button" class="qris-amount-btn" data-amount="100000">100K</button>
+              </div>
+              <div class="mt-2 text-center text-xs font-bold text-main" id="qrisNominalDisplay">Rp 10.000</div>
+            </div>
           </div>
-          <h3 class="text-base font-bold text-main">PayPal</h3>
-          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="paypal_desc">
-            Dukungan global aman melalui saldo PayPal, Kartu Kredit (Visa, Mastercard), atau Debit internasional.
-          </p>
-          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
-            <span class="text-main font-semibold truncate">paypal.me/serojalabs</span>
-            <button type="button" class="text-xs text-sky-500 hover:text-sky-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('paypal.me/serojalabs', 'Link PayPal disalin!')" data-i18n="btn_copy">Salin</button>
+
+          <div class="grid grid-cols-2 gap-2 mt-4">
+            <button type="button" class="btn-subtle py-2.5 text-xs font-bold flex items-center justify-center gap-1.5" onclick="copyToClipboard('ID1025465813588', 'NMID QRIS disalin!')">
+              <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>Salin NMID</span>
+            </button>
+            <a href="qris.jpg" download="qris-serojalabs.jpg" class="btn-primary py-2.5 text-xs font-bold flex items-center justify-center gap-1.5 text-center" style="background-color: #F59E0B; box-shadow: 0 4px 12px rgba(245,158,11,0.25);">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Unduh QRIS</span>
+            </a>
           </div>
-          <a href="https://paypal.me" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" style="background-color: #0070BA; box-shadow: 0 4px 12px rgba(0,112,186,0.3);">
-            <span data-i18n="btn_open_paypal">Buka PayPal</span>
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
         </div>
 
-        <!-- Channel 2: Ko-fi -->
-        <div class="donate-card">
-          <div class="flex items-center justify-between mb-4">
-            <div class="donate-card-icon bg-rose-500/10 text-rose-500 border border-rose-500/20">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+        <!-- Channel 2: PayPal -->
+        <div class="donate-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="donate-card-icon bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13l2-7h5a3 3 0 0 1 0 6h-4l-1 5H8l2-7h2z"/><path d="M6 18h4l1-4H8l-2 4z"/></svg>
+              </div>
+              <span class="badge-tag" data-i18n="tag_intl">Internasional</span>
             </div>
-            <span class="badge-tag">Creator Support</span>
-          </div>
-          <h3 class="text-base font-bold text-main">Ko-fi</h3>
-          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="kofi_desc">
-            Traktir secangkir kopi untuk pengembang Seroja Labs dengan donasi satu kali atau dukungan bulanan.
-          </p>
-          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
-            <span class="text-main font-semibold truncate">ko-fi.com/serojalabs</span>
-            <button type="button" class="text-xs text-rose-500 hover:text-rose-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('ko-fi.com/serojalabs', 'Link Ko-fi disalin!')" data-i18n="btn_copy">Salin</button>
-          </div>
-          <a href="https://ko-fi.com" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" style="background-color: #FF5E5B; box-shadow: 0 4px 12px rgba(255,94,91,0.3);">
-            <span data-i18n="btn_open_kofi">Traktir di Ko-fi</span>
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
+            <h3 class="text-base font-bold text-main">PayPal</h3>
+            <p class="text-xs text-muted mt-1 leading-relaxed" data-i18n="paypal_desc">
+              Dukungan global aman melalui saldo PayPal, Kartu Kredit (Visa, Mastercard, Amex), atau Kartu Debit internasional.
+            </p>
 
-        <!-- Channel 3: SociaBuzz -->
-        <div class="donate-card">
-          <div class="flex items-center justify-between mb-4">
-            <div class="donate-card-icon bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <span class="badge-tag">Indonesia E-Wallet</span>
-          </div>
-          <h3 class="text-base font-bold text-main">SociaBuzz Tribe</h3>
-          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="sociabuzz_desc">
-            Metode termudah untuk pengguna di Indonesia menggunakan GoPay, OVO, DANA, LinkAja, atau ShopeePay.
-          </p>
-          <div class="p-3 rounded-lg bg-base border border-subtle mt-4 font-mono text-xs flex items-center justify-between">
-            <span class="text-main font-semibold truncate">sociabuzz.com/serojalabs/tribe</span>
-            <button type="button" class="text-xs text-emerald-500 hover:text-emerald-400 font-bold ml-2 shrink-0" onclick="copyToClipboard('sociabuzz.com/serojalabs/tribe', 'Link SociaBuzz disalin!')" data-i18n="btn_copy">Salin</button>
-          </div>
-          <a href="https://sociabuzz.com" target="_blank" rel="noopener noreferrer" class="btn-primary w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4">
-            <span data-i18n="btn_open_sociabuzz">Dukung via SociaBuzz</span>
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-
-        <!-- Channel 4: QRIS Nasional -->
-        <div class="donate-card">
-          <div class="flex items-center justify-between mb-4">
-            <div class="donate-card-icon bg-amber-500/10 text-amber-500 border border-amber-500/20">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M17 7h.01M7 17h.01M12 12h.01M17 17h.01"/></svg>
-            </div>
-            <span class="badge-tag">QRIS Standar BI</span>
-          </div>
-          <h3 class="text-base font-bold text-main">QRIS (Semua Bank & E-Wallet)</h3>
-          <p class="text-xs sm:text-sm text-muted mt-1.5 leading-relaxed" data-i18n="qris_desc">
-            Pindai langsung dari aplikasi Mobile Banking (BCA, Mandiri, BRI, BNI) atau aplikasi dompet digital apa saja.
-          </p>
-
-          <!-- Interactive QRIS Nominal Selector -->
-          <div class="mt-4">
-            <label class="input-label" data-i18n="label_qris_amount">Pilih Nominal Donasi:</label>
-            <div class="grid grid-cols-4 gap-2 mt-1.5">
-              <button type="button" class="qris-amount-btn active" data-amount="10000">10K</button>
-              <button type="button" class="qris-amount-btn" data-amount="25000">25K</button>
-              <button type="button" class="qris-amount-btn" data-amount="50000">50K</button>
-              <button type="button" class="qris-amount-btn" data-amount="100000">100K</button>
+            <div class="mt-4 p-4 rounded-xl bg-base border border-subtle">
+              <div class="text-[11px] text-muted font-medium mb-1">Tautan Pembayaran:</div>
+              <div class="font-mono text-xs font-bold text-main truncate">paypal.me/serojalabs</div>
+              <p class="text-[11px] text-muted mt-2 leading-relaxed">
+                Anda dapat memilih jumlah nominal donasi bebas langsung di portal resmi PayPal yang terenkripsi aman.
+              </p>
             </div>
           </div>
 
-          <!-- QRIS Graphic Preview -->
-          <div class="p-4 rounded-xl bg-base border border-subtle mt-4 flex items-center gap-4">
-            <div class="qris-box-graphic p-2 bg-white rounded-lg shrink-0">
-              <!-- Stylized Vector QR Code -->
-              <svg class="w-16 h-16 text-black" viewBox="0 0 100 100" fill="currentColor">
-                <rect x="5" y="5" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
-                <rect x="13" y="13" width="12" height="12"/>
-                <rect x="67" y="5" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
-                <rect x="75" y="13" width="12" height="12"/>
-                <rect x="5" y="67" width="28" height="28" rx="2" fill="none" stroke="black" stroke-width="6"/>
-                <rect x="13" y="75" width="12" height="12"/>
-                <rect x="42" y="10" width="8" height="18"/>
-                <rect x="10" y="42" width="18" height="8"/>
-                <rect x="42" y="42" width="16" height="16"/>
-                <rect x="68" y="42" width="12" height="8"/>
-                <rect x="42" y="72" width="14" height="18"/>
-                <rect x="70" y="70" width="20" height="20"/>
-              </svg>
-            </div>
-            <div class="min-w-0">
-              <div class="text-[10px] text-muted uppercase font-mono tracking-wider">NMID: ID102026SEROJA</div>
-              <div class="text-sm font-bold text-main mt-0.5" id="qrisNominalDisplay">Rp 10.000</div>
-              <div class="text-[11px] text-emerald-500 font-medium mt-0.5">Seroja Labs Official</div>
-            </div>
+          <div class="grid grid-cols-2 gap-2 mt-4">
+            <button type="button" class="btn-subtle py-2.5 text-xs font-bold flex items-center justify-center gap-1.5" onclick="copyToClipboard('https://paypal.me/serojalabs', 'Link PayPal disalin!')" data-i18n="btn_copy">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>Salin Link</span>
+            </button>
+            <a href="https://paypal.me/serojalabs" target="_blank" rel="noopener noreferrer" class="btn-primary py-2.5 text-xs font-bold flex items-center justify-center gap-1.5 text-center" style="background-color: #0070BA; box-shadow: 0 4px 12px rgba(0,112,186,0.3);">
+              <span data-i18n="btn_open_paypal">Buka PayPal</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
           </div>
-
-          <button type="button" class="btn-subtle w-full py-2.5 text-xs font-bold flex items-center justify-center gap-2 mt-4" onclick="copyToClipboard('ID102026SEROJA998', 'Kode NMID QRIS disalin!')">
-            <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/></svg>
-            <span data-i18n="btn_copy_qris">Salin Kode Bayar QRIS</span>
-          </button>
         </div>
 
       </div>
 
       <!-- Bottom Thank You Notice -->
-      <div class="p-6 rounded-2xl bg-surface border border-subtle text-center max-w-2xl mx-auto">
-        <h4 class="text-sm font-bold text-main" data-i18n="donate_thankyou_title">Terima Kasih Banyak Atas Dukungan Anda!</h4>
-        <p class="text-xs text-muted mt-2 leading-relaxed" data-i18n="donate_thankyou_desc">
+      <div class="p-5 rounded-2xl bg-surface border border-subtle text-center max-w-xl mx-auto">
+        <h4 class="text-xs sm:text-sm font-bold text-main" data-i18n="donate_thankyou_title">Terima Kasih Banyak Atas Dukungan Anda!</h4>
+        <p class="text-[11px] sm:text-xs text-muted mt-1.5 leading-relaxed" data-i18n="donate_thankyou_desc">
           Kebaikan Anda adalah energi utama bagi tim kami di Seroja Labs untuk terus berinovasi dan menjaga platform ini tetap bebas biaya selamanya.
         </p>
       </div>
