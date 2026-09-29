@@ -1,86 +1,106 @@
-# Konversian Stage ⚡📄
+# Converter Toolkit (Konversian Stage) ⚡📄
 
-Studio Konversi File dan Dokumen Modern oleh **Seroja Labs** dengan antarmuka **One-Page Fixed Viewport (tanpa scroll)** pada halaman utama, efek **Cursor Backlight**, sistem navigasi 3 tingkat (*Home → Category Overview → Dedicated Workspace*), serta dukungan tema **Light & Dark**.
+Studio Konversi Berkas & Dokumen Modern, Cepat, dan **100% Client-Side** yang dikembangkan oleh **Seroja Labs**. Berjalan langsung di peramban pengguna (browser) tanpa mengirim dokumen ke server pihak ketiga, menjamin kerahasiaan data dan privasi penuh.
 
-Semua pemrosesan yang didukung berjalan **100% Client-Side** langsung di peramban tanpa mengunggah berkas ke server luar demi privasi data mutlak.
+Dilengkapi antarmuka desktop modern (*One-Page Stage & Cursor Backlight*) serta **Versi Mobile Khusus (`/mobile`)** yang responsif dengan navigasi native browser back/forward dan tombol refresh terdedikasi.
+
 Home|Right Click
 |--|--|
 ![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/home.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/right-click.png)
 
 ---
 
-## 🌟 Fitur Baru (v2.2)
+## 🌟 Fitur Utama
 
-### 1. 🖱️ Custom Context Menu (Klik Kanan) & Bubble Light Effect
-- **Animasi Cahaya Gelembung (*Bubble Light Burst*):** Setiap kali pengguna melakukan klik kanan di mana saja pada layar, muncul animasi gelombang cahaya gelembung transparan yang membesar dan memudar halus dari titik kursor.
-- **Menu Pilihan Interaktif:**
-  1. 🔄 **Segarkan (*Refresh*)** — Memuat ulang halaman aplikasi.
-  2. ℹ️ **Tentang Seroja Labs (*About*)** — Membuka halaman profil Seroja Labs & Konversian Stage.
-  3. ── *(Pemisah Garis Estetik)* ──
-  4. 💖 **Donasi Sekarang (*Donate Now*)** — Langsung menuju halaman donasi & dukungan.
-
-### 2. 🏛️ Halaman Baru: Tentang Seroja Labs (*About View*)
-- Menjelaskan bahwa **Konversian Stage dibangun oleh Seroja Labs** untuk inisiatif utilitas digital terbuka berorientasi privasi bagi Workspace, Komunitas, dan Publik.
-- Menyajikan pilar utama:
-  - **100% Client-Side Privacy:** Berkas pengguna tidak pernah meninggalkan peramban.
-  - **Performa Instan:** Ditenagai Canvas API, WebAssembly, PDF.js, dan PDF-Lib tanpa batasan harian.
-  - **Untuk Workspace & Komunitas:** Solusi efisien tanpa paywall atau watermark.
-  - **Transparan & Independen:** Bebas dari pelacak agresif dan iklan pengintai.
-
-### 3. ☕ Halaman Baru: Open Donate & Dukungan Komunitas
-- **Headline Utama:**
-  > *"Dukung kami terus untuk perkembangan yang lebih baik dan kami akan selalu menjaga privasi anda, file anda tidak akan tersimpan di server kami."*
-- **4 Pilihan Kanal Donasi:**
-  1. **PayPal:** Mendukung donasi global via saldo PayPal atau kartu kredit internasional (`paypal.me/serojalabs`).
-  2. **Ko-fi:** Traktir secangkir kopi untuk pengembang Seroja Labs (`ko-fi.com/serojalabs`).
-  3. **SociaBuzz:** Pembayaran lokal Indonesia via GoPay, OVO, DANA, LinkAja, atau ShopeePay.
-  4. **QRIS Nasional:** QR code interaktif berstandar Bank Indonesia dengan selektor nominal instan (*Rp 10.000, Rp 25.000, Rp 50.000, Rp 100.000*) serta tombol salin kode bayar / NMID.
-
-### 4. 🌐 Sistem Multi-Bahasa (6 Bahasa)
-Tombol *Language Selector* di bilah header mendukung terjemahan penuh di seluruh halaman:
-- 🇮🇩 **Bahasa Indonesia**
-- 🇬🇧 **English**
-- 🇸🇦 **العربية (Arab)** *(Dilengkapi dukungan layout RTL otomatis)*
-- 🇩🇪 **Deutsch (Jerman)**
-- 🇷🇺 **Русский (Rusia)**
-- 🇨🇳 **中文 (Mandarin / China)**
-
-Pilihan bahasa tersimpan otomatis di `localStorage` peramban.
+- 🔒 **100% Client-Side Privacy:** Seluruh proses konversi dokumen, gambar, dan enkripsi PDF diproses menggunakan memori peramban (Canvas API, WebAssembly, SheetJS, docx-preview, PDF-Lib). Berkas tidak pernah diunggah ke cloud.
+- 📱 **Mobile Native Experience (`/mobile`):**
+  - Deteksi otomatis perangkat ponsel & tablet dengan pengalihan cerdas ke antarmuka mobile.
+  - Struktur rute terpisah per folder (`/mobile/image`, `/mobile/pdf`, `/mobile/tool`, `/mobile/about`, `/mobile/donate`) sehingga tombol **Back fisik/gesture HP** berfungsi secara alami.
+  - Floating & Top Action Bar dengan tombol **Refresh** dan **Back** di setiap halaman.
+- 📊 **Excel Multi-Sheet Selector:** Konversi spreadsheet Excel (.xlsx, .xls) ke PDF dengan pratinjau lembar kerja (*sheet*) dan selektor dinamis untuk memilih sheet yang ingin dikonversi.
+- 📄 **Office to PDF Engine:** Konversi DOCX, PPTX, dan Excel ke PDF langsung di browser.
+- 💖 **Donasi Sederhana & Transparan:** Pilihan dukungan langsung via **QRIS Nasional** dan **PayPal**.
+- 🌐 **Dukungan Multi-Bahasa:** Bahasa Indonesia, English, العربية, Deutsch, Русский, 中文.
+- 🌗 **Dark & Light Mode:** Transisi tema yang mulus dan nyaman untuk mata.
 
 ---
 
-## 🧭 Struktur Menu & Fitur Konversi
+## 🧭 Daftar Fitur & Tools
 
-### 1. Image Converter Tools
+### 1. 🖼️ Image Converter Tools
 - **A. Compressing Image:**
-  - Compress JPG, JPEG, PNG, WEBP, HEIC, BMP *(Slider kualitas % dan lebar maksimal px)*
+  - Kompresi fleksibel untuk format JPG, JPEG, PNG, WEBP, HEIC, BMP dengan slider kualitas dan batas resolusi.
 - **B. Converting Image:**
-  - JPG ke PNG / WEBP / BMP
-  - JPEG ke PNG / WEBP / BMP
-  - PNG ke JPG / WEBP / BMP
-  - WEBP ke JPG / PNG
-  - BMP ke PNG / JPG
-  - HEIC ke JPEG / JPG / PNG
+  - JPG ➔ PNG / WEBP / BMP
+  - JPEG ➔ PNG / WEBP / BMP
+  - PNG ➔ JPG / WEBP / BMP
+  - WEBP ➔ JPG / PNG
+  - BMP ➔ PNG / JPG
+  - HEIC ➔ JPEG / JPG / PNG
 
-### 2. PDF Converter Tools
-- **A. Standard Convert:**
-  - Image to PDF *(Multi-file, orientasi otomatis/potret/lanskap, margin, format kertas)*
-  - PDF to Image *(Ekstrak lembaran halaman ke PNG/JPG, unduh per halaman atau bulk .ZIP)*
-  - Merge PDF *(Urutkan naik/turun dan gabungkan beberapa PDF)*
-  - Merge PDF & Image
-  - Split PDF *(Pecah dokumen berdasarkan rentang halaman yang fleksibel)*
-  - Compress PDF *(Optimasi ukuran berkas)*
+### 2. 📑 PDF Converter Tools
+- **A. Standard PDF:**
+  - **Image to PDF:** Konversi multi-gambar ke satu PDF dengan pengaturan margin & orientasi.
+  - **Merge PDF:** Menggabungkan banyak file PDF menjadi satu dokumen berurutan.
+  - **Merge PDF & Image:** Menggabungkan lembaran PDF dan gambar ke dalam satu berkas PDF terpadu.
+  - **Split PDF:** Memecah dokumen PDF berdasarkan rentang halaman yang dipilih.
+  - **Compress PDF:** Mengurangi bobot file PDF tanpa mengorbankan keterbacaan teks.
 - **B. Document to PDF:**
-  - Text to PDF *(Editor teks langsung diubah ke PDF rapi)*
-  - DOCX to PDF, PPT to PDF, Excel to PDF
-- **C. PDF to Document:**
-  - PDF to Text *(Ekstraksi teks langsung dengan tombol Salin & Unduh .txt)*
-  - PDF to DOCX, PDF to PPT, PDF to Excel
-- **D. Security Document:**
-  - Lock PDF *(Proteksi watermark visual "CONFIDENTIAL" atau kustom)*
-  - Unlock PDF
+  - **Text to PDF:** Editor teks langsung diubah ke PDF rapi.
+  - **DOCX to PDF:** Konversi dokumen Word (.docx) ke PDF.
+  - **PPT to PDF:** Konversi presentasi PowerPoint (.pptx) ke PDF.
+  - **Excel to PDF:** Konversi spreadsheet (.xlsx, .xls) ke PDF dengan selektor multi-sheet interaktif.
+- **C. Security Document:**
+  - **Lock PDF:** Menambahkan proteksi sandi dan watermark dokumen.
+  - **Unlock PDF:** Membuka enkripsi PDF.
 
 ---
 
-## 🚀 Cara Menjalankan
-Buka file [`index.html`](file:///C:/Users/DARKO/.gemini/antigravity/scratch/docshift-converter/index.html) menggunakan **Brave Browser** atau klik ganda [`start.bat`](file:///C:/Users/DARKO/.gemini/antigravity/scratch/docshift-converter/start.bat).
+## 📂 Struktur Repositori
+
+```text
+convertertoolkit/
+├── index.html            # Halaman utama desktop + auto-redirect mobile
+├── app.js                # Engine converter desktop
+├── styles.css            # Styling desktop & responsive
+├── qris.jpg              # Barcode QRIS resmi
+├── paper.ico             # Favicon
+├── vercel.json           # Konfigurasi routing static Vercel
+├── README.md             # Dokumentasi proyek
+└── mobile/               # Antarmuka web khusus mobile
+    ├── index.html        # Beranda mobile
+    ├── mobile.css        # Styling UI mobile & bottom navigation
+    ├── mobile.js         # Navigasi, toast, dan tema mobile
+    ├── mobile-tools.js   # Engine converter khusus mobile
+    ├── image/index.html  # Halaman tools gambar mobile
+    ├── pdf/index.html    # Halaman tools PDF mobile
+    ├── tool/index.html   # Workspace converter mobile
+    ├── about/index.html  # Profil Seroja Labs minimalis
+    └── donate/index.html # Halaman donasi QRIS + PayPal
+```
+
+---
+
+## 🚀 Panduan Deployment
+
+### Deploy ke Vercel (Rekomendasi)
+1. Fork atau clone repositori ini ke akun GitHub Anda.
+2. Buka [Vercel Dashboard](https://vercel.com/) dan pilih **Add New... ➔ Project**.
+3. Import repositori `convertertoolkit`.
+4. Pada bagian **Framework Preset**, pilih **Other** (karena murni Static HTML/JS/CSS).
+5. Klik **Deploy**. Website akan langsung aktif dalam hitungan detik.
+
+### Menjalankan Secara Lokal
+Cukup buka file `index.html` menggunakan peramban modern (Chrome, Edge, Brave, Firefox) atau gunakan ekstensi Live Server di VS Code.
+
+---
+
+## ☕ Donasi & Kontribusi
+
+Jika aplikasi ini bermanfaat untuk produktivitas Anda, dukung pengembangannya melalui:
+- **QRIS:** Pindai barcode QRIS di menu Donasi aplikasi.
+- **PayPal:** [paypal.me/serojalabs](https://paypal.me/serojalabs)
+
+---
+
+**© 2026 Seroja Labs.** Berorientasi pada privasi dan utilitas digital terbuka.
