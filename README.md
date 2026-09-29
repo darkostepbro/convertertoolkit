@@ -4,9 +4,9 @@ Studio Konversi Berkas & Dokumen Modern, Cepat, dan **100% Client-Side** yang di
 
 Dilengkapi antarmuka desktop modern (*One-Page Stage & Cursor Backlight*) serta **Versi Mobile Khusus (`/mobile`)** yang responsif dengan navigasi native browser back/forward dan tombol refresh terdedikasi.
 
-Home|Right Click
+Home|Right Click|M-Home|M-Image|M-Donate
 |--|--|
-![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/home.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/right-click.png)
+![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/home.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/right-click.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/mob-home.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/mob-image.png)|![img](https://raw.githubusercontent.com/darkostepbro/convertertoolkit/refs/heads/main/images/mob-donate.png)
 
 ---
 
