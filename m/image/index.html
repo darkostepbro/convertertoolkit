@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id" class="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Image Converter Mobile — Konversian Stage</title>
+  <link rel="shortcut icon" type="image/x-ico" href="../../paper.ico"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../mobile.css">
+</head>
+<body>
+
+  <div class="mobile-app">
+    <!-- Header with Back & Refresh -->
+    <header class="mobile-header">
+      <div class="header-left">
+        <button type="button" class="mobile-btn-back" data-action="back" data-fallback="../">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Kembali</span>
+        </button>
+      </div>
+
+      <div class="header-center">
+        <div class="header-title">Image Converter</div>
+        <div class="header-sub">14 Alat Gambar</div>
+      </div>
+
+      <div class="header-right">
+        <!-- Dedicated Refresh Button -->
+        <button type="button" class="mobile-btn-refresh" title="Segarkan Halaman" aria-label="Segarkan">
+          <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+        </button>
+        <!-- Theme Toggle -->
+        <button type="button" id="mobileThemeToggle" class="mobile-btn-icon" aria-label="Ganti Tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mobile-content">
+      <!-- Section A: Compressing Image -->
+      <div class="section-title-bar">
+        <span class="section-label">
+          <span style="width:8px;height:8px;border-radius:2px;background:#10B981;"></span>
+          A. Compressing Image
+        </span>
+        <span class="cat-count-badge">6 format</span>
+      </div>
+
+      <div class="tool-grid-mobile">
+        <a href="../tool/?id=compress-jpg" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress JPG</div>
+          <div class="tool-btn-sub">Kecilkan ukuran .jpg</div>
+        </a>
+
+        <a href="../tool/?id=compress-png" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress PNG</div>
+          <div class="tool-btn-sub">Kecilkan ukuran .png</div>
+        </a>
+
+        <a href="../tool/?id=compress-webp" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress WEBP</div>
+          <div class="tool-btn-sub">Format ringan web</div>
+        </a>
+
+        <a href="../tool/?id=compress-heic" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress HEIC</div>
+          <div class="tool-btn-sub">Foto kamera Apple</div>
+        </a>
+
+        <a href="../tool/?id=compress-bmp" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress BMP</div>
+          <div class="tool-btn-sub">Kompresi bitmap</div>
+        </a>
+
+        <a href="../tool/?id=compress-jpeg" class="tool-btn-card emerald">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 15-5-5-4 4-3-3-5 5"/></svg>
+          </div>
+          <div class="tool-btn-title">Compress JPEG</div>
+          <div class="tool-btn-sub">Kecilkan ukuran .jpeg</div>
+        </a>
+      </div>
+
+      <!-- Section B: Converting Image -->
+      <div class="section-title-bar" style="margin-top:24px;">
+        <span class="section-label">
+          <span style="width:8px;height:8px;border-radius:2px;background:#0EA5E9;"></span>
+          B. Converting Image
+        </span>
+        <span class="cat-count-badge">6 format</span>
+      </div>
+
+      <div class="tool-grid-mobile">
+        <a href="../tool/?id=convert-jpg" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert JPG</div>
+          <div class="tool-btn-sub">Ke PNG, WEBP, BMP</div>
+        </a>
+
+        <a href="../tool/?id=convert-png" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert PNG</div>
+          <div class="tool-btn-sub">Ke JPG, WEBP, BMP</div>
+        </a>
+
+        <a href="../tool/?id=convert-webp" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert WEBP</div>
+          <div class="tool-btn-sub">Ke JPG, PNG, BMP</div>
+        </a>
+
+        <a href="../tool/?id=convert-heic" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert HEIC</div>
+          <div class="tool-btn-sub">HEIC foto iPhone ke JPG</div>
+        </a>
+
+        <a href="../tool/?id=convert-bmp" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert BMP</div>
+          <div class="tool-btn-sub">Ke JPG, PNG, WEBP</div>
+        </a>
+
+        <a href="../tool/?id=convert-jpeg" class="tool-btn-card sky">
+          <div class="tool-icon-box">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div class="tool-btn-title">Convert JPEG</div>
+          <div class="tool-btn-sub">Ke PNG, WEBP, BMP</div>
+        </a>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+      <a href="../" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Beranda</span>
+      </a>
+      <a href="./" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span>Gambar</span>
+      </a>
+      <a href="../pdf/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+        <span>PDF</span>
+      </a>
+      <a href="../about/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Tentang</span>
+      </a>
+      <a href="../donate/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span>Donasi</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="../mobile.js"></script>
+</body>
+</html>

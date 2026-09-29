@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id" class="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Workspace — Konversian Stage Mobile</title>
+  <link rel="shortcut icon" type="image/x-ico" href="../../paper.ico"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- CDN Libraries for full client-side mobile execution -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <script src="https://unpkg.com/@pdfsmaller/pdf-encrypt@1.2.0/dist/pdf-encrypt.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.2/dist/docx-preview.min.js"></script>
+
+  <link rel="stylesheet" href="../mobile.css">
+  <style>
+    /* High fidelity document preview on mobile */
+    .excel-mobile-table {
+      border-collapse: collapse;
+      font-size: 10px;
+      font-family: 'Calibri', sans-serif;
+      width: 100%;
+    }
+    .excel-mobile-table th, .excel-mobile-table td {
+      border: 1px solid #CBD5E1;
+      padding: 4px 6px;
+      white-space: nowrap;
+    }
+    .excel-mobile-table th {
+      background: #E2E8F0;
+      color: #0F172A;
+      font-weight: 700;
+    }
+    .excel-mobile-table tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-app">
+    <!-- Header with Dynamic Back, Tool Title & Refresh Button -->
+    <header class="mobile-header">
+      <div class="header-left">
+        <button type="button" id="toolBackBtn" class="mobile-btn-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+          <span id="toolBackText">Kembali</span>
+        </button>
+      </div>
+
+      <div class="header-center">
+        <div id="toolHeaderTitle" class="header-title">Memuat Alat...</div>
+        <div id="toolHeaderSub" class="header-sub">100% Client-Side</div>
+      </div>
+
+      <div class="header-right">
+        <!-- Dedicated Refresh Button -->
+        <button type="button" class="mobile-btn-refresh" title="Segarkan Halaman" aria-label="Segarkan">
+          <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+        </button>
+        <!-- Theme Toggle -->
+        <button type="button" id="mobileThemeToggle" class="mobile-btn-icon" aria-label="Ganti Tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace Main Content -->
+    <main class="mobile-content">
+      
+      <!-- Mobile Dropzone / File Picker -->
+      <div id="mobileDropzone" class="mobile-dropzone">
+        <input type="file" id="mobileFileInput" style="display:none;">
+        <div class="dropzone-icon-circle">
+          <svg id="toolIconSvg" style="width:26px;height:26px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div id="dropzonePrompt" class="dropzone-prompt">Ketuk untuk Memilih File</div>
+        <div id="dropzoneHint" class="dropzone-hint">Pilih dari galeri atau dokumen ponsel</div>
+        <div class="dropzone-cta-btn">
+          <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Pilih Berkas</span>
+        </div>
+      </div>
+
+      <!-- File Loaded Info Bar -->
+      <div id="mobileFileInfoBar" class="file-loaded-bar hidden">
+        <div class="file-info">
+          <span id="fileIconTag" class="file-icon-tag">FILE</span>
+          <div>
+            <div id="fileNameDisplay" class="file-name-text">berkas.pdf</div>
+            <div id="fileMetaDisplay" class="file-meta-text">0 KB</div>
+          </div>
+        </div>
+        <button type="button" id="changeFileBtn" class="mobile-btn-back" style="height:32px;font-size:11px;">
+          Ganti File
+        </button>
+      </div>
+
+      <!-- Live Preview Container (For Office docs, PDF pages, Excel sheets) -->
+      <div id="previewContainer" class="mobile-preview-box hidden">
+        <div class="mobile-preview-header">
+          <span id="previewHeaderLabel">Pratinjau Dokumen</span>
+          <div id="previewPageControls" class="hidden" style="display:flex;align-items:center;gap:6px;">
+            <button type="button" id="prevSlideBtn" style="padding:2px 8px;border-radius:4px;background:var(--bg-card);border:1px solid var(--border-subtle);font-weight:700;">◀</button>
+            <span id="slideIndicator" style="font-family:var(--font-mono);font-size:11px;">1 / 1</span>
+            <button type="button" id="nextSlideBtn" style="padding:2px 8px;border-radius:4px;background:var(--bg-card);border:1px solid var(--border-subtle);font-weight:700;">▶</button>
+          </div>
+        </div>
+
+        <!-- Excel Sheet Tabs on Mobile -->
+        <div id="mobileSheetTabs" class="mobile-sheet-tabs hidden"></div>
+
+        <!-- Preview Body Canvas/Scroll -->
+        <div id="previewScrollArea" class="mobile-preview-scroll">
+          <div id="docxPreviewArea" class="hidden"></div>
+          <canvas id="pdfPreviewCanvas" class="hidden" style="max-width:100%;height:auto;display:block;margin:0 auto;"></canvas>
+          <div id="excelPreviewArea" class="hidden" style="overflow-x:auto;"></div>
+        </div>
+      </div>
+
+      <!-- Dynamic Settings Card -->
+      <div id="toolSettingsBox" class="mobile-settings">
+        <!-- Injected dynamically based on tool ID -->
+      </div>
+
+      <!-- Primary Action Button -->
+      <button type="button" id="mobileActionBtn" class="btn-mobile-action" disabled>
+        <span id="btnIconSlot">
+          <svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <span id="btnTextSlot">Mulai Konversi</span>
+      </button>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+      <a href="../" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Beranda</span>
+      </a>
+      <a href="../image/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span>Gambar</span>
+      </a>
+      <a href="../pdf/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+        <span>PDF</span>
+      </a>
+      <a href="../about/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Tentang</span>
+      </a>
+      <a href="../donate/" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span>Donasi</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="../mobile.js"></script>
+  <script src="../mobile-tools.js"></script>
+</body>
+</html>
