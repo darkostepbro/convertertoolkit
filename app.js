@@ -1,6 +1,5 @@
 /**
  * Konversian Stage — Application Logic v2.2
- * built by Seroja Labs
  * ==========================================
  * Features:
  * - 3-level navigation: Home → Category → Workspace
@@ -38,14 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'B. Converting Image',
       chip_6_format: '6 format',
       img_card_cta: 'Jelajahi Tools Gambar',
-      pdf_card_badge: '4 Kategori · 20 Alat',
+      pdf_card_badge: '3 Kategori · 11 Alat',
       pdf_card_title: 'PDF Converter',
-      pdf_card_overview: 'Kelola dokumen PDF secara menyeluruh — dari konversi standar, gabung, pisah, kompres, hingga proteksi dokumen. Termasuk konversi ke/dari format dokumen populer seperti DOCX, PPT, dan Excel.',
+      pdf_card_overview: 'Kelola dokumen PDF secara menyeluruh — dari konversi standar, gabung, pisah, kompres, hingga proteksi dokumen serta konversi berkas Office (Word, PowerPoint, Excel) ke PDF.',
       sec_pdf_standard: 'A. Standard Convert',
       sec_doc2pdf: 'B. Document to PDF',
-      sec_pdf2doc: 'C. PDF to Document',
-      sec_security: 'D. Security Document',
-      chip_6_tools: '6 alat',
+      sec_security: 'C. Security Document',
+      chip_6_tools: '5 alat',
       chip_4_tools: '4 alat',
       chip_2_tools: '2 alat',
       pdf_card_cta: 'Jelajahi Tools PDF',
@@ -199,9 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btn_unlock_pdf: 'Buka Kunci Dokumen',
       // Stirling-PDF
       dz_stirling_o2p_title: 'Pilih Dokumen Office (DOCX / PPT / Excel)',
-      settings_stirling_o2p: 'Konfigurasi Stirling-PDF',
+      settings_stirling_o2p: 'Pengaturan Konversi Dokumen',
       btn_convert_to_pdf: 'Konversi ke PDF',
-      desc_stirling_api_info: 'Didukung oleh arsitektur open-source Stirling-Tools/Stirling-PDF via REST API. Mendukung LibreOffice headless engine untuk hasil tata letak dokumen yang presisi.',
+      desc_stirling_api_info: 'Konversi file diproses langsung di peramban Anda dengan ketepatan tata letak berpresisi tinggi.',
       dz_stirling_p2o_title: 'Pilih Dokumen PDF untuk Dikonversi',
       settings_stirling_p2o: 'Format Target Dokumen',
       label_target_office: 'Konversi Ke',
@@ -222,14 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'B. Converting Image',
       chip_6_format: '6 formats',
       img_card_cta: 'Explore Image Tools',
-      pdf_card_badge: '4 Categories · 20 Tools',
+      pdf_card_badge: '3 Categories · 11 Tools',
       pdf_card_title: 'PDF Converter',
-      pdf_card_overview: 'Manage PDF documents comprehensively — standard convert, merge, split, compress, and document protection. Includes DOCX, PPT, and Excel support.',
+      pdf_card_overview: 'Manage PDF documents comprehensively — standard convert, merge, split, compress, document protection, and Office (Word, PowerPoint, Excel) to PDF.',
       sec_pdf_standard: 'A. Standard Convert',
       sec_doc2pdf: 'B. Document to PDF',
-      sec_pdf2doc: 'C. PDF to Document',
-      sec_security: 'D. Security Document',
-      chip_6_tools: '6 tools',
+      sec_security: 'C. Security Document',
+      chip_6_tools: '5 tools',
       chip_4_tools: '4 tools',
       chip_2_tools: '2 tools',
       pdf_card_cta: 'Explore PDF Tools',
@@ -381,9 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
       desc_unlock_notice: 'After entering a valid password, a new unlocked PDF copy will be created and ready to download.',
       btn_unlock_pdf: 'Unlock Document',
       dz_stirling_o2p_title: 'Select Office Document (DOCX / PPT / Excel)',
-      settings_stirling_o2p: 'Stirling-PDF Configuration',
+      settings_stirling_o2p: 'Document Conversion Settings',
       btn_convert_to_pdf: 'Convert to PDF',
-      desc_stirling_api_info: 'Powered by the open-source Stirling-Tools/Stirling-PDF architecture via REST API. Supports LibreOffice headless engine for precise document layout results.',
+      desc_stirling_api_info: 'File conversion is processed directly in your browser with high-precision layout preservation.',
       dz_stirling_p2o_title: 'Select PDF Document to Convert',
       settings_stirling_p2o: 'Target Document Format',
       label_target_office: 'Convert To',
@@ -404,14 +401,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'ب. تحويل صيغ الصور',
       chip_6_format: '6 صيغ',
       img_card_cta: 'استكشف أدوات الصور',
-      pdf_card_badge: '4 فئات · 20 أداة',
+      pdf_card_badge: '3 فئات · 11 أداة',
       pdf_card_title: 'أدوات PDF',
       pdf_card_overview: 'إدارة شاملة لملفات PDF — تحويل، دمج، تقسيم، ضغط، وحماية المستندات بالكامل محلياً.',
       sec_pdf_standard: 'أ. التحويل القياسي',
       sec_doc2pdf: 'ب. تحويل المستندات إلى PDF',
-      sec_pdf2doc: 'ج. تحويل PDF إلى مستندات',
-      sec_security: 'د. أمان المستندات',
-      chip_6_tools: '6 أدوات',
+      sec_security: 'ج. أمان المستندات',
+      chip_6_tools: '5 أدوات',
       chip_4_tools: '4 أدوات',
       chip_2_tools: 'أداتان',
       pdf_card_cta: 'استكشف أدوات PDF',
@@ -582,14 +578,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'B. Bildkonvertierung',
       chip_6_format: '6 Formate',
       img_card_cta: 'Bild-Tools entdecken',
-      pdf_card_badge: '4 Kategorien · 20 Tools',
+      pdf_card_badge: '3 Kategorien · 11 Tools',
       pdf_card_title: 'PDF Converter',
-      pdf_card_overview: 'PDF-Dokumente flexibel verwalten — Konvertieren, Zusammenführen, Teilen, Komprimieren und Sichern. Inklusive Office-Unterstützung.',
+      pdf_card_overview: 'PDF-Dokumente flexibel verwalten — Konvertieren, Zusammenführen, Teilen, Komprimieren, Sichern und Office zu PDF.',
       sec_pdf_standard: 'A. Standard-Konvertierung',
       sec_doc2pdf: 'B. Dokument zu PDF',
-      sec_pdf2doc: 'C. PDF zu Dokument',
-      sec_security: 'D. Dokumentensicherheit',
-      chip_6_tools: '6 Tools',
+      sec_security: 'C. Dokumentensicherheit',
+      chip_6_tools: '5 Tools',
       chip_4_tools: '4 Tools',
       chip_2_tools: '2 Tools',
       pdf_card_cta: 'PDF-Tools entdecken',
@@ -755,14 +750,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'Б. Конвертация изображений',
       chip_6_format: '6 форматов',
       img_card_cta: 'Открыть инструменты изображений',
-      pdf_card_badge: '4 категории · 20 инструментов',
+      pdf_card_badge: '3 категории · 11 инструментов',
       pdf_card_title: 'Конвертер PDF',
-      pdf_card_overview: 'Полное управление PDF: объединение, разделение, сжатие, защита и конвертация в форматы DOCX, PPT и Excel.',
+      pdf_card_overview: 'Полное управление PDF: объединение, разделение, сжатие, защита и конвертация Office в PDF.',
       sec_pdf_standard: 'А. Стандартная конвертация',
       sec_doc2pdf: 'Б. Документы в PDF',
-      sec_pdf2doc: 'В. PDF в документы',
-      sec_security: 'Г. Безопасность документов',
-      chip_6_tools: '6 утилит',
+      sec_security: 'В. Безопасность документов',
+      chip_6_tools: '5 утилит',
       chip_4_tools: '4 утилиты',
       chip_2_tools: '2 утилиты',
       pdf_card_cta: 'Открыть инструменты PDF',
@@ -928,14 +922,13 @@ document.addEventListener('DOMContentLoaded', () => {
       sec_img_convert: 'B. 图片格式转换',
       chip_6_format: '6 种格式',
       img_card_cta: '浏览图片处理工具',
-      pdf_card_badge: '4 大类别 · 20 种工具',
+      pdf_card_badge: '3 大类别 · 11 种工具',
       pdf_card_title: 'PDF 转换工具',
-      pdf_card_overview: '全方位掌控 PDF 文档——标准转换、合并、分割、压缩与安全保护。支持 DOCX、PPT 与 Excel 双向转换。',
+      pdf_card_overview: '全方位掌控 PDF 文档——标准转换、合并、分割、压缩与安全保护，以及 Office (Word, PPT, Excel) 转 PDF。',
       sec_pdf_standard: 'A. 标准 PDF 转换',
       sec_doc2pdf: 'B. 办公文档转 PDF',
-      sec_pdf2doc: 'C. PDF 转办公文档',
-      sec_security: 'D. 文档安全保护',
-      chip_6_tools: '6 款工具',
+      sec_security: 'C. 文档安全保护',
+      chip_6_tools: '5 款工具',
       chip_4_tools: '4 款工具',
       chip_2_tools: '2 款工具',
       pdf_card_cta: '浏览 PDF 处理工具',
@@ -1105,7 +1098,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { id:'compress-jpeg', label:'Compress JPEG', status:'ready', panel:'panelImgCompress', accept:'image/jpeg',           ext:'jpeg' },
             { id:'compress-png',  label:'Compress PNG',  status:'ready', panel:'panelImgCompress', accept:'image/png',            ext:'png'  },
             { id:'compress-webp', label:'Compress WEBP', status:'ready', panel:'panelImgCompress', accept:'image/webp',           ext:'webp' },
-            { id:'compress-heic', label:'Compress HEIC', status:'soon', panel:'panelImgCompress', accept:'.heic,.heif,image/heic,image/heif', ext:'heic' },
+            { id:'compress-heic', label:'Compress HEIC', status:'ready', panel:'panelImgCompress', accept:'.heic,.heif,image/heic,image/heif', ext:'heic' },
             { id:'compress-bmp',  label:'Compress BMP',  status:'ready', panel:'panelImgCompress', accept:'image/bmp',            ext:'bmp'  },
           ]
         },
@@ -1115,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { id:'convert-jpg',  label:'JPG → PNG/WEBP/BMP', status:'ready', panel:'panelImgConvert', srcFmt:'jpg',  srcMime:'image/jpeg', targets:['png','webp','bmp'] },
             { id:'convert-jpeg', label:'JPEG → PNG/WEBP/BMP',status:'ready', panel:'panelImgConvert', srcFmt:'jpeg', srcMime:'image/jpeg', targets:['png','webp','bmp'] },
             { id:'convert-png',  label:'PNG → JPG/WEBP/BMP', status:'ready', panel:'panelImgConvert', srcFmt:'png',  srcMime:'image/png',  targets:['jpg','webp','bmp'] },
-            { id:'convert-heic', label:'HEIC → JPG/PNG/WEBP', status:'soon', panel:'panelImgConvert', srcFmt:'heic', srcMime:'.heic,.heif,image/heic,image/heif', targets:['jpg','png','webp'] },
+            { id:'convert-heic', label:'HEIC → JPG/PNG/WEBP', status:'ready', panel:'panelImgConvert', srcFmt:'heic', srcMime:'.heic,.heif,image/heic,image/heif', targets:['jpg','png','webp'] },
             { id:'convert-webp', label:'WEBP → JPG/PNG',     status:'ready', panel:'panelImgConvert', srcFmt:'webp', srcMime:'image/webp', targets:['jpg','png'] },
             { id:'convert-bmp',  label:'BMP → PNG/JPG',      status:'ready', panel:'panelImgConvert', srcFmt:'bmp',  srcMime:'image/bmp',  targets:['png','jpg'] },
           ]
@@ -1131,7 +1124,6 @@ document.addEventListener('DOMContentLoaded', () => {
           id: 'sec-pdf-standard', labelKey: 'sec_pdf_standard',
           tools: [
             { id:'img2pdf',      label:'Image to PDF',     status:'ready', panel:'panelImg2Pdf'   },
-            { id:'pdf2img',      label:'PDF to Image',     status:'ready', panel:'panelPdf2Img'   },
             { id:'mergepdf',     label:'Merge PDF',        status:'ready', panel:'panelMergePdf'  },
             { id:'merge-pdf-img',label:'Merge PDF & Image',status:'soon',  panel:'panelComingSoon'},
             { id:'splitpdf',     label:'Split PDF',        status:'ready', panel:'panelSplitPdf'  },
@@ -1141,26 +1133,17 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           id: 'sec-doc2pdf', labelKey: 'sec_doc2pdf',
           tools: [
-            { id:'docx2pdf',  label:'DOCX to PDF',  status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.docx,.doc', ext:'docx' },
-            { id:'ppt2pdf',   label:'PPT to PDF',   status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.pptx,.ppt', ext:'pptx' },
-            { id:'excel2pdf', label:'Excel to PDF', status:'soon', panel:'panelStirlingOffice2Pdf', accept:'.xlsx,.xls', ext:'xlsx' },
+            { id:'docx2pdf',  label:'DOCX to PDF',  status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.docx,.doc', ext:'docx' },
+            { id:'ppt2pdf',   label:'PPT to PDF',   status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.pptx,.ppt', ext:'pptx' },
+            { id:'excel2pdf', label:'Excel to PDF', status:'ready', panel:'panelStirlingOffice2Pdf', accept:'.xlsx,.xls', ext:'xlsx' },
             { id:'text2pdf',  label:'Text to PDF',  status:'ready', panel:'panelText2Pdf'  },
-          ]
-        },
-        {
-          id: 'sec-pdf2doc', labelKey: 'sec_pdf2doc',
-          tools: [
-            { id:'pdf2docx',  label:'PDF to DOCX',  status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'docx' },
-            { id:'pdf2ppt',   label:'PDF to PPT',   status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'pptx' },
-            { id:'pdf2excel', label:'PDF to Excel', status:'soon', panel:'panelStirlingPdf2Office', targetFormat:'xlsx' },
-            { id:'pdf2text',  label:'PDF to Text',  status:'ready', panel:'panelPdf2Text'  },
           ]
         },
         {
           id: 'sec-security', labelKey: 'sec_security',
           tools: [
             { id:'lockpdf',   label:'Lock PDF',   status:'ready', panel:'panelLockPdf'    },
-            { id:'unlockpdf', label:'Unlock PDF', status:'soon', panel:'panelUnlockPdf'  },
+            { id:'unlockpdf', label:'Unlock PDF', status:'ready', panel:'panelUnlockPdf'  },
           ]
         },
       ]
@@ -1200,19 +1183,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TOOL_ICON_COLORS = {
     'compress-jpg': 'bg-emerald-500/10 text-emerald-500', 'compress-jpeg': 'bg-emerald-500/10 text-emerald-500',
-    'compress-png': 'bg-emerald-500/10 text-emerald-500', 'compress-webp': 'bg-emerald-500/10 text-emerald-500',
-    'compress-heic':'bg-gray-500/10 text-gray-500',       'compress-bmp': 'bg-gray-500/10 text-gray-500',
-    'convert-jpg':  'bg-violet-500/10 text-violet-500',   'convert-jpeg': 'bg-violet-500/10 text-violet-500',
-    'convert-png':  'bg-violet-500/10 text-violet-500',   'convert-heic': 'bg-gray-500/10 text-gray-500',
-    'convert-webp': 'bg-violet-500/10 text-violet-500',   'convert-bmp':  'bg-violet-500/10 text-violet-500',
-    'img2pdf':      'bg-emerald-500/10 text-emerald-500', 'pdf2img':    'bg-sky-500/10 text-sky-500',
-    'mergepdf':     'bg-amber-500/10 text-amber-500',     'merge-pdf-img':'bg-gray-500/10 text-gray-500',
-    'splitpdf':     'bg-rose-500/10 text-rose-500',       'compresspdf':'bg-orange-500/10 text-orange-500',
-    'docx2pdf':     'bg-gray-500/10 text-gray-500',       'ppt2pdf':    'bg-gray-500/10 text-gray-500',
-    'excel2pdf':    'bg-gray-500/10 text-gray-500',       'text2pdf':   'bg-teal-500/10 text-teal-500',
-    'pdf2docx':     'bg-gray-500/10 text-gray-500',       'pdf2ppt':    'bg-gray-500/10 text-gray-500',
-    'pdf2excel':    'bg-gray-500/10 text-gray-500',       'pdf2text':   'bg-indigo-500/10 text-indigo-500',
-    'lockpdf':      'bg-yellow-500/10 text-yellow-500',   'unlockpdf':  'bg-gray-500/10 text-gray-500',
+    'compress-png':  'bg-emerald-500/10 text-emerald-500', 'compress-webp': 'bg-emerald-500/10 text-emerald-500',
+    'compress-heic': 'bg-emerald-500/10 text-emerald-500', 'compress-bmp':  'bg-emerald-500/10 text-emerald-500',
+    'convert-jpg':   'bg-violet-500/10 text-violet-500',   'convert-jpeg':  'bg-violet-500/10 text-violet-500',
+    'convert-png':   'bg-violet-500/10 text-violet-500',   'convert-heic':  'bg-violet-500/10 text-violet-500',
+    'convert-webp':  'bg-violet-500/10 text-violet-500',   'convert-bmp':   'bg-violet-500/10 text-violet-500',
+    'img2pdf':       'bg-emerald-500/10 text-emerald-500', 'pdf2img':       'bg-sky-500/10 text-sky-500',
+    'mergepdf':      'bg-amber-500/10 text-amber-500',     'merge-pdf-img': 'bg-gray-500/10 text-gray-500',
+    'splitpdf':      'bg-rose-500/10 text-rose-500',       'compresspdf':   'bg-orange-500/10 text-orange-500',
+    'docx2pdf':      'bg-blue-500/10 text-blue-500',       'ppt2pdf':       'bg-orange-500/10 text-orange-500',
+    'excel2pdf':     'bg-emerald-500/10 text-emerald-500', 'text2pdf':      'bg-teal-500/10 text-teal-500',
+    'pdf2docx':      'bg-blue-500/10 text-blue-500',       'pdf2ppt':       'bg-orange-500/10 text-orange-500',
+    'pdf2excel':     'bg-emerald-500/10 text-emerald-500', 'pdf2text':      'bg-indigo-500/10 text-indigo-500',
+    'lockpdf':       'bg-yellow-500/10 text-yellow-500',   'unlockpdf':     'bg-sky-500/10 text-sky-500',
   };
 
   const TOOL_MAP = {};
@@ -1269,6 +1252,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const langMenu       = document.getElementById('langMenu');
   const currentLangLabel = document.getElementById('currentLangLabel');
   const langOptions    = document.querySelectorAll('.lang-option');
+
+  // Show local server notice when running on file:// protocol
+  if (window.location.protocol === 'file:') {
+    const fileNotice = document.getElementById('fileProtocolNotice');
+    if (fileNotice) fileNotice.classList.remove('hidden');
+  }
 
   // Theme Buttons
   const themeBtns = [
@@ -1597,33 +1586,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (tool.panel === 'panelStirlingOffice2Pdf') {
       const ext = (tool.ext || 'docx').toUpperCase();
-      document.getElementById('so2pDropzoneHint').textContent =
-        `Pilih berkas ${ext} untuk dikonversi menjadi PDF via Stirling-PDF`;
+      let customHint = `Pilih berkas ${ext} untuk melihat pratinjau dan konversi ke PDF`;
+      if (tool.id === 'excel2pdf') customHint = 'Pilih lembar kerja Excel (.xlsx, .xls, .csv) untuk melihat pratinjau tabel & konversi ke PDF';
+      if (tool.id === 'docx2pdf')  customHint = 'Pilih dokumen Word (.docx) untuk melihat pratinjau tata letak & konversi ke PDF';
+      if (tool.id === 'ppt2pdf')   customHint = 'Pilih presentasi PowerPoint (.pptx, .ppt) untuk melihat pratinjau slide & konversi ke PDF';
+
+      document.getElementById('so2pDropzoneHint').textContent = customHint;
       document.getElementById('so2pFileInput').accept = tool.accept || '.docx,.doc,.pptx,.ppt,.xlsx,.xls';
-      so2pFileData = null;
+      so2pCurrentFile = null;
       document.getElementById('so2pDropzone').classList.remove('hidden');
       document.getElementById('so2pInfoBar').classList.add('hidden');
+      document.getElementById('so2pPreviewWrapper').classList.add('hidden');
       document.getElementById('so2pConvertBtn').disabled = true;
-      const storedUrl = localStorage.getItem('ks-stirling-url');
-      if (storedUrl) {
-        document.getElementById('stirlingServerUrl').value = storedUrl;
-        document.getElementById('stirlingServerDisplay').textContent = storedUrl;
-      }
-      pingStirling();
     }
 
     if (tool.panel === 'panelStirlingPdf2Office') {
       const fmt = tool.targetFormat || 'docx';
       document.getElementById('sp2oDropzoneHint').textContent =
-        `Pilih dokumen PDF yang ingin diubah ke ${fmt.toUpperCase()} yang dapat diedit`;
+        `Pilih dokumen PDF yang ingin direkonstruksi menjadi format ${fmt.toUpperCase()}`;
       document.getElementById('sp2oTargetFormat').value = fmt;
       document.getElementById('sp2oExtDisplay').textContent = '.' + fmt;
-      sp2oFileData = null;
+      sp2oCurrentFile = null;
       document.getElementById('sp2oDropzone').classList.remove('hidden');
       document.getElementById('sp2oInfoBar').classList.add('hidden');
+      document.getElementById('sp2oPreviewWrapper').classList.add('hidden');
       document.getElementById('sp2oConvertBtn').disabled = true;
-      const storedUrl = localStorage.getItem('ks-stirling-url');
-      if (storedUrl) document.getElementById('sp2oServerUrl').value = storedUrl;
     }
 
     if (tool.panel === 'panelLockPdf') {
@@ -1956,12 +1943,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (const file of icvFiles) {
       try {
-        const dataUrl = await convertImageCanvas(file, targetMime, quality);
+        const decoded = await decodeHeicIfNeeded(file);
+        const dataUrl = await convertImageCanvas(decoded, targetMime, quality);
         const name = file.name.replace(/\.[^.]+$/, '') + `.${targetFmt}`;
         downloadDataUrl(dataUrl, name);
         await new Promise(r => setTimeout(r, 120));
       } catch (e) {
-        showToast(`Gagal konversi ${file.name}`, 'error');
+        showToast(`Gagal konversi ${file.name}: ${e.message}`, 'error');
       }
     }
 
@@ -2104,82 +2092,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const downloadZipSpinner   = document.getElementById('downloadZipSpinner');
   const downloadZipText      = document.getElementById('downloadZipText');
 
-  setupDropzone(pdfDropzone, pdfFileInput, async files => {
-    const f = Array.from(files).find(x => x.type==='application/pdf'||x.name.endsWith('.pdf'));
-    if (!f) { showToast('Pilih file PDF.', 'error'); return; }
-    currentPdfFile = f;
-    document.getElementById('pdfLoadedName').textContent = f.name;
-    document.getElementById('pdfLoadedMeta').textContent = 'Memuat...';
-    pdfInfoBar.classList.remove('hidden');
-    pdfDropzone.classList.add('hidden');
-    pdfPagesHeader.classList.remove('hidden');
-    pdfPagesGrid.innerHTML = ''; downloadAllImagesBtn.disabled = true;
-    try {
-      const buf = await f.arrayBuffer();
-      currentPdfDoc = await window.pdfjsLib.getDocument({ data: buf }).promise;
-      document.getElementById('pdfLoadedMeta').textContent = `${currentPdfDoc.numPages} Halaman · ${formatBytes(f.size)}`;
-      await renderPdfPages(currentPdfDoc);
-    } catch(e) { showToast('Gagal baca PDF: ' + e.message, 'error'); pdfDropzone.classList.remove('hidden'); pdfInfoBar.classList.add('hidden'); }
-  });
+  if (pdfDropzone) {
+    setupDropzone(pdfDropzone, pdfFileInput, async files => {
+      const f = Array.from(files).find(x => x.type==='application/pdf'||x.name.endsWith('.pdf'));
+      if (!f) { showToast('Pilih file PDF.', 'error'); return; }
+      currentPdfFile = f;
+      document.getElementById('pdfLoadedName').textContent = f.name;
+      document.getElementById('pdfLoadedMeta').textContent = 'Memuat...';
+      pdfInfoBar.classList.remove('hidden');
+      pdfDropzone.classList.add('hidden');
+      pdfPagesHeader.classList.remove('hidden');
+      pdfPagesGrid.innerHTML = ''; downloadAllImagesBtn.disabled = true;
+      try {
+        const buf = await f.arrayBuffer();
+        currentPdfDoc = await window.pdfjsLib.getDocument({ data: buf }).promise;
+        document.getElementById('pdfLoadedMeta').textContent = `${currentPdfDoc.numPages} Halaman · ${formatBytes(f.size)}`;
+        await renderPdfPages(currentPdfDoc);
+      } catch(e) { showToast('Gagal baca PDF: ' + e.message, 'error'); pdfDropzone.classList.remove('hidden'); pdfInfoBar.classList.add('hidden'); }
+    });
 
-  pdfChangeFileBtn.addEventListener('click', () => { pdfFileInput.click(); });
-  document.getElementById('pdfImgFormat').addEventListener('change', () => { if(currentPdfDoc) renderPdfPages(currentPdfDoc); });
-  document.getElementById('pdfImgScale').addEventListener('change', () => { if(currentPdfDoc) renderPdfPages(currentPdfDoc); });
+    if (pdfChangeFileBtn) pdfChangeFileBtn.addEventListener('click', () => { pdfFileInput.click(); });
+    const pFmt = document.getElementById('pdfImgFormat');
+    if (pFmt) pFmt.addEventListener('change', () => { if(currentPdfDoc) renderPdfPages(currentPdfDoc); });
+    const pScl = document.getElementById('pdfImgScale');
+    if (pScl) pScl.addEventListener('change', () => { if(currentPdfDoc) renderPdfPages(currentPdfDoc); });
 
-  async function renderPdfPages(pdfDoc) {
-    renderedPages = []; pdfPagesGrid.innerHTML = '';
-    const total = pdfDoc.numPages;
-    const scale = parseFloat(document.getElementById('pdfImgScale').value) || 2;
-    const fmt = document.getElementById('pdfImgFormat').value;
-    pdfPageRenderingState.textContent = `0/${total} halaman...`;
-    for (let p = 1; p <= total; p++) {
-      const page = await pdfDoc.getPage(p);
-      const vp = page.getViewport({ scale });
-      const canvas = document.createElement('canvas');
-      canvas.width = vp.width; canvas.height = vp.height;
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
-      const dataUrl = canvas.toDataURL(fmt, 0.92);
-      const ext = fmt.includes('jpeg') ? 'jpg' : 'png';
-      renderedPages.push({ pageNum: p, dataUrl, ext, w: vp.width, h: vp.height });
-
-      const card = document.createElement('div');
-      card.className = 'thumb-card animate-in';
-      card.innerHTML = `
-        <div class="thumb-img-wrapper"><img src="${dataUrl}" loading="lazy"></div>
-        <div class="thumb-meta" style="font-weight:700">Halaman ${p}</div>
-        <button type="button" class="btn-primary text-xs py-1 px-2 flex items-center justify-center gap-1 mt-2" style="font-size:11px">
-          <svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Unduh
-        </button>
-      `;
-      const baseName = currentPdfFile.name.replace(/\.pdf$/i,'');
-      card.querySelector('button').addEventListener('click', () => {
-        downloadDataUrl(dataUrl, `${baseName}-hal-${p}.${ext}`);
-        showToast(`Halaman ${p} diunduh.`, 'success');
+    if (downloadAllImagesBtn) {
+      downloadAllImagesBtn.addEventListener('click', async () => {
+        if (!renderedPages.length || !window.JSZip) return;
+        downloadAllImagesBtn.disabled = true;
+        downloadZipSpinner.classList.remove('hidden');
+        downloadZipText.textContent = 'Membuat ZIP...';
+        const zip = new window.JSZip();
+        const base = currentPdfFile.name.replace(/\.pdf$/i,'');
+        renderedPages.forEach(p => zip.file(`${base}-hal-${p.pageNum}.${p.ext}`, p.dataUrl.split(',')[1], { base64:true }));
+        const blob = await zip.generateAsync({ type:'blob' });
+        downloadBytes(await blob.arrayBuffer(), `${base}-semua-gambar.zip`, 'application/zip');
+        downloadAllImagesBtn.disabled = false;
+        downloadZipSpinner.classList.add('hidden');
+        downloadZipText.textContent = TRANSLATIONS[currentLang].btn_download_zip;
+        showToast('Arsip ZIP berhasil diunduh!', 'success');
       });
-      pdfPagesGrid.appendChild(card);
-      pdfPageRenderingState.textContent = `${p}/${total} halaman...`;
     }
-    pdfPageRenderingState.textContent = `Selesai (${total} halaman)`;
-    downloadAllImagesBtn.disabled = false;
-    showToast(`${total} halaman berhasil diekstrak!`, 'success');
   }
-
-  downloadAllImagesBtn.addEventListener('click', async () => {
-    if (!renderedPages.length || !window.JSZip) return;
-    downloadAllImagesBtn.disabled = true;
-    downloadZipSpinner.classList.remove('hidden');
-    downloadZipText.textContent = 'Membuat ZIP...';
-    const zip = new window.JSZip();
-    const base = currentPdfFile.name.replace(/\.pdf$/i,'');
-    renderedPages.forEach(p => zip.file(`${base}-hal-${p.pageNum}.${p.ext}`, p.dataUrl.split(',')[1], { base64:true }));
-    const blob = await zip.generateAsync({ type:'blob' });
-    downloadBytes(await blob.arrayBuffer(), `${base}-semua-gambar.zip`, 'application/zip');
-    downloadAllImagesBtn.disabled = false;
-    downloadZipSpinner.classList.add('hidden');
-    downloadZipText.textContent = TRANSLATIONS[currentLang].btn_download_zip;
-    showToast('Arsip ZIP berhasil diunduh!', 'success');
-  });
 
   // ===========================================================================
   // 14. TOOL 5: MERGE PDF
@@ -2421,112 +2376,1264 @@ document.addEventListener('DOMContentLoaded', () => {
   // 18. TOOL 9: PDF TO TEXT
   // ===========================================================================
   let p2tCurrentFile = null;
-  setupDropzone(document.getElementById('p2tDropzone'), document.getElementById('p2tFileInput'), async files => {
-    const f = Array.from(files).find(x => x.type==='application/pdf'||x.name.endsWith('.pdf'));
-    if (!f) return;
-    p2tCurrentFile = f;
-    const infoBox = document.getElementById('p2tInfoBox');
-    infoBox.classList.remove('hidden');
-    document.getElementById('p2tFileName').textContent = f.name;
-    document.getElementById('p2tPageCount').textContent = 'Memuat...';
-    document.getElementById('p2tExtractBtn').disabled = false;
-    try {
-      const buf = await f.arrayBuffer();
-      const doc = await window.pdfjsLib.getDocument({ data: buf }).promise;
-      document.getElementById('p2tPageCount').textContent = doc.numPages + ' halaman';
-    } catch(e) { document.getElementById('p2tPageCount').textContent = 'Error'; }
-  });
+  if (document.getElementById('p2tDropzone')) {
+    setupDropzone(document.getElementById('p2tDropzone'), document.getElementById('p2tFileInput'), async files => {
+      const f = Array.from(files).find(x => x.type==='application/pdf'||x.name.endsWith('.pdf'));
+      if (!f) return;
+      p2tCurrentFile = f;
+      const infoBox = document.getElementById('p2tInfoBox');
+      if (infoBox) infoBox.classList.remove('hidden');
+      const pName = document.getElementById('p2tFileName');
+      if (pName) pName.textContent = f.name;
+      const pCount = document.getElementById('p2tPageCount');
+      if (pCount) pCount.textContent = 'Memuat...';
+      const pBtn = document.getElementById('p2tExtractBtn');
+      if (pBtn) pBtn.disabled = false;
+      try {
+        const buf = await f.arrayBuffer();
+        const doc = await window.pdfjsLib.getDocument({ data: buf }).promise;
+        if (pCount) pCount.textContent = doc.numPages + ' halaman';
+      } catch(e) { if (pCount) pCount.textContent = 'Error'; }
+    });
 
-  document.getElementById('p2tExtractBtn').addEventListener('click', async () => {
-    if (!p2tCurrentFile || !window.pdfjsLib) return;
-    const btn = document.getElementById('p2tExtractBtn');
-    const sp  = document.getElementById('p2tSpinner');
-    const txt = document.getElementById('p2tBtnText');
-    btn.disabled = true; sp.classList.remove('hidden'); txt.textContent = 'Mengekstrak...';
-    try {
-      const buf = await p2tCurrentFile.arrayBuffer();
-      const doc = await window.pdfjsLib.getDocument({ data: buf }).promise;
-      let fullText = '';
-      for (let p = 1; p <= doc.numPages; p++) {
-        const page = await doc.getPage(p);
-        const content = await page.getTextContent();
-        const pageText = content.items.map(i => i.str).join(' ');
-        fullText += `--- Halaman ${p} ---\n${pageText}\n\n`;
-      }
-      document.getElementById('p2tOutput').value = fullText;
-      document.getElementById('p2tResultBlock').classList.remove('hidden');
-      showToast('Teks berhasil diekstrak!', 'success');
-    } catch(e) { showToast('Gagal ekstrak: ' + e.message, 'error'); }
-    btn.disabled = false; sp.classList.add('hidden'); txt.textContent = TRANSLATIONS[currentLang].btn_extract_text;
-  });
+    const extractBtn = document.getElementById('p2tExtractBtn');
+    if (extractBtn) {
+      extractBtn.addEventListener('click', async () => {
+        if (!p2tCurrentFile || !window.pdfjsLib) return;
+        const btn = document.getElementById('p2tExtractBtn');
+        const sp  = document.getElementById('p2tSpinner');
+        const txt = document.getElementById('p2tBtnText');
+        btn.disabled = true; sp.classList.remove('hidden'); txt.textContent = 'Mengekstrak...';
+        try {
+          const buf = await p2tCurrentFile.arrayBuffer();
+          const doc = await window.pdfjsLib.getDocument({ data: buf }).promise;
+          let fullText = '';
+          for (let p = 1; p <= doc.numPages; p++) {
+            const page = await doc.getPage(p);
+            const content = await page.getTextContent();
+            const pageText = content.items.map(i => i.str).join(' ');
+            fullText += `--- Halaman ${p} ---\n${pageText}\n\n`;
+          }
+          document.getElementById('p2tOutput').value = fullText;
+          document.getElementById('p2tResultBlock').classList.remove('hidden');
+          showToast('Teks berhasil diekstrak!', 'success');
+        } catch(e) { showToast('Gagal ekstrak: ' + e.message, 'error'); }
+        btn.disabled = false; sp.classList.add('hidden'); txt.textContent = TRANSLATIONS[currentLang].btn_extract_text;
+      });
+    }
 
-  document.getElementById('p2tCopyBtn').addEventListener('click', () => {
-    const t = document.getElementById('p2tOutput').value;
-    navigator.clipboard.writeText(t).then(() => showToast('Teks disalin ke clipboard.', 'success'));
-  });
+    const copyBtn = document.getElementById('p2tCopyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const t = document.getElementById('p2tOutput').value;
+        navigator.clipboard.writeText(t).then(() => showToast('Teks disalin ke clipboard.', 'success'));
+      });
+    }
 
-  document.getElementById('p2tDownloadBtn').addEventListener('click', () => {
-    const t = document.getElementById('p2tOutput').value;
-    if (!t) return;
-    const blob = new Blob([t], { type:'text/plain;charset=utf-8' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href = url; a.download = (p2tCurrentFile?.name.replace(/\.pdf$/i,'') || 'teks') + '.txt';
-    a.click(); URL.revokeObjectURL(url);
-    showToast('File .txt berhasil diunduh!', 'success');
-  });
+    const dlBtn = document.getElementById('p2tDownloadBtn');
+    if (dlBtn) {
+      dlBtn.addEventListener('click', () => {
+        const t = document.getElementById('p2tOutput').value;
+        if (!t) return;
+        const blob = new Blob([t], { type:'text/plain;charset=utf-8' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href = url; a.download = (p2tCurrentFile?.name.replace(/\.pdf$/i,'') || 'teks') + '.txt';
+        a.click(); URL.revokeObjectURL(url);
+        showToast('File .txt berhasil diunduh!', 'success');
+      });
+    }
+  }
 
   // ===========================================================================
-  // 19. TOOL 10: LOCK PDF (WATERMARK)
+  // 19. TOOL 10: LOCK PDF — Real Password Encryption (AES-256 / RC4)
+  //     Primary: @pdfsmaller/pdf-encrypt (client-side)
+  //     Fallback: Stirling-PDF API /api/v1/security/add-password
   // ===========================================================================
-  let lpPdfData = null;
+  let lpPdfData   = null;
+  let ulpPdfData  = null;   // Unlock PDF
+  let so2pFileData = null;  // Stirling Office → PDF
+  let sp2oFileData = null;  // Stirling PDF → Office
+
   setupDropzone(document.getElementById('lpDropzone'), document.getElementById('lpFileInput'), async files => {
-    const f = Array.from(files).find(x => x.type==='application/pdf'||x.name.endsWith('.pdf'));
+    const f = Array.from(files).find(x => x.type === 'application/pdf' || x.name.endsWith('.pdf'));
     if (!f) return;
     try {
       const buf = await f.arrayBuffer();
-      lpPdfData = { file:f, arrayBuffer:buf };
+      lpPdfData = { file: f, arrayBuffer: buf };
       document.getElementById('lpPdfName').textContent = f.name;
-      document.getElementById('lpPdfMeta').textContent = `${formatBytes(f.size)} · Siap diproteksi`;
+      document.getElementById('lpPdfMeta').textContent = `${formatBytes(f.size)} · Siap dikunci`;
       document.getElementById('lpInfoBar').classList.remove('hidden');
       document.getElementById('lpDropzone').classList.add('hidden');
       document.getElementById('lpLockBtn').disabled = false;
     } catch(e) { showToast('Gagal baca PDF: ' + e.message, 'error'); }
   });
 
+  document.getElementById('lpChangeFileBtn').addEventListener('click', () => {
+    document.getElementById('lpFileInput').click();
+  });
+
   document.getElementById('lpLockBtn').addEventListener('click', async () => {
-    if (!lpPdfData || !window.PDFLib) return;
+    if (!lpPdfData) return;
+    const userPwd    = document.getElementById('lpUserPassword').value;
+    const confirmPwd = document.getElementById('lpConfirmPassword').value;
+    if (!userPwd) { showToast('Kata sandi wajib diisi.', 'error'); return; }
+    if (userPwd !== confirmPwd) { showToast('Konfirmasi kata sandi tidak cocok.', 'error'); return; }
+    const ownerPwd = document.getElementById('lpOwnerPassword').value.trim() || (userPwd + '_owner');
+    const algo     = document.getElementById('lpEncryptionAlgo').value;
+    const out      = (document.getElementById('lpOutputName').value.trim() || 'terkunci') + '.pdf';
+
     const btn = document.getElementById('lpLockBtn');
     const sp  = document.getElementById('lpSpinner');
     const txt = document.getElementById('lpBtnText');
-    btn.disabled = true; sp.classList.remove('hidden'); txt.textContent = 'Menambahkan Watermark...';
+    btn.disabled = true; sp.classList.remove('hidden'); txt.textContent = 'Mengenkripsi...';
+
+    let success = false;
+
+    // — Strategy 1: client-side via @pdfsmaller/pdf-encrypt CDN
+    if (!success && window.PDFEncrypt && typeof window.PDFEncrypt.encryptPDF === 'function') {
+      try {
+        const uint8 = new Uint8Array(lpPdfData.arrayBuffer);
+        const encrypted = await window.PDFEncrypt.encryptPDF(uint8, userPwd, {
+          ownerPassword: ownerPwd,
+          algorithm: algo
+        });
+        const outBytes = encrypted instanceof Uint8Array ? encrypted : new Uint8Array(encrypted);
+        downloadBytes(outBytes, out);
+        showToast(`PDF berhasil dikunci (${algo}) — 100% client-side!`, 'success');
+        success = true;
+      } catch(e) {
+        console.warn('PDFEncrypt client-side failed:', e.message);
+      }
+    }
+
+    // — Strategy 2: Stirling-PDF REST API /api/v1/security/add-password
+    if (!success) {
+      try {
+        const stirlingUrl = (localStorage.getItem('ks-stirling-url') || 'http://localhost:8080').replace(/\/$/, '');
+        const form = new FormData();
+        form.append('fileInput', new Blob([lpPdfData.arrayBuffer], { type: 'application/pdf' }), lpPdfData.file.name);
+        form.append('password', userPwd);
+        form.append('ownerPassword', ownerPwd);
+        const res = await fetch(`${stirlingUrl}/api/v1/security/add-password`, { method: 'POST', body: form });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const blob = await res.blob();
+        const objUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objUrl; a.download = out; a.click();
+        URL.revokeObjectURL(objUrl);
+        showToast(`PDF berhasil dikunci (${algo})!`, 'success');
+        success = true;
+      } catch(e) {
+        showToast(
+          `Enkripsi gagal: ${e.message}. Pastikan file valid dan koneksi stabil.`,
+          'error'
+        );
+      }
+    }
+
+    btn.disabled = false; sp.classList.add('hidden');
+    txt.textContent = TRANSLATIONS[currentLang].btn_lock_pdf || 'Kunci & Lindungi PDF';
+  });
+
+  // ===========================================================================
+  // 20. TOOL 11: UNLOCK PDF — Remove Password Protection
+  //     Primary: pdf-lib (untuk enkripsi standard/readable)
+  //     Fallback: Stirling-PDF API /api/v1/security/remove-password
+  // ===========================================================================
+  setupDropzone(document.getElementById('ulpDropzone'), document.getElementById('ulpFileInput'), async files => {
+    const f = Array.from(files).find(x => x.type === 'application/pdf' || x.name.endsWith('.pdf'));
+    if (!f) return;
     try {
-      const { PDFDocument, rgb, degrees, StandardFonts } = window.PDFLib;
-      const doc = await PDFDocument.load(lpPdfData.arrayBuffer);
-      const font = await doc.embedFont(StandardFonts.HelveticaBold);
-      const wmText = document.getElementById('lpWatermarkText').value.trim() || 'CONFIDENTIAL';
-      const pages = doc.getPages();
-      for (const page of pages) {
-        const { width, height } = page.getSize();
-        page.drawText(wmText, {
-          x: width / 2 - (wmText.length * 14),
-          y: height / 2,
-          size: 48,
-          font,
-          color: rgb(0.85, 0.1, 0.1),
-          opacity: 0.18,
-          rotate: degrees(45),
+      const buf = await f.arrayBuffer();
+      ulpPdfData = { file: f, arrayBuffer: buf };
+      document.getElementById('ulpPdfName').textContent = f.name;
+      document.getElementById('ulpPdfMeta').textContent = formatBytes(f.size) + ' · Terkunci';
+      document.getElementById('ulpInfoBar').classList.remove('hidden');
+      document.getElementById('ulpDropzone').classList.add('hidden');
+      document.getElementById('ulpUnlockBtn').disabled = false;
+    } catch(e) { showToast('Gagal baca PDF: ' + e.message, 'error'); }
+  });
+
+  document.getElementById('ulpChangeFileBtn').addEventListener('click', () => {
+    document.getElementById('ulpFileInput').click();
+  });
+
+  document.getElementById('ulpUnlockBtn').addEventListener('click', async () => {
+    if (!ulpPdfData) return;
+    const password = document.getElementById('ulpPassword').value;
+    if (!password) { showToast('Masukkan kata sandi dokumen.', 'error'); return; }
+    const out = (document.getElementById('ulpOutputName').value.trim() || 'terbuka') + '.pdf';
+
+    const btn = document.getElementById('ulpUnlockBtn');
+    const sp  = document.getElementById('ulpSpinner');
+    const txt = document.getElementById('ulpBtnText');
+    btn.disabled = true; sp.classList.remove('hidden'); txt.textContent = 'Membuka kunci...';
+
+    let success = false;
+
+    // — Strategy 1: pdf-lib (works for user-password encrypted PDFs)
+    if (!success && window.PDFLib) {
+      try {
+        const doc   = await window.PDFLib.PDFDocument.load(ulpPdfData.arrayBuffer, { password });
+        const bytes = await doc.save();
+        downloadBytes(bytes, out);
+        showToast('PDF berhasil dibuka kuncinya!', 'success');
+        success = true;
+      } catch(e) {
+        console.warn('pdf-lib unlock failed:', e.message);
+      }
+    }
+
+    // — Strategy 2: Stirling-PDF REST API /api/v1/security/remove-password
+    if (!success) {
+      try {
+        const stirlingUrl = (localStorage.getItem('ks-stirling-url') || 'http://localhost:8080').replace(/\/$/, '');
+        const form = new FormData();
+        form.append('fileInput', new Blob([ulpPdfData.arrayBuffer], { type: 'application/pdf' }), ulpPdfData.file.name);
+        form.append('password', password);
+        const res = await fetch(`${stirlingUrl}/api/v1/security/remove-password`, { method: 'POST', body: form });
+        if (!res.ok) throw new Error(`HTTP ${res.status} — kata sandi mungkin salah`);
+        const blob = await res.blob();
+        const objUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objUrl; a.download = out; a.click();
+        URL.revokeObjectURL(objUrl);
+        showToast('PDF berhasil dibuka kuncinya!', 'success');
+        success = true;
+      } catch(e) {
+        showToast('Gagal buka kunci: ' + e.message, 'error');
+      }
+    }
+
+    btn.disabled = false; sp.classList.add('hidden');
+    txt.textContent = TRANSLATIONS[currentLang].btn_unlock_pdf || 'Buka Kunci Dokumen';
+  });
+
+  // ===========================================================================
+  // 21. STIRLING-PDF PING HELPER
+  //     Checks if Stirling-PDF server is reachable and updates status dot
+  // ===========================================================================
+  async function pingStirling() {
+    const urlInput = document.getElementById('stirlingServerUrl');
+    if (!urlInput) return;
+    const url = urlInput.value.trim().replace(/\/$/, '');
+    const dot = document.getElementById('stirlingStatusDot');
+    if (!dot) return;
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400';
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 3000);
+      const res = await fetch(url + '/api/v1/info', { signal: ctrl.signal });
+      clearTimeout(tid);
+      dot.className = res.ok
+        ? 'w-2.5 h-2.5 rounded-full bg-emerald-500'
+        : 'w-2.5 h-2.5 rounded-full bg-rose-500';
+    } catch {
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+    }
+  }
+
+  // ===========================================================================
+  // 21. TOOL 12: OFFICE TO PDF (EXCEL, WORD, POWERPOINT TO PDF)
+  //     With Live Interactive Document Preview & Precision Conversion
+  // ===========================================================================
+  let so2pCurrentFile   = null;
+  let so2pExcelWb       = null;
+  let so2pExcelActiveSheet = null;
+  let so2pPptxSlides    = [];
+  let so2pPptxActiveIdx = 0;
+
+  const so2pDropzone     = document.getElementById('so2pDropzone');
+  const so2pFileInput    = document.getElementById('so2pFileInput');
+  const so2pInfoBar      = document.getElementById('so2pInfoBar');
+  const so2pChangeFileBtn= document.getElementById('so2pChangeFileBtn');
+  const so2pPreviewWrapper = document.getElementById('so2pPreviewWrapper');
+  const so2pPreviewTitle = document.getElementById('so2pPreviewTitle');
+  const so2pExcelTabs    = document.getElementById('so2pExcelTabs');
+  const so2pPptControls  = document.getElementById('so2pPptControls');
+  const so2pPptPrevBtn   = document.getElementById('so2pPptPrevBtn');
+  const so2pPptNextBtn   = document.getElementById('so2pPptNextBtn');
+  const so2pPptIndicator = document.getElementById('so2pPptSlideIndicator');
+  const so2pDocxStatus   = document.getElementById('so2pDocxStatus');
+  const so2pExcelViewer  = document.getElementById('so2pExcelViewer');
+  const so2pExcelTable   = document.getElementById('so2pExcelTable');
+  const so2pDocxViewer   = document.getElementById('so2pDocxViewer');
+  const so2pPptxViewer   = document.getElementById('so2pPptxViewer');
+  const so2pPptxCanvas   = document.getElementById('so2pPptxCanvas');
+  const so2pConvertBtn   = document.getElementById('so2pConvertBtn');
+  const so2pSpinner      = document.getElementById('so2pSpinner');
+  const so2pBtnText      = document.getElementById('so2pBtnText');
+  const so2pOrientation  = document.getElementById('so2pPageOrientation');
+  const so2pExcelScaleBlock = document.getElementById('so2pExcelScaleBlock');
+
+  setupDropzone(so2pDropzone, so2pFileInput, async files => {
+    const f = files[0];
+    if (!f) return;
+    so2pCurrentFile = f;
+
+    document.getElementById('so2pFileName').textContent = f.name;
+    document.getElementById('so2pMeta').textContent = formatBytes(f.size);
+    const ext = (f.name.split('.').pop() || 'DOC').toUpperCase().slice(0, 5);
+    document.getElementById('so2pExtBadge').textContent = ext;
+    document.getElementById('so2pOutputName').value = f.name.replace(/\.[^.]+$/, '');
+
+    so2pDropzone.classList.add('hidden');
+    so2pInfoBar.classList.remove('hidden');
+    so2pConvertBtn.disabled = false;
+
+    // Load Live Preview
+    await loadOfficePreview(f);
+  });
+
+  so2pChangeFileBtn.addEventListener('click', () => {
+    so2pFileInput.click();
+  });
+
+  let so2pPptxMedia    = {};
+  let so2pPptxMasterBg = null;
+
+  // Handler load live preview per format
+  async function loadOfficePreview(file) {
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    so2pPreviewWrapper.classList.remove('hidden');
+    so2pExcelTabs.classList.add('hidden');
+    so2pPptControls.classList.add('hidden');
+    so2pDocxStatus.classList.add('hidden');
+    so2pExcelViewer.classList.add('hidden');
+    so2pDocxViewer.classList.add('hidden');
+    so2pPptxViewer.classList.add('hidden');
+    so2pExcelScaleBlock.classList.add('hidden');
+
+    try {
+      const buf = await file.arrayBuffer();
+
+      // 1. EXCEL SPREADSHEET PREVIEW
+      if (['xlsx', 'xls', 'csv', 'ods'].includes(ext)) {
+        if (!window.XLSX) throw new Error('SheetJS belum siap.');
+        so2pExcelWb = window.XLSX.read(buf, { type: 'array', cellDates: true });
+        so2pExcelTabs.classList.remove('hidden');
+        so2pExcelViewer.classList.remove('hidden');
+        so2pExcelScaleBlock.classList.remove('hidden');
+
+        // Render sheet tabs
+        so2pExcelTabs.innerHTML = '';
+        const sheetScopeBlock = document.getElementById('so2pExcelSheetScopeBlock');
+        const activeSheetOpt  = document.getElementById('so2pActiveSheetOpt');
+        const sheetScopeHint  = document.getElementById('so2pSheetScopeHint');
+        if (sheetScopeBlock) sheetScopeBlock.classList.remove('hidden');
+
+        function updateSheetScopeDisplay(sheetName) {
+          if (activeSheetOpt) activeSheetOpt.textContent = `Lembar yang Dipilih (${sheetName})`;
+          if (sheetScopeHint) sheetScopeHint.textContent = `Hanya mengonversi lembar "${sheetName}" yang sedang Anda pratinjau.`;
+        }
+
+        so2pExcelWb.SheetNames.forEach((name, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'sheet-tab-btn' + (idx === 0 ? ' active' : '');
+          btn.textContent = name;
+          btn.addEventListener('click', () => {
+            so2pExcelTabs.querySelectorAll('.sheet-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            so2pExcelActiveSheet = name;
+            updateSheetScopeDisplay(name);
+            renderExcelSheetTable(name);
+          });
+          so2pExcelTabs.appendChild(btn);
+        });
+
+        so2pExcelActiveSheet = so2pExcelWb.SheetNames[0];
+        updateSheetScopeDisplay(so2pExcelActiveSheet);
+        renderExcelSheetTable(so2pExcelActiveSheet);
+        return;
+      }
+
+      // 2. WORD DOCUMENT PREVIEW
+      if (ext === 'docx') {
+        so2pDocxStatus.classList.remove('hidden');
+        so2pDocxViewer.classList.remove('hidden');
+        so2pDocxViewer.innerHTML = '';
+        so2pPreviewTitle.textContent = 'Pratinjau Dokumen Microsoft Word';
+
+        if (window.docx && typeof window.docx.renderAsync === 'function') {
+          await window.docx.renderAsync(buf, so2pDocxViewer, null, {
+            inWrapper: true,
+            breakPages: true,
+            ignoreLastRenderedPageBreak: false,
+            ignoreWidth: false,
+            ignoreHeight: false
+          });
+        } else if (window.mammoth) {
+          const res = await window.mammoth.convertToHtml({ arrayBuffer: buf });
+          so2pDocxViewer.innerHTML = `<div style="background:#fff; color:#111; padding:40px; max-width:800px; width:100%; box-shadow:0 4px 20px rgba(0,0,0,0.3); font-family:Georgia,serif; line-height:1.6;">${res.value}</div>`;
+        }
+        return;
+      }
+
+      // 3. POWERPOINT PRESENTATION PREVIEW
+      if (['pptx', 'ppt'].includes(ext)) {
+        so2pPptControls.classList.remove('hidden');
+        so2pPptxViewer.classList.remove('hidden');
+        so2pPreviewTitle.textContent = 'Pratinjau Slide Presentasi';
+
+        if (!window.JSZip) throw new Error('JSZip belum siap.');
+        const zip = await window.JSZip.loadAsync(file);
+
+        // Pre-load all media images (backgrounds & pictures)
+        so2pPptxMedia = {};
+        so2pPptxMasterBg = null;
+        let largestSize = 0;
+
+        for (const path in zip.files) {
+          if (/^ppt\/media\/[^/]+\.(jpeg|jpg|png|webp)$/i.test(path)) {
+            try {
+              const blob = await zip.files[path].async('blob');
+              const url = URL.createObjectURL(blob);
+              const img = new Image();
+              img.src = url;
+              await new Promise(r => { img.onload = r; img.onerror = r; });
+              const fname = path.split('/').pop();
+              so2pPptxMedia[fname] = img;
+
+              if (blob.size > largestSize) {
+                largestSize = blob.size;
+                so2pPptxMasterBg = img;
+              }
+            } catch(e) {
+              console.warn('Media load err:', e);
+            }
+          }
+        }
+
+        const slideKeys = Object.keys(zip.files).filter(k => /^ppt\/slides\/slide\d+\.xml$/i.test(k));
+        slideKeys.sort((a, b) => {
+          const nA = parseInt(a.match(/slide(\d+)\.xml/i)?.[1] || '0', 10);
+          const nB = parseInt(b.match(/slide(\d+)\.xml/i)?.[1] || '0', 10);
+          return nA - nB;
+        });
+
+        so2pPptxSlides = [];
+        for (const k of slideKeys) {
+          const xml = await zip.files[k].async('text');
+          so2pPptxSlides.push({ name: k, xml, zip });
+        }
+
+        so2pPptxActiveIdx = 0;
+        await renderPptxSlideToCanvas(so2pPptxActiveIdx);
+        updatePptPager();
+        return;
+      }
+
+      so2pPreviewTitle.textContent = 'Pratinjau Dokumen';
+    } catch(err) {
+      console.warn('Preview error:', err);
+      so2pPreviewWrapper.classList.add('hidden');
+    }
+  }
+
+  // Render Excel Sheet to Table in Preview
+  function renderExcelSheetTable(sheetName) {
+    if (!so2pExcelWb || !so2pExcelTable) return;
+    so2pExcelActiveSheet = sheetName;
+    const ws = so2pExcelWb.Sheets[sheetName];
+    if (!ws) return;
+
+    const range = window.XLSX.utils.decode_range(ws['!ref'] || 'A1');
+    const totalRows = range.e.r - range.s.r + 1;
+    const totalCols = range.e.c - range.s.c + 1;
+    so2pPreviewTitle.textContent = `Pratinjau Lembar Kerja: ${sheetName} (${totalRows} Baris × ${totalCols} Kolom)`;
+
+    if (totalCols > 6) {
+      so2pOrientation.value = 'landscape';
+    }
+
+    so2pExcelTable.innerHTML = '';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const cornerTh = document.createElement('th');
+    cornerTh.textContent = '#';
+    cornerTh.style.width = '40px';
+    headerRow.appendChild(cornerTh);
+
+    for (let c = range.s.c; c <= range.e.c; c++) {
+      const th = document.createElement('th');
+      th.textContent = window.XLSX.utils.encode_col(c);
+      headerRow.appendChild(th);
+    }
+    thead.appendChild(headerRow);
+    so2pExcelTable.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    const maxPreviewRows = Math.min(range.e.r, range.s.r + 99);
+    for (let r = range.s.r; r <= maxPreviewRows; r++) {
+      const tr = document.createElement('tr');
+      const rowNumTd = document.createElement('th');
+      rowNumTd.textContent = r + 1;
+      rowNumTd.style.backgroundColor = '#E2E8F0';
+      rowNumTd.style.color = '#475569';
+      tr.appendChild(rowNumTd);
+
+      for (let c = range.s.c; c <= range.e.c; c++) {
+        const td = document.createElement('td');
+        const cellRef = window.XLSX.utils.encode_cell({ r, c });
+        const cell = ws[cellRef];
+        const val = cell ? (cell.w || cell.v || '') : '';
+        td.textContent = val;
+
+        if (cell && (cell.t === 'n' || !isNaN(Number(val.toString().replace(/[^0-9.-]+/g,""))))) {
+          td.style.textAlign = 'right';
+          td.style.fontFamily = 'monospace';
+        }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    so2pExcelTable.appendChild(tbody);
+  }
+
+  // Render PowerPoint Slide to Canvas with High Fidelity
+  async function renderPptxSlideToCanvas(idx) {
+    if (!so2pPptxSlides.length || !so2pPptxCanvas) return;
+    const slideData = so2pPptxSlides[idx];
+    const canvas = so2pPptxCanvas;
+    const ctx = canvas.getContext('2d');
+
+    // 16:9 Presentation Canvas (1920x1080)
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    // 1. Draw Master Slide Background Image if present (Preserves Themes, Gradients & Ribbon Art)
+    if (so2pPptxMasterBg) {
+      ctx.drawImage(so2pPptxMasterBg, 0, 0, canvas.width, canvas.height);
+    } else {
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      grad.addColorStop(0, '#1E1B4B');
+      grad.addColorStop(0.5, '#311042');
+      grad.addColorStop(1, '#0F172A');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // 2. Parse Slide XML
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(slideData.xml, 'application/xml');
+
+    const emuW = 12192000, emuH = 6858000;
+
+    // Helper: word-wrapping text draw
+    function drawWrapped(text, startX, startY, maxW, lineH, align) {
+      const words = text.split(/\s+/);
+      let currentLine = '';
+      let curY = startY;
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = currentLine ? (currentLine + ' ' + words[n]) : words[n];
+        if (ctx.measureText(testLine).width > maxW && currentLine) {
+          if (align === 'center') {
+            ctx.textAlign = 'center';
+            ctx.fillText(currentLine, startX + maxW / 2, curY);
+          } else if (align === 'right') {
+            ctx.textAlign = 'right';
+            ctx.fillText(currentLine, startX + maxW, curY);
+          } else {
+            ctx.textAlign = 'left';
+            ctx.fillText(currentLine, startX, curY);
+          }
+          currentLine = words[n];
+          curY += lineH;
+        } else {
+          currentLine = testLine;
+        }
+      }
+      if (currentLine) {
+        if (align === 'center') {
+          ctx.textAlign = 'center';
+          ctx.fillText(currentLine, startX + maxW / 2, curY);
+        } else if (align === 'right') {
+          ctx.textAlign = 'right';
+          ctx.fillText(currentLine, startX + maxW, curY);
+        } else {
+          ctx.textAlign = 'left';
+          ctx.fillText(currentLine, startX, curY);
+        }
+        curY += lineH;
+      }
+      return curY;
+    }
+
+    // 3. Render Pictures (<p:pic>)
+    const pics = xmlDoc.getElementsByTagNameNS('*', 'pic');
+    for (let pI = 0; pI < pics.length; pI++) {
+      const pic = pics[pI];
+      const blip = pic.getElementsByTagNameNS('*', 'blip')[0];
+      const off = pic.getElementsByTagNameNS('*', 'off')[0];
+      const ext = pic.getElementsByTagNameNS('*', 'ext')[0];
+      if (off && ext && blip) {
+        const rEmbed = blip.getAttribute('r:embed') || blip.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'embed');
+        const rawX = parseInt(off.getAttribute('x') || '0', 10);
+        const rawY = parseInt(off.getAttribute('y') || '0', 10);
+        const rawW = parseInt(ext.getAttribute('cx') || '0', 10);
+        const rawH = parseInt(ext.getAttribute('cy') || '0', 10);
+        const pX = (rawX / emuW) * canvas.width;
+        const pY = (rawY / emuH) * canvas.height;
+        const pW = (rawW / emuW) * canvas.width;
+        const pH = (rawH / emuH) * canvas.height;
+
+        // Try find matching media
+        if (so2pPptxMedia) {
+          const mKeys = Object.keys(so2pPptxMedia);
+          const foundKey = mKeys.find(k => k.includes(rEmbed || '')) || mKeys[pI];
+          if (foundKey && so2pPptxMedia[foundKey]) {
+            ctx.drawImage(so2pPptxMedia[foundKey], pX, pY, pW, pH);
+          }
+        }
+      }
+    }
+
+    // 4. Render Shapes and Text (<p:sp>)
+    const shapes = xmlDoc.getElementsByTagNameNS('*', 'sp');
+
+    for (let i = 0; i < shapes.length; i++) {
+      const sp = shapes[i];
+      const off = sp.getElementsByTagNameNS('*', 'off')[0];
+      const ext = sp.getElementsByTagNameNS('*', 'ext')[0];
+      const ph = sp.getElementsByTagNameNS('*', 'ph')[0];
+      const phType = ph ? ph.getAttribute('type') : null;
+
+      let x, y, w, h;
+      if (off && ext) {
+        const rawX = parseInt(off.getAttribute('x') || '0', 10);
+        const rawY = parseInt(off.getAttribute('y') || '0', 10);
+        const rawW = parseInt(ext.getAttribute('cx') || '0', 10);
+        const rawH = parseInt(ext.getAttribute('cy') || '0', 10);
+        x = (rawX / emuW) * canvas.width;
+        y = (rawY / emuH) * canvas.height;
+        w = (rawW / emuW) * canvas.width;
+        h = (rawH / emuH) * canvas.height;
+      } else {
+        // Fallback positioning for placeholders that inherit bounds from slideLayout
+        if (phType === 'title' || phType === 'ctrTitle' || i === 0) {
+          x = canvas.width * 0.08;
+          y = canvas.height * 0.08;
+          w = canvas.width * 0.84;
+          h = canvas.height * 0.16;
+        } else if (phType === 'subTitle') {
+          x = canvas.width * 0.08;
+          y = canvas.height * 0.30;
+          w = canvas.width * 0.84;
+          h = canvas.height * 0.22;
+        } else {
+          x = canvas.width * 0.08;
+          y = canvas.height * 0.26;
+          w = canvas.width * 0.84;
+          h = canvas.height * 0.65;
+        }
+      }
+
+      // Shape Background Fill
+      const sFill = sp.getElementsByTagNameNS('*', 'srgbClr')[0];
+      if (sFill && !sp.getElementsByTagNameNS('*', 'txBody')[0]) {
+        ctx.fillStyle = '#' + sFill.getAttribute('val');
+        ctx.fillRect(x, y, w, h);
+      }
+
+      // Shape Paragraphs
+      const paras = sp.getElementsByTagNameNS('*', 'p');
+      let cursorY = y;
+
+      const isTitleShape = (phType === 'title' || phType === 'ctrTitle' || (idx === 0 && i === 0));
+
+      for (let pIdx = 0; pIdx < paras.length; pIdx++) {
+        const p = paras[pIdx];
+        const runs = p.getElementsByTagNameNS('*', 'r');
+        let lineText = '';
+        let fontSize = isTitleShape ? (idx === 0 ? 52 : 42) : 30;
+        let fontColor = '#FFFFFF';
+        let isBold = isTitleShape;
+        let fontFace = 'Times New Roman, Arial, sans-serif';
+
+        for (let rIdx = 0; rIdx < runs.length; rIdx++) {
+          const r = runs[rIdx];
+          const tEl = r.getElementsByTagNameNS('*', 't')[0];
+          if (tEl) lineText += tEl.textContent;
+
+          const rPr = r.getElementsByTagNameNS('*', 'rPr')[0];
+          if (rPr) {
+            const sz = rPr.getAttribute('sz');
+            if (sz) {
+              const pt = parseInt(sz, 10) / 100;
+              fontSize = Math.round(pt * 1.55);
+            }
+            if (rPr.getAttribute('b') === '1') isBold = true;
+
+            const colorEl = rPr.getElementsByTagNameNS('*', 'srgbClr')[0];
+            if (colorEl) {
+              fontColor = '#' + colorEl.getAttribute('val');
+            } else {
+              const schemeEl = rPr.getElementsByTagNameNS('*', 'schemeClr')[0];
+              if (schemeEl) {
+                const sVal = schemeEl.getAttribute('val');
+                if (sVal === 'accent1') fontColor = '#F43F5E';
+                else if (sVal === 'accent2') fontColor = '#38BDF8';
+                else if (sVal === 'tx2') fontColor = '#E2E8F0';
+                else fontColor = '#FFFFFF';
+              }
+            }
+
+            const latin = rPr.getElementsByTagNameNS('*', 'latin')[0];
+            if (latin?.getAttribute('typeface')) {
+              fontFace = `'${latin.getAttribute('typeface')}', sans-serif`;
+            }
+          }
+        }
+
+        if (lineText.trim()) {
+          ctx.fillStyle = fontColor;
+          ctx.font = `${isBold ? 'bold ' : ''}${fontSize}px ${fontFace}`;
+          ctx.textBaseline = 'top';
+
+          const pPr = p.getElementsByTagNameNS('*', 'pPr')[0];
+          const rawAlgn = pPr?.getAttribute('algn');
+          const algn = rawAlgn || (isTitleShape && idx === 0 ? 'ctr' : 'l');
+
+          // Multi-column row for tab-delimited text (e.g. member lists)
+          if (lineText.includes('\t')) {
+            const parts = lineText.split(/\t+/).filter(Boolean);
+            if (parts.length >= 2) {
+              ctx.textAlign = 'left';
+              ctx.fillText(parts[0].trim(), x, cursorY);
+              ctx.fillText(parts[1].trim(), x + w * 0.48, cursorY);
+              cursorY += Math.round(fontSize * 1.35) + 6;
+            } else {
+              ctx.textAlign = 'left';
+              cursorY = drawWrapped(lineText.replace(/\t+/g, ' ').trim(), x, cursorY, w, Math.round(fontSize * 1.35), 'l') + 6;
+            }
+          } else {
+            // Word-wrap long paragraph texts to prevent truncation
+            const lineH = Math.round(fontSize * 1.35);
+            cursorY = drawWrapped(lineText.trim(), x, cursorY, w, lineH, algn === 'ctr' ? 'center' : (algn === 'r' ? 'right' : 'left')) + 8;
+          }
+        } else {
+          cursorY += 14; // empty line spacing
+        }
+      }
+    }
+  }
+
+  function updatePptPager() {
+    if (!so2pPptIndicator) return;
+    so2pPptIndicator.textContent = `Slide ${so2pPptActiveIdx + 1} / ${so2pPptxSlides.length}`;
+    so2pPptPrevBtn.disabled = so2pPptActiveIdx === 0;
+    so2pPptNextBtn.disabled = so2pPptActiveIdx >= so2pPptxSlides.length - 1;
+  }
+
+  so2pPptPrevBtn.addEventListener('click', async () => {
+    if (so2pPptActiveIdx > 0) {
+      so2pPptActiveIdx--;
+      await renderPptxSlideToCanvas(so2pPptActiveIdx);
+      updatePptPager();
+    }
+  });
+
+  so2pPptNextBtn.addEventListener('click', async () => {
+    if (so2pPptActiveIdx < so2pPptxSlides.length - 1) {
+      so2pPptActiveIdx++;
+      await renderPptxSlideToCanvas(so2pPptActiveIdx);
+      updatePptPager();
+    }
+  });
+
+  // Action Convert Office to PDF
+  so2pConvertBtn.addEventListener('click', async () => {
+    if (!so2pCurrentFile) return;
+    so2pConvertBtn.disabled = true;
+    so2pSpinner.classList.remove('hidden');
+    so2pBtnText.textContent = 'Mengonversi Dokumen...';
+
+    const outName = (document.getElementById('so2pOutputName').value.trim() || 'dokumen-konversi') + '.pdf';
+
+    try {
+      await convertOfficeToPdfHighFidelity(so2pCurrentFile, outName);
+      showToast(`Dokumen "${outName}" berhasil dikonversi lengkap!`, 'success');
+    } catch(e) {
+      showToast(`Gagal konversi: ${e.message}`, 'error');
+    }
+
+    so2pConvertBtn.disabled = false;
+    so2pSpinner.classList.add('hidden');
+    so2pBtnText.textContent = 'Konversi ke PDF';
+  });
+
+  // Precision Office-to-PDF Conversion Function (Multi-Page & Theme Aware)
+  async function convertOfficeToPdfHighFidelity(file, outFilename) {
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    const userOrient = so2pOrientation.value;
+
+    // Determine sheet to convert if file is an Excel spreadsheet
+    const excelScope = document.getElementById('so2pExcelSheetScope')?.value || 'active';
+    const targetSheet = (excelScope === 'active' && so2pExcelActiveSheet) ? so2pExcelActiveSheet : '__ALL__';
+
+    // 0. HIGH-PRECISION NATIVE ENGINE (100% Original Document Fidelity, Zero Layout Shift)
+    try {
+      const qParams = new URLSearchParams({ filename: file.name });
+      if (['xlsx', 'xls', 'csv', 'ods'].includes(ext)) {
+        qParams.append('sheet', targetSheet);
+      }
+      const endpoint = window.location.origin.includes('49152')
+        ? `/convert?${qParams.toString()}`
+        : `http://127.0.0.1:49152/convert?${qParams.toString()}`;
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'X-Filename': file.name,
+          'X-Sheet': targetSheet
+        },
+        body: file
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const objUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objUrl;
+        a.download = outFilename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(objUrl), 3000);
+        return;
+      } else {
+        const errText = await res.text();
+        console.warn('Native engine responded with error:', errText);
+      }
+    } catch (netErr) {
+      console.info('Native engine offline, proceeding with client-side fallback engine...', netErr);
+    }
+
+    // ==========================================
+    // 1. EXCEL HIGH-FIDELITY CONVERSION
+    // ==========================================
+    if (['xlsx', 'xls', 'csv', 'ods'].includes(ext)) {
+      if (!so2pExcelWb) {
+        const buf = await file.arrayBuffer();
+        so2pExcelWb = window.XLSX.read(buf, { type: 'array', cellDates: true });
+      }
+
+      const container = document.createElement('div');
+      container.style.backgroundColor = '#FFFFFF';
+      container.style.color = '#000000';
+      container.style.fontFamily = "'Calibri', 'Segoe UI', 'Arial', sans-serif";
+      container.style.padding = '12px';
+      container.style.boxSizing = 'border-box';
+      container.style.width = '100%';
+
+      let maxColsInDoc = 0;
+
+      const sheetsToRender = (excelScope === 'active' && so2pExcelActiveSheet && so2pExcelWb.Sheets[so2pExcelActiveSheet])
+        ? [so2pExcelActiveSheet]
+        : so2pExcelWb.SheetNames;
+
+      sheetsToRender.forEach((sheetName, sIdx) => {
+        const ws = so2pExcelWb.Sheets[sheetName];
+        if (!ws || !ws['!ref']) return;
+        const range = window.XLSX.utils.decode_range(ws['!ref']);
+        const colCount = range.e.c - range.s.c + 1;
+        if (colCount > maxColsInDoc) maxColsInDoc = colCount;
+
+        const sheetWrapper = document.createElement('div');
+        sheetWrapper.style.marginBottom = '20px';
+        sheetWrapper.style.pageBreakAfter = (sIdx < sheetsToRender.length - 1) ? 'always' : 'auto';
+
+        if (so2pExcelWb.SheetNames.length > 1) {
+          const title = document.createElement('h3');
+          title.textContent = sheetName;
+          title.style.fontSize = '12pt';
+          title.style.fontWeight = 'bold';
+          title.style.marginBottom = '6px';
+          title.style.color = '#1E293B';
+          sheetWrapper.appendChild(title);
+        }
+
+        const table = document.createElement('table');
+        table.style.width = '100%';
+        table.style.borderCollapse = 'collapse';
+        table.style.fontSize = '8.5pt';
+        table.style.lineHeight = '1.25';
+        table.style.tableLayout = 'auto';
+
+        for (let r = range.s.r; r <= range.e.r; r++) {
+          const tr = document.createElement('tr');
+          const isHeader = (r === range.s.r);
+
+          for (let c = range.s.c; c <= range.e.c; c++) {
+            const cellRef = window.XLSX.utils.encode_cell({ r, c });
+            const cell = ws[cellRef];
+            const val = cell ? (cell.w || cell.v || '') : '';
+
+            const cellEl = document.createElement(isHeader ? 'th' : 'td');
+            cellEl.textContent = val;
+            cellEl.style.border = '1px solid #334155';
+            cellEl.style.padding = '3px 5px';
+            cellEl.style.wordBreak = 'break-word';
+
+            if (isHeader) {
+              cellEl.style.backgroundColor = '#F1F5F9';
+              cellEl.style.fontWeight = 'bold';
+              cellEl.style.textAlign = 'center';
+            } else {
+              const isNum = cell && (cell.t === 'n' || !isNaN(Number(val.toString().replace(/[^0-9.-]+/g,""))));
+              cellEl.style.textAlign = isNum ? 'right' : 'left';
+            }
+            tr.appendChild(cellEl);
+          }
+          table.appendChild(tr);
+        }
+        sheetWrapper.appendChild(table);
+        container.appendChild(sheetWrapper);
+      });
+
+      document.body.appendChild(container);
+
+      const finalOrientation = (userOrient === 'auto')
+        ? (maxColsInDoc > 6 ? 'landscape' : 'portrait')
+        : userOrient;
+
+      const opt = {
+        margin: [6, 6, 6, 6],
+        filename: outFilename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2.5, useCORS: true, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: finalOrientation }
+      };
+
+      await window.html2pdf().set(opt).from(container).save();
+      container.remove();
+      return;
+    }
+
+    // ==========================================
+    // 2. POWERPOINT HIGH-FIDELITY CONVERSION (16:9 Presentation Pages)
+    // ==========================================
+    if (['pptx', 'ppt'].includes(ext)) {
+      if (!window.jspdf) throw new Error('jsPDF belum siap.');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
+
+      for (let i = 0; i < so2pPptxSlides.length; i++) {
+        if (i > 0) pdf.addPage();
+        await renderPptxSlideToCanvas(i);
+        const dataUrl = so2pPptxCanvas.toDataURL('image/jpeg', 0.96);
+        pdf.addImage(dataUrl, 'JPEG', 0, 0, pdfW, pdfH);
+      }
+      pdf.save(outFilename);
+      return;
+    }
+
+    // ==========================================
+    // 3. WORD MULTI-PAGE HIGH-FIDELITY CONVERSION
+    // ==========================================
+    if (ext === 'docx') {
+      if (!window.jspdf) throw new Error('jsPDF belum siap.');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
+
+      // Render fresh into an unconstrained off-screen print element
+      const printOffscreen = document.createElement('div');
+      printOffscreen.style.position = 'fixed';
+      printOffscreen.style.left = '-9999px';
+      printOffscreen.style.top = '0';
+      printOffscreen.style.width = '794px'; // 210mm in pixels at 96 DPI
+      printOffscreen.style.background = '#ffffff';
+      printOffscreen.style.color = '#000000';
+      document.body.appendChild(printOffscreen);
+
+      const buf = await file.arrayBuffer();
+      if (window.docx && typeof window.docx.renderAsync === 'function') {
+        await window.docx.renderAsync(buf, printOffscreen, null, {
+          inWrapper: true,
+          breakPages: true,
+          ignoreLastRenderedPageBreak: false,
+          ignoreWidth: false,
+          ignoreHeight: false
         });
       }
-      const bytes = await doc.save();
-      const out = (document.getElementById('lpOutputName').value.trim() || 'terproteksi') + '.pdf';
-      downloadBytes(bytes, out);
-      showToast(`PDF dengan watermark "${wmText}" berhasil dibuat!`, 'success');
-    } catch(e) { showToast('Gagal: ' + e.message, 'error'); }
-    btn.disabled = false; sp.classList.add('hidden'); txt.textContent = TRANSLATIONS[currentLang].btn_add_watermark;
-  });
+
+      // Wait for all images in the document to load
+      const imgs = Array.from(printOffscreen.querySelectorAll('img'));
+      if (imgs.length > 0) {
+        await Promise.all(imgs.map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(res => { img.onload = res; img.onerror = res; });
+        }));
+      }
+
+      // Brief tick for font rendering & layout stabilization
+      await new Promise(r => setTimeout(r, 200));
+
+      let targetSections = Array.from(printOffscreen.querySelectorAll('section.docx'));
+      if (!targetSections.length) targetSections = [printOffscreen];
+
+      let isFirstPdfPage = true;
+
+      for (let sIdx = 0; sIdx < targetSections.length; sIdx++) {
+        const sec = targetSections[sIdx];
+        sec.style.boxShadow = 'none';
+        sec.style.margin = '0 0 10px 0';
+        sec.style.width = '100%';
+        sec.style.background = '#ffffff';
+
+        const secCanvas = await window.html2canvas(sec, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false
+        });
+
+        // Calculate height equivalent to one A4 page in canvas space (ratio 297 / 210 = 1.4142)
+        const pageCanvasH = Math.round(secCanvas.width * (pdfH / pdfW));
+        const totalPagesInSec = Math.max(1, Math.ceil((secCanvas.height - 5) / pageCanvasH));
+
+        for (let p = 0; p < totalPagesInSec; p++) {
+          if (isFirstPdfPage) {
+            isFirstPdfPage = false;
+          } else {
+            pdf.addPage();
+          }
+
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = secCanvas.width;
+          const currH = Math.min(pageCanvasH, secCanvas.height - p * pageCanvasH);
+          pageCanvas.height = pageCanvasH;
+
+          const pCtx = pageCanvas.getContext('2d');
+          pCtx.fillStyle = '#ffffff';
+          pCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+          pCtx.drawImage(secCanvas, 0, p * pageCanvasH, secCanvas.width, currH, 0, 0, secCanvas.width, currH);
+
+          const imgData = pageCanvas.toDataURL('image/jpeg', 0.98);
+          pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+        }
+      }
+
+      pdf.save(outFilename);
+      printOffscreen.remove();
+      return;
+    }
+
+    throw new Error(`Format .${ext} tidak didukung.`);
+  }
+
+  // ===========================================================================
+  // 22. TOOL 13: PDF TO OFFICE (WORD, PPT, EXCEL)
+  //     With Live PDF Page Preview & Precision Reconstruction
+  // ===========================================================================
+  let sp2oCurrentFile   = null;
+  let sp2oPdfDoc        = null;
+  let sp2oActivePage    = 1;
+
+  const sp2oDropzone     = document.getElementById('sp2oDropzone');
+  const sp2oFileInput    = document.getElementById('sp2oFileInput');
+  const sp2oInfoBar      = document.getElementById('sp2oInfoBar');
+  const sp2oChangeFileBtn= document.getElementById('sp2oChangeFileBtn');
+  const sp2oPreviewWrapper = document.getElementById('sp2oPreviewWrapper');
+  const sp2oPdfCanvas    = document.getElementById('sp2oPdfCanvas');
+  const sp2oPdfPrevBtn   = document.getElementById('sp2oPdfPrevBtn');
+  const sp2oPdfNextBtn   = document.getElementById('sp2oPdfNextBtn');
+  const sp2oPdfIndicator = document.getElementById('sp2oPdfPageIndicator');
+  const sp2oConvertBtn   = document.getElementById('sp2oConvertBtn');
+  const sp2oSpinner      = document.getElementById('sp2oSpinner');
+  const sp2oBtnText      = document.getElementById('sp2oBtnText');
+  const sp2oTargetFormat = document.getElementById('sp2oTargetFormat');
+  const sp2oExtDisplay   = document.getElementById('sp2oExtDisplay');
+
+  if (sp2oDropzone) {
+    setupDropzone(sp2oDropzone, sp2oFileInput, async files => {
+      const f = Array.from(files).find(x => x.type === 'application/pdf' || x.name.endsWith('.pdf'));
+      if (!f) return;
+      sp2oCurrentFile = f;
+
+      document.getElementById('sp2oFileName').textContent = f.name;
+      document.getElementById('sp2oMeta').textContent = formatBytes(f.size);
+      document.getElementById('sp2oOutputName').value = f.name.replace(/\.pdf$/i, '');
+
+      sp2oDropzone.classList.add('hidden');
+      sp2oInfoBar.classList.remove('hidden');
+      sp2oConvertBtn.disabled = false;
+
+      // Load PDF Preview
+      await loadPdfPreview(f);
+    });
+
+    if (sp2oChangeFileBtn) {
+      sp2oChangeFileBtn.addEventListener('click', () => {
+        sp2oFileInput.click();
+      });
+    }
+
+    if (sp2oTargetFormat) {
+      sp2oTargetFormat.addEventListener('change', () => {
+        sp2oExtDisplay.textContent = '.' + sp2oTargetFormat.value;
+      });
+    }
+
+    if (sp2oPdfPrevBtn) {
+      sp2oPdfPrevBtn.addEventListener('click', async () => {
+        if (sp2oActivePage > 1) {
+          sp2oActivePage--;
+          await renderPdfPageToCanvas(sp2oActivePage);
+          updatePdfPageIndicator();
+        }
+      });
+    }
+
+    if (sp2oPdfNextBtn) {
+      sp2oPdfNextBtn.addEventListener('click', async () => {
+        if (sp2oPdfDoc && sp2oActivePage < sp2oPdfDoc.numPages) {
+          sp2oActivePage++;
+          await renderPdfPageToCanvas(sp2oActivePage);
+          updatePdfPageIndicator();
+        }
+      });
+    }
+
+    if (sp2oConvertBtn) {
+      sp2oConvertBtn.addEventListener('click', async () => {
+        if (!sp2oCurrentFile || !sp2oPdfDoc) return;
+        sp2oConvertBtn.disabled = true;
+        sp2oSpinner.classList.remove('hidden');
+        sp2oBtnText.textContent = 'Merekontruksi Dokumen...';
+
+        const targetFmt = sp2oTargetFormat.value;
+        const outBase = document.getElementById('sp2oOutputName').value.trim() || 'hasil-ekstrak';
+
+        try {
+          await executePdfToOfficeHighFidelity(sp2oPdfDoc, targetFmt, outBase);
+          showToast(`Berhasil merekonstruksi ke format .${targetFmt.toUpperCase()}!`, 'success');
+        } catch(e) {
+          showToast(`Gagal: ${e.message}`, 'error');
+        }
+
+        sp2oConvertBtn.disabled = false;
+        sp2oSpinner.classList.add('hidden');
+        sp2oBtnText.textContent = 'Konversi ke Dokumen';
+      });
+    }
+  }
+
+  // Precision PDF to Office Reconstruction Function
+  async function executePdfToOfficeHighFidelity(pdfDoc, targetFmt, outputBaseName) {
+    const numPages = pdfDoc.numPages;
+
+    // 1. PDF TO EXCEL (.xlsx) — Table Column Extraction
+    if (targetFmt === 'xlsx') {
+      if (!window.XLSX) throw new Error('SheetJS belum siap.');
+      const allRows = [];
+
+      for (let p = 1; p <= numPages; p++) {
+        const page = await pdfDoc.getPage(p);
+        const textContent = await page.getTextContent();
+        allRows.push([`=== LEMBAR DATA: HALAMAN ${p} ===`]);
+
+        // Cluster items by vertical Y coordinate
+        const linesMap = {};
+        textContent.items.forEach(item => {
+          const y = Math.round(item.transform[5] / 4) * 4; // grid clustering
+          if (!linesMap[y]) linesMap[y] = [];
+          linesMap[y].push({ x: item.transform[4], str: item.str });
+        });
+
+        // Sort descending (top of page to bottom)
+        const sortedYs = Object.keys(linesMap).map(Number).sort((a, b) => b - a);
+        sortedYs.forEach(y => {
+          const rowItems = linesMap[y].sort((a, b) => a.x - b.x);
+          const rowData = rowItems.map(i => i.str.trim()).filter(Boolean);
+          if (rowData.length) allRows.push(rowData);
+        });
+
+        allRows.push([]); // blank row between pages
+      }
+
+      const wb = window.XLSX.utils.book_new();
+      const ws = window.XLSX.utils.aoa_to_sheet(allRows);
+      window.XLSX.utils.book_append_sheet(wb, ws, 'Hasil Ekstraksi PDF');
+      window.XLSX.writeFile(wb, `${outputBaseName}.xlsx`);
+      return;
+    }
+
+    // 2. PDF TO POWERPOINT (.pptx) — 1:1 HD Slide Reproduction
+    if (targetFmt === 'pptx') {
+      if (!window.PptxGenJS) throw new Error('PptxGenJS belum siap.');
+      const pptx = new window.PptxGenJS();
+      pptx.layout = 'LAYOUT_16x9';
+
+      for (let p = 1; p <= numPages; p++) {
+        const page = await pdfDoc.getPage(p);
+        const viewport = page.getViewport({ scale: 2.0 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const slide = pptx.addSlide();
+        slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
+      }
+
+      await pptx.writeFile({ fileName: `${outputBaseName}.pptx` });
+      return;
+    }
+
+    // 3. PDF TO WORD (.docx) — Semantic Paragraph Reproduction
+    if (targetFmt === 'docx') {
+      if (!window.docx) throw new Error('docx.js belum siap.');
+      const { Document, Packer, Paragraph, TextRun, HeadingLevel } = window.docx;
+      const docChildren = [];
+
+      for (let p = 1; p <= numPages; p++) {
+        const page = await pdfDoc.getPage(p);
+        const textContent = await page.getTextContent();
+
+        docChildren.push(new Paragraph({
+          text: `Halaman ${p}`,
+          heading: HeadingLevel.HEADING_2,
+          spacing: { before: 240, after: 120 }
+        }));
+
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        const sentences = pageText.split(/(?<=\.|\?|\!)\s+/);
+        sentences.forEach(s => {
+          if (s.trim()) {
+            docChildren.push(new Paragraph({
+              children: [new TextRun({ text: s.trim(), size: 22 })],
+              spacing: { after: 120 }
+            }));
+          }
+        });
+      }
+
+      const doc = new Document({ sections: [{ properties: {}, children: docChildren }] });
+      const blob = await Packer.toBlob(doc);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${outputBaseName}.docx`;
+      a.click();
+      URL.revokeObjectURL(url);
+      return;
+    }
+
+    throw new Error(`Format .${targetFmt} belum didukung.`);
+  }
 
   // Initialize selected language on load
   setLanguage(currentLang);
 
 }); // end DOMContentLoaded
+
